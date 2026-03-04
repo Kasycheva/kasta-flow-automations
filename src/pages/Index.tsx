@@ -1,12 +1,32 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import '../lib/i18n';
+import Navbar from '../components/sections/Navbar';
+import Hero from '../components/sections/Hero';
+import Ticker from '../components/sections/Ticker';
+import Services from '../components/sections/Services';
+import Calculator from '../components/sections/Calculator';
+import Support from '../components/sections/Support';
+import Cases from '../components/sections/Cases';
+import FAQ from '../components/sections/FAQ';
+import Contact from '../components/sections/Contact';
+import Footer from '../components/sections/Footer';
+import CookieBanner from '../components/widgets/CookieBanner';
+import ChatWidget from '../components/widgets/ChatWidget';
 
 const Index = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <Hero />
+      <Ticker />
+      <Services />
+      <Calculator />
+      <Support />
+      <Cases />
+      <FAQ />
+      <Contact />
+      <Footer />
+      <CookieBanner />
+      <ChatWidget />
     </div>
   );
 };

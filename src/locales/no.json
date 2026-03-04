@@ -1,0 +1,274 @@
+{
+  "nav": {
+    "services": "Tjenester",
+    "calculator": "Kalkulator",
+    "support": "Support",
+    "cases": "Prosjekter",
+    "faq": "FAQ",
+    "contact": "Kontakt",
+    "cta": "Ta kontakt"
+  },
+  "hero": {
+    "badge": "⚡ Automatiseringsstudio · Norge",
+    "title1": "Automatiser bedriften din.",
+    "title2": "Frigjør tiden din.",
+    "subtitle": "Vi bygger smarte integrasjoner, AI-chatboter og automatiserte arbeidsflyter for små og mellomstore bedrifter i Norge. Ingen møter. Ingen samtaler. Bare resultater — levert skriftlig.",
+    "ctaPrimary": "Start automatisering",
+    "ctaSecondary": "Se tjenester",
+    "proof1": "✓ Norsk marked",
+    "proof2": "✓ Vipps & Fiken-integrasjoner",
+    "proof3": "✓ Svar innen 48 timer"
+  },
+  "services": {
+    "badge": "✦ Våre tjenester",
+    "title1": "Alt bedriften din trenger",
+    "title2": "for å kjøre på autopilot",
+    "subtitle": "Vi jobber med små og mellomstore bedrifter i Norge — fra én enkel integrasjon til et helt automatiseringssystem. Ingen teknisk kunnskap kreves fra din side.",
+    "card1": {
+      "name": "Enkle integrasjoner",
+      "desc": "Koble sammen 2–3 av dine eksisterende verktøy og eliminer manuell dataoverføring. Skjemaer, regneark og e-post kommuniserer automatisk med hverandre.",
+      "checks": ["Én automatisert flyt", "Opptil 3 tilkoblede tjenester", "Testing + dokumentasjon", "Levering innen 3–5 dager"],
+      "price": "3 600"
+    },
+    "card2": {
+      "name": "Vipps + Fiken-automasjon",
+      "badge": "🇳🇴 Norsk",
+      "desc": "Automatiser betalingsflyten din. Kunden betaler via Vipps — faktura opprettes automatisk i Fiken. Spar 4–6 timer per uke på manuell bokføring.",
+      "checks": ["Vipps betalingsintegrasjon", "Automatisk fakturaopprettelse i Fiken", "E-postkvittering til kunden", "Google Sheets transaksjonslogg"],
+      "price": "8 000"
+    },
+    "card3": {
+      "name": "CRM-oppsett og automasjon",
+      "desc": "Fra Google Sheets til et profesjonelt CRM-system. Vi setter opp salgspipelinen din, importerer kontakter og automatiserer oppfølging så ingen leads går tapt.",
+      "checks": ["Pipedrive eller HubSpot-oppsett", "Salgspipeline-konfigurasjon", "Kontaktimport + maler", "Automatiserte oppfølgingsregler"],
+      "price": "6 400"
+    },
+    "card4": {
+      "name": "FAQ-chatbot",
+      "desc": "En chatbot på nettsiden din som svarer på de 15–30 vanligste spørsmålene døgnet rundt. Mist aldri en kunde fordi ingen svarte utenfor arbeidstid.",
+      "checks": ["Opptil 30 Q&A-scenarier", "Fallback til menneskelig kontakt", "Nettside-embed (alle plattformer)", "Levering innen 3–5 dager"],
+      "price": "5 600"
+    },
+    "card5": {
+      "name": "Smart AI-agent",
+      "badge": "✦ AI-drevet",
+      "desc": "En intelligent assistent som virkelig kjenner bedriften din. Den konsulterer kunder, onboarder nye ansatte, kvalifiserer leads — og jobber døgnet rundt uten lønn.",
+      "checks": ["Trent på dine forretningsdokumenter", "Naturlig språkforståelse", "CRM- eller kalenderintegrasjon", "Tilgjengelig på nettside, Telegram eller WhatsApp"],
+      "price": "9 600"
+    },
+    "card6": {
+      "name": "Landingsside + Lead-automasjon",
+      "desc": "En ryddig, rask landingsside koblet til CRM og e-postsekvens fra dag én. Bygget for resultater, ikke bare utseende — hver lead fanges automatisk.",
+      "checks": ["Responsiv enkeltside-nettside", "Lead-skjema + CRM-integrasjon", "Velkomst-e-postsekvens (3 e-poster)", "Levering innen 5–10 dager"],
+      "price": "9 600"
+    },
+    "customTitle": "Finner du ikke det du trenger?",
+    "customDesc": "Vi jobber med de mest innovative automatiseringsverktøyene og elsker å løse ikke-standard problemer. Hvis du har en arbeidsflyt, en repetitiv oppgave, eller bare en idé — beskriv den for oss. Vi finner ut hvordan vi kan automatisere den.",
+    "customCta": "Beskriv oppgaven din",
+    "pricingNote": "ℹ️ Prisene gjelder kun oppsett og implementering, eks. MVA. Tredjeparts tjenester (n8n Cloud, OpenAI API, CRM-abonnement, Vipps ePay, Fiken) betales separat av kunden til standardpriser. Månedlig support er tilgjengelig som et valgfritt tillegg.",
+    "from": "Fra",
+    "exVat": "eks. MVA"
+  },
+  "calculator": {
+    "badge": "📊 ROI-kalkulator",
+    "title1": "Hva koster rutinearbeidet ditt",
+    "title2": "deg egentlig?",
+    "subtitle": "Arbeidskostnadene i Norge er blant de høyeste i verden. Hver time brukt på manuelle oppgaver er penger du kunne investert i vekst. Beregn din reelle kostnad på 30 sekunder.",
+    "hoursLabel": "Timer per uke brukt på manuelle oppgaver",
+    "hoursUnit": "timer / uke",
+    "rateLabel": "Timekostnad per ansatt (NOK)",
+    "rateUnit": "NOK / time",
+    "rateHelper": "Gjennomsnitt i Norge: 500–700 NOK/time",
+    "employeesLabel": "Antall ansatte som gjør denne oppgaven",
+    "weeklyWaste": "Ukentlig sløsing",
+    "monthlyWaste": "Månedlig sløsing",
+    "annualWaste": "Årlig sløsing",
+    "payback": "Tilbakebetalingstid",
+    "months": "måneder",
+    "progressLabel": "Automatisering dekker seg selv på:",
+    "resultNote": "Disse tallene er basert på dine inndata. De faktiske besparelsene avhenger av hvilke prosesser vi automatiserer sammen.",
+    "cta": "La oss automatisere bedriften din"
+  },
+  "support": {
+    "badge": "💎 Månedlig support",
+    "title1": "Automatiseringen din fortsetter å jobbe.",
+    "title2": "Vi sørger for det.",
+    "subtitle": "Etter at vi leverer prosjektet ditt, kan du velge å abonnere på månedlig support. Vi overvåker systemene dine, fikser tekniske problemer og gjør små justeringer — så du aldri trenger å bekymre deg.",
+    "disclaimer": "ℹ️ Support dekker teknisk stabilitet i eksisterende systemer: overvåking av feil, oppdatering av API-nøkler, mindre justeringer (inntil 1 time/mnd). Nye funksjoner og redesign tilbys som separate prosjekter.",
+    "perMonth": "per måned · eks. MVA",
+    "getStarted": "Kom i gang",
+    "mostPopular": "✦ Mest populær",
+    "mini": {
+      "name": "Mini",
+      "subtitle": "For enkle integrasjoner",
+      "price": "1 800",
+      "includes": ["2 timer support / måned", "Feilovervåking", "API-nøkkeloppdateringer", "Svar innen 48 timer", "E-postkommunikasjon"],
+      "excludes": ["Nye funksjoner", "Arkitekturendringer"]
+    },
+    "standard": {
+      "name": "Standard",
+      "subtitle": "For CRM og chatboter",
+      "price": "3 300",
+      "includes": ["5 timer support / måned", "Feilovervåking + varsler", "API-nøkkeloppdateringer", "Mindre innholdsoppdateringer", "Svar innen 24 timer", "Prioritert e-postsupport", "Månedlig optimaliseringsrapport"],
+      "excludes": ["Nye funksjoner", "Arkitekturendringer"]
+    },
+    "pro": {
+      "name": "Pro",
+      "subtitle": "For kritiske forretningssystemer",
+      "price": "7 700",
+      "includes": ["15 timer support / måned", "Proaktiv overvåking 24/7", "API-nøkkeloppdateringer", "Innhold- og logikkoppdateringer", "Svar innen 4 timer", "Dedikert kontaktperson", "Månedlig rapport + analyse", "Nye integrasjoner inkludert"],
+      "excludes": ["Fullstendig redesign", "Ny produktutvikling"]
+    },
+    "finePrint": "⚡ Support tilbys kun etter prosjektleveranse. Ubrukte timer overføres ikke til neste måned. Arbeid utover inkluderte timer faktureres til 800 NOK/time eks. MVA. Større endringer tilbys som separate prosjekter.",
+    "howTitle": "Slik fungerer support",
+    "steps": [
+      { "num": "01", "title": "Prosjekt levert", "desc": "Vi fullfører automatiseringen din og leverer den ferdig testet og dokumentert." },
+      { "num": "02", "title": "Du velger en plan", "desc": "Etter levering kan du velge å abonnere på supportplanen som passer dine behov." },
+      { "num": "03", "title": "Vi overvåker stille", "desc": "Vi sjekker systemene dine ukentlig. Du hører kun fra oss når noe trenger oppmerksomhet." },
+      { "num": "04", "title": "Raske fikser, ingen samtaler", "desc": "All kommunikasjon er skriftlig. Vi fikser problemer og rapporterer tilbake — ingen unødvendige møter." }
+    ],
+    "ctaTitle": "Usikker på hvilken plan du trenger?",
+    "ctaDesc": "Skriv til oss, så anbefaler vi rett supportnivå basert på kompleksiteten til prosjektet ditt.",
+    "ctaButton": "Spør oss"
+  },
+  "cases": {
+    "badge": "✦ Prosjekter",
+    "title1": "Ekte automatiseringer.",
+    "title2": "Ekte resultater.",
+    "subtitle": "Her er noen av arbeidsflytene og systemene vi har bygget for bedrifter som din.",
+    "case1": {
+      "badge": "Integrasjon",
+      "industry": "Restaurant · Norge",
+      "title": "Bookingautomasjon for en lokal restaurant",
+      "desc": "Manuelle reservasjoner via telefon og e-post forårsaket dobbeltbookinger og tapte kunder utenom åpningstid. Vi koblet bookingskjemaet direkte til Google Sheets, kalender og e-postvarsler.",
+      "metrics": ["0 Dobbeltbookinger", "3t Spart per dag", "100% Automatisert"],
+      "stack": ["n8n", "Google Sheets", "Gmail", "Typeform"]
+    },
+    "case2": {
+      "badge": "CRM + Lead Flow",
+      "industry": "Konsulent · Norge",
+      "title": "Lead-fangst system for en selvstendig konsulent",
+      "desc": "Leads fra nettsiden ble sporet i en personlig notatbok. Vi bygde en landingsside med automatisk lead-flyt inn i HubSpot og en velkomstsekvens på 3 e-poster.",
+      "metrics": ["+40% Lead-konvertering", "5t Spart per uke", "3 E-poster automatisert"],
+      "stack": ["HubSpot", "n8n", "Framer", "Gmail"]
+    },
+    "case3": {
+      "badge": "Vipps + Fiken",
+      "industry": "Skjønnhetssalong · Norge",
+      "title": "Betalings- og fakturautomasjon for en skjønnhetssalong",
+      "desc": "Eieren brukte 5–6 timer per uke på å opprette fakturaer manuelt i Fiken etter hver Vipps-betaling. Vi automatiserte hele flyten: betaling mottatt → faktura opprettet → kvittering sendt.",
+      "metrics": ["6t Spart per uke", "0 Manuelle fakturaer", "Umiddelbar Fakturaopprettelse"],
+      "stack": ["Vipps", "Fiken", "n8n", "Gmail"]
+    },
+    "testimonialsBadge": "💬 Hva kunder sier",
+    "testimonialsTitle1": "Klarert av bedrifter",
+    "testimonialsTitle2": "over hele Norge",
+    "testimonials": [
+      { "quote": "Samarbeidet med Kasta Flow Studio forandret helt hvordan vi håndterer bookinger. Alt fungerer nå — ingen flere telefonsamtaler, ingen dobbeltbookinger. Og de leverte raskere enn noe byrå vi har jobbet med før.", "author": "Erik Andersen", "role": "Eier, Restaurant Brygga · Oslo" },
+      { "quote": "Jeg brukte hele formiddager på fakturering. Nå tenker jeg ikke engang på det. Vipps–Fiken-automatiseringen kjører bare i bakgrunnen. Jeg sjekker tallene på slutten av måneden. Verdt hver krone.", "author": "Marte Olsen", "role": "Frilanskonsulent · Bergen" },
+      { "quote": "Hele prosessen ble gjort skriftlig — ingen samtaler, ingen møter. De sendte meg en kort video som forklarte hvordan alt fungerer, og det var nok. Ryddig, profesjonelt og akkurat det en liten bedrift trenger.", "author": "Jonas Berg", "role": "Eier, Berg Eiendom · Stavanger" },
+      { "quote": "Vi hadde null teknisk kunnskap. Kasta Flow Studio forklarte alt tydelig via e-post, satte opp CRM fra bunnen av og trente teamet vårt. Tre måneder senere er salgsprosessen vår helt annerledes — på den beste måten.", "author": "Silje Haugen", "role": "CEO, Haugen Rekruttering · Trondheim" }
+    ],
+    "stats": [
+      { "value": "15+", "label": "Prosjekter levert" },
+      { "value": "6", "label": "Bransjer betjent" },
+      { "value": "40t", "label": "Gjennomsnittlig tid spart / mnd" },
+      { "value": "48t", "label": "Gjennomsnittlig responstid" }
+    ]
+  },
+  "faq": {
+    "badge": "❓ Ofte stilte spørsmål",
+    "title1": "Spørsmål vi hører",
+    "title2": "oftest",
+    "subtitle": "Hvis du ikke finner svaret her — bare skriv til oss. Vi svarer innen 48 timer.",
+    "items": [
+      { "q": "Trenger jeg teknisk kunnskap for å jobbe med dere?", "a": "Overhodet ikke. Vår jobb er å håndtere all teknisk kompleksitet slik at du slipper. Vi stiller noen spørsmål om forretningsprosessene dine, du gir oss tilgang til verktøyene dine — og vi gjør resten. Alt forklares tydelig skriftlig." },
+      { "q": "Hvordan fungerer prosessen hvis vi aldri har en samtale?", "a": "Vi jobber utelukkende skriftlig — e-post, WhatsApp eller Telegram. Du fyller ut en kort brief, vi sender deg et tilbud innen 24 timer. Etter at du godkjenner og betaler depositumet, starter vi arbeidet. Vi leverer via en kort Loom-skjermopptak så du kan se nøyaktig hvordan alt fungerer — ingen live-møte nødvendig." },
+      { "q": "Hvilke verktøy trenger jeg å ha før vi starter?", "a": "Det avhenger av tjenesten. For enkle integrasjoner — vanligvis bare en Google-konto. For Vipps + Fiken-automasjon trenger du en aktiv Vipps Bedrift-konto og et Fiken-abonnement. For CRM-oppsett hjelper vi deg med å velge og registrere riktig system." },
+      { "q": "Hvor lang tid tar et typisk prosjekt?", "a": "Enkle integrasjoner: 3–5 virkedager. Vipps + Fiken-automasjon: 5–7 virkedager. AI-chatbot eller CRM-oppsett: 5–10 virkedager. Landingsside + lead-flyt: 5–10 virkedager. Tidslinjen starter fra vi mottar depositum og alle nødvendige tilgangsdata." },
+      { "q": "Hva er betalingsbetingelsene?", "a": "Vi jobber med 50/50 betalingsstruktur: 50% depositum før vi starter, 50% ved levering. Betaling aksepteres via Vipps eller bankoverføring. Vi utsteder formell faktura for hver transaksjon." },
+      { "q": "Inkluderer prisene på siden MVA?", "a": "Nei. Alle viste priser er eksklusive MVA (eks. MVA). 25% norsk MVA legges til fakturaen når Kasta Flow Studio er registrert i MVA-registeret, som skjer når årlig omsetning overstiger 50 000 NOK." },
+      { "q": "Hva skjer hvis noe slutter å fungere etter levering?", "a": "Vi tilbyr 30 dagers gratis feilretting etter hver levering. Hvis noe går i stykker på grunn av vår implementering — fikser vi det uten kostnad. Problemer forårsaket av tredjeparts API-endringer håndteres under en supportplan." },
+      { "q": "Kan dere jobbe med verktøy som ikke er listet på nettsiden?", "a": "Ja. Våre listede tjenester dekker de vanligste brukstilfellene, men vi jobber jevnlig med verktøy som ikke er på listen. Hvis en tjeneste har et åpent API — kan vi nesten garantert integrere den." }
+    ],
+    "chatMessages": [
+      { "from": "client", "text": "Hei, jeg driver en liten salong i Oslo. Jeg bruker så mye tid på fakturering hver uke. Kan dere hjelpe?" },
+      { "from": "studio", "text": "Hei! Ja, dette er akkurat det vi gjør. Fortell meg — bruker du Vipps for betalinger? Og har du en Fiken-konto?" },
+      { "from": "client", "text": "Ja til begge! Men jeg oppretter fakturaer manuelt hver gang..." },
+      { "from": "studio", "text": "Perfekt. Vi kan automatisere det fullstendig. Betaling mottatt → faktura opprettet → kvittering sendt. Ikke mer manuelt arbeid. La meg sende deg et tilbud." }
+    ],
+    "chatStatus": "✓ Tilbud sendt innen 24 timer",
+    "chatBadge": "💬 All kommunikasjon er skriftlig",
+    "bottomCta": "Har du fortsatt spørsmål?",
+    "bottomCtaLink": "Skriv til oss direkte"
+  },
+  "contact": {
+    "badge": "📋 Gratis analyse",
+    "title1": "Usikker på hvor du skal begynne?",
+    "title2": "La oss finne ut av det sammen.",
+    "subtitle": "Fortell oss om bedriften din og oppgavene som tar tiden din. Vi kommer tilbake til deg innen 48 timer med et konkret forslag. Ingen samtaler nødvendig — alt skjer skriftlig.",
+    "formToggle": "✏️ Fyll ut et skjema",
+    "formToggleSub": "5 minutter",
+    "voiceToggle": "🎙️ Ta opp stemmen din",
+    "voiceToggleSub": "Bare snakk — vi tar oss av resten",
+    "nameLabel": "Ditt navn",
+    "namePlaceholder": "Erik Andersen",
+    "emailLabel": "E-postadresse",
+    "emailPlaceholder": "erik@bedriften.no",
+    "emailHelper": "Vi svarer her innen 48 timer",
+    "companyLabel": "Firmanavn (valgfritt)",
+    "teamLabel": "Teamstørrelse",
+    "teamOptions": ["Bare meg", "2–5 personer", "6–15 personer", "16–50 personer", "50+ personer"],
+    "interestLabel": "Hva er du interessert i?",
+    "interestOptions": ["Enkle integrasjoner", "Vipps + Fiken-automasjon", "CRM-oppsett", "FAQ-chatbot", "Smart AI-agent", "Landingsside", "Ikke sikker ennå"],
+    "descLabel": "Beskriv situasjonen din",
+    "descPlaceholder": "Hvilke oppgaver tar mest tid i bedriften din? Hvilke verktøy bruker du allerede? Hva ønsker du å automatisere?",
+    "channelLabel": "Foretrukket kontaktkanal",
+    "channels": ["📧 E-post", "💬 WhatsApp", "✈️ Telegram"],
+    "submit": "Send forespørsel",
+    "sending": "Sender...",
+    "success": "✓ Forespørsel mottatt! Vi kommer tilbake til deg innen 48 timer via din valgte kanal.",
+    "gdpr": "Ved å sende dette skjemaet godtar du vår personvernpolicy og samtykker til behandling av dine personopplysninger for å svare på forespørselen din.",
+    "voiceTitle": "Bare snakk — vi tar oss av resten",
+    "voiceSubtitle": "Trykk på knappen og beskriv bedriften din, hva som tar mest tid, og hva du ønsker å automatisere. Snakk naturlig — det finnes ingen feil svar.",
+    "tapToRecord": "Trykk for å starte innspilling",
+    "listening": "Lytter... trykk for å stoppe",
+    "processing": "Behandler...",
+    "transcript": "Her er det vi hørte:",
+    "reRecord": "Ta opp på nytt",
+    "sendTranscript": "Dette ser riktig ut — send",
+    "emailCard": { "title": "E-post", "address": "kontakt@kastaflow.no", "note": "Svar innen 48 timer" },
+    "whatsappCard": { "title": "WhatsApp", "text": "Skriv til studioets chat", "note": "Meldinger videresendt til teamet", "cta": "Åpne WhatsApp" },
+    "telegramCard": { "title": "Telegram", "username": "@kastaflow", "note": "Nummeret ditt forblir privat" },
+    "channelNote": "💬 Vi foretrekker skriftlig kommunikasjon — det sparer tiden din og skaper et tydelig spor av alt vi avtaler."
+  },
+  "footer": {
+    "tagline": "Automatiseringsstudio for små og mellomstore bedrifter i Norge.",
+    "servicesHeading": "Tjenester",
+    "companyHeading": "Selskap",
+    "contactHeading": "Kontakt",
+    "howItWorks": "Slik fungerer det",
+    "caseStudies": "Prosjekter",
+    "roiCalc": "ROI-kalkulator",
+    "freeAudit": "Gratis analyse",
+    "privacyPolicy": "Personvern",
+    "terms": "Vilkår",
+    "cookiePolicy": "Informasjonskapsler",
+    "location": "Norge · Fjernarbeid",
+    "responseTime": "Svar innen 48 timer",
+    "accepting": "Tar for øyeblikket imot nye kunder",
+    "copyright": "© 2026 Kasta Flow Studio · Norge"
+  },
+  "cookie": {
+    "text": "Vi bruker informasjonskapsler for å forbedre opplevelsen din. Nødvendige informasjonskapsler er alltid aktive.",
+    "acceptAll": "Godta alle",
+    "essentialOnly": "Kun nødvendige",
+    "learnMore": "Les mer"
+  },
+  "chat": {
+    "tooltip": "👋 Spørsmål om automatisering?",
+    "online": "Online",
+    "welcome": "Hei! 👋 Jeg er assistenten til Kasta Flow Studio. Jeg kan fortelle deg om tjenestene, prisene og prosessen vår — eller hjelpe deg med å finne ut hvilken automatisering som passer best for bedriften din. Hva ønsker du å vite?",
+    "quickReplies": ["Hvilke tjenester tilbyr dere?", "Hva koster det?", "Hvordan fungerer prosessen?", "Jeg vil starte"]
+  }
+}
