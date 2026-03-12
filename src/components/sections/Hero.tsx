@@ -20,7 +20,7 @@ export default function Hero() {
             <motion.div {...fadeUp(0.2)}>
               <span className="section-badge">{t('hero.badge')}</span>
             </motion.div>
-            <motion.h1 {...fadeUp(0.5)} className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-foreground leading-[1.1] mb-6">
+            <motion.h1 {...fadeUp(0.5)} className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-foreground leading-[1.08] mb-6">
               {t('hero.title1')}<br />{t('hero.title2')}
             </motion.h1>
             <motion.p {...fadeUp(0.8)} className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed">
