@@ -41,7 +41,7 @@ export default function Calculator() {
   const barWidth = Math.min((paybackMonths / 12) * 100, 100);
 
   return (
-    <section id="calculator" className="section-padding bg-gradient-to-b from-background to-surface">
+    <section id="calculator" className="pt-10 md:pt-16 pb-10 md:pb-14 px-4 md:px-8 bg-gradient-to-b from-background to-surface">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <span className="section-badge">{t('calculator.badge')}</span>

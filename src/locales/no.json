@@ -31,41 +31,63 @@
       "price": "3 600"
     },
     "card2": {
+      "name": "Avanserte integrasjoner",
+      "badge": "↑ Populær",
+      "desc": "Flerstegs automatisering med logikk, betingelser og forgreninger. Alt samhandler automatisk — du slipper rutinearbeidet og kan fokusere på bedriften.",
+      "checks": ["Arbeidsflyt med 4–10 noder med betingelser", "Flergren-logikk (if/then-scenarier)", "Datakonvertering mellom tjenester", "Testing + dokumentasjon"],
+      "checksNote": "Integrasjon med regnskapssystemer og tilpasset API-utvikling er separate tjenester.",
+      "price": "4 800"
+    },
+    "card3": {
       "name": "Vipps + Fiken-automasjon",
       "badge": "🇳🇴 Norsk",
       "desc": "Automatiser betalingsflyten din. Kunden betaler via Vipps — faktura opprettes automatisk i Fiken. Spar 4–6 timer per uke på manuell bokføring.",
       "checks": ["Vipps betalingsintegrasjon", "Automatisk fakturaopprettelse i Fiken", "E-postkvittering til kunden", "Google Sheets transaksjonslogg"],
       "price": "8 000"
     },
-    "card3": {
+    "card4": {
       "name": "CRM-oppsett og automasjon",
-      "desc": "Fra Google Sheets til et profesjonelt CRM-system. Vi setter opp salgspipelinen din, importerer kontakter og automatiserer oppfølging så ingen leads går tapt.",
-      "checks": ["Pipedrive eller HubSpot-oppsett", "Salgspipeline-konfigurasjon", "Kontaktimport + maler", "Automatiserte oppfølgingsregler"],
+      "desc": "Fra Google Sheets til et profesjonelt CRM-system. Vi tilpasser en løsning som passer budsjettet og teamet ditt — enten du starter enkelt eller skalerer.",
+      "checks": ["CRM-valg og oppsett (HubSpot, Pipedrive og andre)", "Salgstrakt-oppsett", "Kontaktimport (opptil 500 oppføringer)", "Automatiske varsler og oppfølging"],
       "price": "6 400"
     },
-    "card4": {
+    "card5": {
       "name": "FAQ-chatbot",
       "desc": "En chatbot på nettsiden din som svarer på de 15–30 vanligste spørsmålene døgnet rundt. Mist aldri en kunde fordi ingen svarte utenfor arbeidstid.",
       "checks": ["Opptil 30 Q&A-scenarier", "Fallback til menneskelig kontakt", "Nettside-embed (alle plattformer)", "Levering innen 3–5 dager"],
       "price": "5 600"
     },
-    "card5": {
+    "card6": {
       "name": "Smart AI-agent",
       "badge": "✦ AI-drevet",
-      "desc": "En intelligent assistent som virkelig kjenner bedriften din. Den konsulterer kunder, onboarder nye ansatte, kvalifiserer leads — og jobber døgnet rundt uten lønn.",
+      "desc": "En intelligent assistent som virkelig kjenner bedriften din. Den kan brukes til en rekke oppgaver: den konsulterer kunder, onboarder nye ansatte, kvalifiserer potensielle kunder — og jobber 24/7 uten lønn.",
       "checks": ["Trent på dine forretningsdokumenter", "Naturlig språkforståelse", "CRM- eller kalenderintegrasjon", "Tilgjengelig på nettside, Telegram eller WhatsApp"],
       "price": "9 600"
     },
-    "card6": {
+    "card7": {
       "name": "Landingsside + Lead-automasjon",
-      "desc": "En ryddig, rask landingsside koblet til CRM og e-postsekvens fra dag én. Bygget for resultater, ikke bare utseende — hver lead fanges automatisk.",
-      "checks": ["Responsiv enkeltside-nettside", "Lead-skjema + CRM-integrasjon", "Velkomst-e-postsekvens (3 e-poster)", "Levering innen 5–10 dager"],
+      "desc": "En ryddig og rask landingsside integrert med CRM-systemet ditt eller enkel integrasjon. Designet for å oppnå resultater, ikke bare for utseendets skyld — hver lead fanges automatisk.",
+      "checks": ["Responsiv enkeltside-nettside", "Lead-skjema + CRM-integrasjon", "Levering innen 5–10 dager"],
       "price": "9 600"
+    },
+    "card8": {
+      "name": "Bookingsystem",
+      "badge": "+ Ny",
+      "desc": "Nettbasert booking, koblet til kalenderen din. Kunder bestiller selv — du mottar automatiske bekreftelser og påminnelser uten noen innsats eller tid.",
+      "checks": ["Oppsett av nettbasert bookingside", "Kalendersynkronisering (Google eller Outlook)", "Automatiske bekreftelser og påminnelser", "Betalingsinnkreving (valgfritt)"],
+      "price": "5 500"
+    },
+    "card9": {
+      "name": "Automatiske påminnelser",
+      "desc": "Mist aldri kunder på grunn av en glemt avtale eller en forfalt betaling. Automatiske påminnelser sendes til rett tid — du trenger ikke lenger huske på alt.",
+      "checks": ["Møtepåminnelser via SMS eller e-post", "Varsler om forfallsdato for betalinger", "Tilpassbare tids- og meldingsmaler", "Kompatibelt med eksisterende kalender eller CRM"],
+      "price": "3 200"
     },
     "customTitle": "Finner du ikke det du trenger?",
     "customDesc": "Vi jobber med de mest innovative automatiseringsverktøyene og elsker å løse ikke-standard problemer. Hvis du har en arbeidsflyt, en repetitiv oppgave, eller bare en idé — beskriv den for oss. Vi finner ut hvordan vi kan automatisere den.",
     "customCta": "Beskriv oppgaven din",
-    "pricingNote": "ℹ️ Prisene gjelder kun oppsett og implementering, eks. MVA. Tredjeparts tjenester (n8n Cloud, OpenAI API, CRM-abonnement, Vipps ePay, Fiken) betales separat av kunden til standardpriser. Månedlig support er tilgjengelig som et valgfritt tillegg.",
+    "pricingNote": "Prisene gjelder kun oppsett og implementering, eks. MVA. Tredjeparts tjenester (n8n Cloud, OpenAI API, CRM-abonnement, Vipps ePay, Fiken) betales separat av kunden til standardpriser. Månedlig support er tilgjengelig som et valgfritt tillegg.",
+    "orderCta": "Bestill denne tjenesten",
     "from": "Fra",
     "exVat": "eks. MVA"
   },

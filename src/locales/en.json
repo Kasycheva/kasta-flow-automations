@@ -31,41 +31,63 @@
       "price": "3 600"
     },
     "card2": {
+      "name": "Advanced Integrations",
+      "badge": "↑ Popular",
+      "desc": "Multi-step automation with logic, conditions, and branching. Everything interacts automatically, freeing you from routine work and allowing you to focus on your business.",
+      "checks": ["Workflow of 4–10 nodes with conditions", "Multi-branch logic (if/then scenarios)", "Data conversion between services", "Testing + documentation"],
+      "checksNote": "Integration with accounting systems and custom API development are separate services.",
+      "price": "4 800"
+    },
+    "card3": {
       "name": "Vipps + Fiken Automation",
       "badge": "🇳🇴 Norwegian",
       "desc": "Automate your Norwegian payment flow. Customer pays via Vipps — invoice is created in Fiken automatically. Save 4–6 hours per week on manual bookkeeping.",
       "checks": ["Vipps payment integration", "Auto-invoice creation in Fiken", "Email receipt to customer", "Google Sheets transaction log"],
       "price": "8 000"
     },
-    "card3": {
+    "card4": {
       "name": "CRM Setup & Automation",
-      "desc": "From Google Sheets to a professional CRM system. We set up your sales pipeline, import your contacts and automate follow-ups so no lead slips through.",
-      "checks": ["Pipedrive or HubSpot setup", "Sales pipeline configuration", "Contact import + templates", "Automated follow-up rules"],
+      "desc": "From Google Sheets to a professional CRM system. We customize a solution that fits your budget and team — whether you're starting simple or scaling.",
+      "checks": ["CRM selection and setup (HubSpot, Pipedrive, and others)", "Sales funnel setup", "Contact import (up to 500 records)", "Automatic notifications and follow-up"],
       "price": "6 400"
     },
-    "card4": {
+    "card5": {
       "name": "FAQ Chatbot",
       "desc": "A chatbot on your website that answers the 15–30 most common questions 24/7. Never lose a customer because no one answered outside business hours.",
       "checks": ["Up to 30 Q&A scenarios", "Fallback to human contact", "Website embed (any platform)", "Delivery in 3–5 days"],
       "price": "5 600"
     },
-    "card5": {
+    "card6": {
       "name": "Smart AI Agent",
       "badge": "✦ AI-powered",
-      "desc": "An intelligent assistant that truly knows your business. It consults customers, onboards new employees, qualifies leads — and works around the clock without a salary.",
+      "desc": "An intelligent assistant that truly knows your business. It can be used for a variety of tasks: it consults clients, onboards new employees, evaluates potential clients — and works 24/7 without a salary.",
       "checks": ["Trained on your business documents", "Natural language understanding", "CRM or calendar integration", "Available on website, Telegram or WhatsApp"],
       "price": "9 600"
     },
-    "card6": {
+    "card7": {
       "name": "Landing Page + Lead Flow",
-      "desc": "A clean, fast landing page connected to your CRM and email sequence from day one. Built for results, not just for looks — every lead is captured automatically.",
-      "checks": ["Single-page responsive website", "Lead capture form + CRM integration", "Welcome email sequence (3 emails)", "Delivery in 5–10 days"],
+      "desc": "A clean and fast landing page integrated with your CRM system or a standalone integration. Designed to achieve results, not just for show — every lead is automatically captured.",
+      "checks": ["Single-page responsive website", "Lead capture form + CRM integration", "Delivery in 5–10 days"],
       "price": "9 600"
+    },
+    "card8": {
+      "name": "Booking System",
+      "badge": "+ New",
+      "desc": "Online booking, connected to your calendar. Customers book themselves — you receive automatic confirmations and reminders without any effort or time.",
+      "checks": ["Online booking page setup", "Calendar synchronization (Google or Outlook)", "Automatic confirmations and reminders", "Payment collection (optional)"],
+      "price": "5 500"
+    },
+    "card9": {
+      "name": "Automatic Reminders",
+      "desc": "Never lose clients because of a forgotten appointment or a missed payment. Automatic reminders are sent at the right time — you no longer need to remember everything.",
+      "checks": ["Meeting reminders via SMS or email", "Payment due date notifications", "Customizable time and message templates", "Compatible with your existing calendar or CRM"],
+      "price": "3 200"
     },
     "customTitle": "Don't see what you need?",
     "customDesc": "We work with the most innovative automation tools available and love solving non-standard problems. If you have a workflow, a repetitive task, or just an idea — describe it to us. We'll figure out how to automate it.",
     "customCta": "Describe your task",
-    "pricingNote": "ℹ️ Prices shown are for setup and implementation only, excl. VAT. Third-party services (n8n Cloud, OpenAI API, CRM subscriptions, Vipps ePay, Fiken) are paid separately by the client at their standard rates. Monthly support is available as an optional add-on.",
+    "pricingNote": "Prices are for setup and implementation only, excluding VAT. Third-party services (n8n Cloud, OpenAI API, CRM subscriptions, Vipps ePay, Fiken) are paid separately by the client at their standard rates. Monthly support is available as an additional option.",
+    "orderCta": "Order this service",
     "from": "From",
     "exVat": "excl. VAT"
   },
