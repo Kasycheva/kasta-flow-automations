@@ -146,9 +146,12 @@ export default function Calculator() {
         >
           {/* Top bar */}
           <div
-            className="flex items-center justify-end px-5 py-3"
+            className="flex items-center justify-between px-5 py-3"
             style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}
           >
+            <span className="text-[11px] text-muted-foreground/60 tracking-widest uppercase">
+              kasta flow studio
+            </span>
             <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground/70">
               <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-pulse" />
               live
