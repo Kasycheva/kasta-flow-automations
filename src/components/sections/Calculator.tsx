@@ -41,11 +41,11 @@ export default function Calculator() {
   const barWidth = Math.min((paybackMonths / 12) * 100, 100);
 
   return (
-    <section id="calculator" className="pt-10 md:pt-16 pb-10 md:pb-14 px-4 md:px-8 bg-gradient-to-b from-background to-surface">
+    <section id="calculator" className="pt-10 md:pt-16 pb-10 md:pb-14 px-4 md:px-8" style={{ background: 'linear-gradient(180deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%)', borderTop: '1px solid rgba(255,255,255,0.08)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <span className="section-badge">{t('calculator.badge')}</span>
-          <h2 className="section-title">{t('calculator.title1')}<br />{t('calculator.title2')}</h2>
+          <h2 className="section-title !text-5xl md:!text-7xl">{t('calculator.title1')}<br />{t('calculator.title2')}</h2>
           <p className="section-subtitle">{t('calculator.subtitle')}</p>
         </div>
 
@@ -81,19 +81,19 @@ export default function Calculator() {
 
             {/* Results */}
             <div className="space-y-4">
-              <div className="bg-background rounded-xl p-4 border border-border">
+              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-xs text-muted-foreground mb-1">{t('calculator.weeklyWaste')}</p>
                 <p className="text-2xl font-heading font-bold text-foreground"><AnimatedNumber value={weeklyCost} format={fmt} /> NOK</p>
               </div>
-              <div className="bg-background rounded-xl p-4 border border-border">
+              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-xs text-muted-foreground mb-1">{t('calculator.monthlyWaste')}</p>
                 <p className="text-2xl font-heading font-bold text-accent"><AnimatedNumber value={monthlyCost} format={fmt} /> NOK</p>
               </div>
-              <div className="bg-background rounded-xl p-4 border border-border">
+              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-xs text-muted-foreground mb-1">{t('calculator.annualWaste')}</p>
                 <p className="text-3xl font-heading font-bold text-foreground"><AnimatedNumber value={annualCost} format={fmt} /> NOK</p>
               </div>
-              <div className="bg-background rounded-xl p-4 border border-border">
+              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-xs text-muted-foreground mb-1">{t('calculator.payback')}</p>
                 <p className="text-2xl font-heading font-bold text-kasta-green">
                   {paybackMonths < 2 ? '< 2' : paybackMonths} {t('calculator.months')}

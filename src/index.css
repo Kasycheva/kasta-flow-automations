@@ -12,7 +12,7 @@
     --color-border: 0 0% 12%;
     --color-border-hover: 0 0% 30%;
     --color-text: 0 0% 96%;
-    --color-muted: 0 0% 53%;
+    --color-muted: 0 0% 67%;
     --color-accent: 0 0% 78%;
     --color-highlight: 0 0% 100%;
     --color-green: 142 69% 58%;
@@ -28,7 +28,7 @@
     --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 96%;
     --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 53%;
+    --muted-foreground: 0 0% 67%;
     --accent: 0 0% 78%;
     --accent-foreground: 0 0% 4%;
     --destructive: 0 84.2% 60.2%;
@@ -85,6 +85,7 @@
   }
   .section-title {
     @apply text-[2.3rem] sm:text-[2.7rem] md:text-5xl lg:text-[3.75rem] font-heading font-bold text-foreground leading-[1.02] tracking-[-0.03em] mb-5;
+    letter-spacing: -0.02em;
   }
   .section-subtitle {
     @apply text-[1rem] md:text-[1.15rem] text-muted-foreground max-w-3xl mx-auto leading-[1.8];
@@ -97,7 +98,8 @@
   }
   .services-card {
     background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-left: 2px solid rgba(200,200,200,0.4);
     border-radius: 20px;
     padding: 28px;
     cursor: pointer;
@@ -108,7 +110,8 @@
   }
   .services-card:hover {
     background: rgba(255,255,255,0.05);
-    border-color: rgba(220,220,220,0.4);
+    border-color: rgba(255,255,255,0.35);
+    border-left: 2px solid rgba(200,200,200,0.4);
     box-shadow: 0 16px 56px rgba(0,0,0,0.5),
                 0 0 0 1px rgba(255,255,255,0.12),
                 inset 0 1px 0 rgba(255,255,255,0.1);
