@@ -27,16 +27,56 @@ function AnimatedNumber({ value, format }: { value: number; format: (n: number) 
 
 const fmt = (n: number) => new Intl.NumberFormat('no-NO').format(n);
 
-const SLIDER_CLASS =
-  'w-full accent-accent h-1.5 bg-border rounded-full appearance-none cursor-pointer ' +
-  '[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 ' +
-  '[&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-foreground ' +
-  '[&::-webkit-slider-thumb]:rounded-full';
+function Slider({
+  label, helper, min, max, step, value, onChange, displayValue,
+}: {
+  label: string; helper?: string; min: number; max: number;
+  step: number; value: number; onChange: (v: number) => void; displayValue: string;
+}) {
+  const pct = ((value - min) / (max - min)) * 100;
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <label className="text-xs text-muted-foreground uppercase tracking-wider">{label}</label>
+        <span className="text-sm font-heading font-bold text-foreground tabular-nums">{displayValue}</span>
+      </div>
+      <div className="relative h-1.5 rounded-full bg-white/10">
+        <div
+          className="absolute left-0 top-0 h-full rounded-full bg-gradient-to-r from-white/40 to-white/80 transition-[width] duration-100"
+          style={{ width: `${pct}%` }}
+        />
+        <input
+          type="range" min={min} max={max} step={step} value={value}
+          onChange={e => onChange(+e.target.value)}
+          className="absolute inset-0 w-full opacity-0 cursor-pointer h-full"
+        />
+        <div
+          className="absolute top-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-foreground border-2 border-background shadow-lg pointer-events-none transition-[left] duration-100"
+          style={{ left: `calc(${pct}% - 7px)` }}
+        />
+      </div>
+      {helper && <p className="text-[11px] text-muted-foreground/60 mt-1.5">{helper}</p>}
+    </div>
+  );
+}
 
-const RESULT_CARD_STYLE = {
-  border: '1px solid rgba(255,255,255,0.22)',
-  background: 'rgba(255,255,255,0.04)',
-};
+function MetricCard({
+  label, value, color = 'text-foreground', size = 'md',
+}: {
+  label: string; value: React.ReactNode; color?: string; size?: 'md' | 'lg';
+}) {
+  return (
+    <div
+      className="rounded-xl p-4"
+      style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)' }}
+    >
+      <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2">{label}</p>
+      <p className={`font-heading font-bold tabular-nums ${color} ${size === 'lg' ? 'text-3xl' : 'text-xl'}`}>
+        {value}
+      </p>
+    </div>
+  );
+}
 
 export default function Calculator() {
   const { t } = useTranslation();
@@ -51,7 +91,7 @@ export default function Calculator() {
     if (!el) return;
     const obs = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setInView(true); },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -64,159 +104,201 @@ export default function Calculator() {
   const paybackMonths = +(avgAutomationPrice / monthlyCost).toFixed(1);
   const barWidth = Math.min((paybackMonths / 12) * 100, 100);
 
-  const fadeUp = (delay: number) => ({
-    initial: { opacity: 0, y: 40 },
-    animate: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 },
-    transition: { duration: 0.6, delay, ease: [0.23, 1, 0.32, 1] as const },
-  });
-
-  const fadeLeft = (delay: number) => ({
-    initial: { opacity: 0, x: -20 },
-    animate: inView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 },
-    transition: { duration: 0.5, delay, ease: [0.23, 1, 0.32, 1] as const },
-  });
-
-  const fadeRight = (delay: number) => ({
-    initial: { opacity: 0, y: 20 },
-    animate: inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
-    transition: { duration: 0.5, delay, ease: [0.23, 1, 0.32, 1] as const },
-  });
+  const EASE = [0.23, 1, 0.32, 1] as const;
 
   return (
     <section
       ref={sectionRef}
       id="calculator"
-      className="min-h-screen flex flex-col justify-center py-16 px-4 md:px-8"
+      className="py-16 md:py-24 px-4 md:px-8"
       style={{
-        background: 'linear-gradient(180deg, #0A0A0A 0%, #141414 50%, #0A0A0A 100%)',
+        background: 'linear-gradient(180deg, #0A0A0A 0%, #111111 50%, #0A0A0A 100%)',
         borderTop: '1px solid rgba(255,255,255,0.08)',
         borderBottom: '1px solid rgba(255,255,255,0.08)',
       }}
     >
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="max-w-5xl mx-auto">
 
-        {/* Heading */}
-        <motion.div {...fadeUp(0.1)} className="text-center mb-14">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: EASE }}
+        >
           <span className="section-badge">{t('calculator.badge')}</span>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-foreground leading-[1.02] tracking-tight mb-5">
-            {t('calculator.title1')}<br />{t('calculator.title2')}
-          </h2>
+          <h2 className="section-title">{t('calculator.title1')}<br />{t('calculator.title2')}</h2>
           <p className="section-subtitle">{t('calculator.subtitle')}</p>
         </motion.div>
 
-        {/* Main grid: sliders | big number | results */}
-        <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-center mb-10">
-
-          {/* Sliders */}
-          <div className="space-y-8">
-            <motion.div {...fadeLeft(0.2)}>
-              <label className="text-sm text-muted-foreground mb-3 block">{t('calculator.hoursLabel')}</label>
-              <input type="range" min={1} max={40} step={1} value={hours}
-                onChange={e => setHours(+e.target.value)} className={SLIDER_CLASS} />
-              <p className="text-foreground font-heading font-bold mt-2">{hours} {t('calculator.hoursUnit')}</p>
-            </motion.div>
-            <motion.div {...fadeLeft(0.35)}>
-              <label className="text-sm text-muted-foreground mb-3 block">{t('calculator.rateLabel')}</label>
-              <input type="range" min={200} max={1200} step={50} value={rate}
-                onChange={e => setRate(+e.target.value)} className={SLIDER_CLASS} />
-              <p className="text-foreground font-heading font-bold mt-2">{fmt(rate)} {t('calculator.rateUnit')}</p>
-              <p className="text-xs text-muted-foreground mt-1">{t('calculator.rateHelper')}</p>
-            </motion.div>
-            <motion.div {...fadeLeft(0.5)}>
-              <label className="text-sm text-muted-foreground mb-3 block">{t('calculator.employeesLabel')}</label>
-              <input type="range" min={1} max={10} step={1} value={employees}
-                onChange={e => setEmployees(+e.target.value)} className={SLIDER_CLASS} />
-              <p className="text-foreground font-heading font-bold mt-2">{employees}</p>
-            </motion.div>
-          </div>
-
-          {/* Big annual number — desktop only */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={inView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
-            className="hidden md:flex flex-col items-center text-center px-6"
-          >
-            <p
-              className="text-7xl lg:text-8xl font-heading font-bold text-foreground leading-none mb-3 tabular-nums"
-              style={{ textShadow: '0 0 40px rgba(200,200,200,0.25), 0 0 80px rgba(200,200,200,0.1)' }}
-            >
-              <AnimatedNumber value={inView ? annualCost : 0} format={fmt} />
-            </p>
-            <p className="text-xs text-muted-foreground uppercase tracking-widest max-w-[140px] leading-relaxed">
-              NOK you lose per year on manual work
-            </p>
-          </motion.div>
-
-          {/* Result cards — 2×2 grid */}
-          <div className="grid grid-cols-2 gap-3">
-            <motion.div {...fadeRight(0.2)} className="rounded-xl p-4" style={RESULT_CARD_STYLE}>
-              <p className="text-xs text-muted-foreground mb-1">{t('calculator.weeklyWaste')}</p>
-              <p className="text-xl font-heading font-bold text-foreground">
-                <AnimatedNumber value={weeklyCost} format={fmt} /> <span className="text-xs font-normal">NOK</span>
-              </p>
-            </motion.div>
-            <motion.div {...fadeRight(0.3)} className="rounded-xl p-4" style={RESULT_CARD_STYLE}>
-              <p className="text-xs text-muted-foreground mb-1">{t('calculator.monthlyWaste')}</p>
-              <p className="text-xl font-heading font-bold text-accent">
-                <AnimatedNumber value={monthlyCost} format={fmt} /> <span className="text-xs font-normal">NOK</span>
-              </p>
-            </motion.div>
-            <motion.div {...fadeRight(0.4)} className="rounded-xl p-4 col-span-2" style={RESULT_CARD_STYLE}>
-              <p className="text-xs text-muted-foreground mb-1">{t('calculator.annualWaste')}</p>
-              <p className="text-2xl font-heading font-bold text-foreground">
-                <AnimatedNumber value={annualCost} format={fmt} /> <span className="text-xs font-normal">NOK</span>
-              </p>
-            </motion.div>
-            <motion.div {...fadeRight(0.5)} className="rounded-xl p-4 col-span-2" style={RESULT_CARD_STYLE}>
-              <p className="text-[10px] text-muted-foreground/60 mb-1">
-                Estimated automation cost: {fmt(avgAutomationPrice)} NOK
-              </p>
-              <p className="text-xs text-muted-foreground mb-1">{t('calculator.payback')}</p>
-              <p className="text-2xl font-heading font-bold text-kasta-green">
-                {paybackMonths < 2 ? '< 2' : paybackMonths} {t('calculator.months')}
-              </p>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Big annual number — mobile only */}
+        {/* Dashboard card */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="md:hidden text-center mb-10"
+          initial={{ opacity: 0, y: 40, scale: 0.98 }}
+          animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+          className="rounded-2xl overflow-hidden"
+          style={{
+            border: '1px solid rgba(255,255,255,0.25)',
+            background: '#0D0D0D',
+            backgroundImage: 'radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)',
+            backgroundSize: '28px 28px',
+          }}
         >
-          <p
-            className="text-6xl font-heading font-bold text-foreground leading-none mb-2 tabular-nums"
-            style={{ textShadow: '0 0 40px rgba(200,200,200,0.2)' }}
+          {/* Terminal top bar */}
+          <div
+            className="flex items-center gap-3 px-5 py-3.5"
+            style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}
           >
-            <AnimatedNumber value={inView ? annualCost : 0} format={fmt} />
-          </p>
-          <p className="text-xs text-muted-foreground uppercase tracking-widest">
-            NOK / year — manual work cost
-          </p>
-        </motion.div>
-
-        {/* Progress bar */}
-        <motion.div {...fadeUp(0.5)} className="max-w-2xl mx-auto mb-8">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-muted-foreground">{t('calculator.progressLabel')}</p>
-            <p className="text-sm font-heading font-bold text-foreground">{paybackMonths} {t('calculator.months')}</p>
+            <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+            <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+            <span className="flex-1 text-center text-[11px] text-muted-foreground/50 tracking-widest uppercase">
+              kasta flow — roi calculator
+            </span>
+            <span className="flex items-center gap-1.5 text-[11px] text-kasta-green">
+              <span className="w-1.5 h-1.5 rounded-full bg-kasta-green animate-pulse" />
+              live
+            </span>
           </div>
-          <div className="h-2 bg-border rounded-full overflow-hidden">
-            <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-accent to-foreground"
-              animate={{ width: `${barWidth}%` }}
-              transition={{ type: 'spring', stiffness: 80, damping: 18 }}
-            />
-          </div>
-        </motion.div>
 
-        {/* CTA */}
-        <motion.div {...fadeUp(0.6)} className="text-center">
-          <p className="text-sm text-muted-foreground mb-4">{t('calculator.resultNote')}</p>
-          <a href="#contact" className="btn-primary">{t('calculator.cta')}</a>
+          {/* Body */}
+          <div className="grid md:grid-cols-[1fr_1.1fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.07]">
+
+            {/* Left — sliders */}
+            <div className="p-7 md:p-10 space-y-8">
+              <motion.div
+                initial={{ opacity: 0, x: -16 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+              >
+                <Slider
+                  label={t('calculator.hoursLabel')}
+                  min={1} max={40} step={1} value={hours} onChange={setHours}
+                  displayValue={`${hours} ${t('calculator.hoursUnit')}`}
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -16 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.48, ease: EASE }}
+              >
+                <Slider
+                  label={t('calculator.rateLabel')}
+                  helper={t('calculator.rateHelper')}
+                  min={200} max={1200} step={50} value={rate} onChange={setRate}
+                  displayValue={`${fmt(rate)} ${t('calculator.rateUnit')}`}
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -16 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.61, ease: EASE }}
+              >
+                <Slider
+                  label={t('calculator.employeesLabel')}
+                  min={1} max={10} step={1} value={employees} onChange={setEmployees}
+                  displayValue={String(employees)}
+                />
+              </motion.div>
+
+              {/* Payback bar — inside left panel */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.5, delay: 0.7, ease: EASE }}
+                className="pt-2"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground">{t('calculator.progressLabel')}</p>
+                  <p className="text-xs font-heading font-bold text-foreground tabular-nums">
+                    {paybackMonths < 2 ? '< 2' : paybackMonths} {t('calculator.months')}
+                  </p>
+                </div>
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                  <motion.div
+                    className="h-full rounded-full"
+                    style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.4), rgba(255,255,255,0.85))' }}
+                    animate={{ width: `${barWidth}%` }}
+                    transition={{ type: 'spring', stiffness: 80, damping: 18 }}
+                  />
+                </div>
+                <p className="text-[10px] text-muted-foreground/50 mt-1.5">
+                  Est. automation cost: {fmt(avgAutomationPrice)} NOK
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Right — metrics */}
+            <div className="p-7 md:p-10 flex flex-col gap-4">
+
+              {/* Hero metric — annual */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
+                className="rounded-xl p-5"
+                style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.15)' }}
+              >
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-3">{t('calculator.annualWaste')}</p>
+                <p
+                  className="text-4xl md:text-5xl font-heading font-bold text-foreground tabular-nums leading-none"
+                  style={{ textShadow: '0 0 32px rgba(255,255,255,0.12)' }}
+                >
+                  <AnimatedNumber value={annualCost} format={fmt} />
+                  <span className="text-lg font-normal text-muted-foreground ml-2">NOK</span>
+                </p>
+              </motion.div>
+
+              {/* 2-col smaller metrics */}
+              <div className="grid grid-cols-2 gap-3">
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.45, delay: 0.5, ease: EASE }}
+                >
+                  <MetricCard
+                    label={t('calculator.weeklyWaste')}
+                    value={<><AnimatedNumber value={weeklyCost} format={fmt} /><span className="text-xs font-normal text-muted-foreground ml-1">NOK</span></>}
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.45, delay: 0.6, ease: EASE }}
+                >
+                  <MetricCard
+                    label={t('calculator.monthlyWaste')}
+                    color="text-accent"
+                    value={<><AnimatedNumber value={monthlyCost} format={fmt} /><span className="text-xs font-normal text-muted-foreground ml-1">NOK</span></>}
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.45, delay: 0.68, ease: EASE }}
+                  className="col-span-2"
+                >
+                  <MetricCard
+                    label={t('calculator.payback')}
+                    color="text-kasta-green"
+                    size="lg"
+                    value={<>{paybackMonths < 2 ? '< 2' : paybackMonths} <span className="text-sm font-normal text-muted-foreground">{t('calculator.months')}</span></>}
+                  />
+                </motion.div>
+              </div>
+
+              {/* CTA */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={inView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.78, ease: EASE }}
+                className="mt-auto pt-2"
+              >
+                <p className="text-xs text-muted-foreground mb-3">{t('calculator.resultNote')}</p>
+                <a href="#contact" className="btn-primary w-full text-center block">{t('calculator.cta')}</a>
+              </motion.div>
+            </div>
+          </div>
         </motion.div>
 
       </div>
