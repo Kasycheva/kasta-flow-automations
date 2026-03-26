@@ -22,10 +22,17 @@ export default function FAQ() {
           {/* Accordion */}
           <div className="lg:col-span-3">
             {items.map((item, i) => (
-              <div key={i} className="border-b border-border">
+              <div
+                key={i}
+                className="rounded-[12px] mb-2 overflow-hidden transition-all duration-300"
+                style={{
+                  border: openIndex === i ? '1px solid rgba(255,255,255,0.35)' : '1px solid rgba(255,255,255,0.2)',
+                  ...(openIndex === i && { borderLeft: '2px solid rgba(200,200,200,0.4)' }),
+                }}
+              >
                 <button
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  className="w-full py-6 flex items-center justify-between text-left"
+                  className="w-full py-5 px-5 flex items-center justify-between text-left"
                 >
                   <span className="text-[17px] font-heading font-medium text-foreground pr-4">{item.q}</span>
                   <motion.span
@@ -45,7 +52,7 @@ export default function FAQ() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="pb-6 text-[15px] text-muted-foreground leading-[1.7]">{item.a}</p>
+                      <p className="px-5 pb-5 text-[15px] text-muted-foreground leading-[1.7]">{item.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>

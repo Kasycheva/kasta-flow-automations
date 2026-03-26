@@ -32,10 +32,10 @@ export default function Support() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.15 }}
-                className={`relative rounded-[20px] p-8 flex flex-col ${
+                className={`relative rounded-[20px] p-8 flex flex-col transition-all duration-300 ${
                   isStandard
-                    ? 'bg-surface-elevated border border-border-hover glow-silver'
-                    : 'card-base'
+                    ? 'bg-surface-elevated border border-[rgba(200,200,200,0.4)] shadow-[0_0_30px_rgba(200,200,200,0.06)]'
+                    : 'bg-surface border border-[rgba(255,255,255,0.25)] hover:border-[rgba(255,255,255,0.3)]'
                 }`}
               >
                 {isStandard && (

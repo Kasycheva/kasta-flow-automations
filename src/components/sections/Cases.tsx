@@ -67,6 +67,7 @@ export default function Cases() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.12 }}
                 className="card-base card-hover overflow-hidden rounded-[20px] p-0 group"
+                style={{ borderColor: 'rgba(255,255,255,0.25)', borderLeft: '2px solid rgba(200,200,200,0.5)' }}
               >
                 {/* Image placeholder */}
                 <div className="relative h-[200px] bg-gradient-to-b from-surface-elevated to-surface flex items-center justify-center overflow-hidden">

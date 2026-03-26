@@ -53,7 +53,8 @@ export default function Calculator() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-[720px] mx-auto card-base rounded-3xl p-8 md:p-12"
+          className="max-w-[720px] mx-auto card-base rounded-[20px] p-10"
+          style={{ border: '1px solid rgba(255,255,255,0.25)' }}
         >
           <div className="grid md:grid-cols-2 gap-10">
             {/* Sliders */}
@@ -81,19 +82,19 @@ export default function Calculator() {
 
             {/* Results */}
             <div className="space-y-4">
-              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
+              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.22)', background: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-xs text-muted-foreground mb-1">{t('calculator.weeklyWaste')}</p>
                 <p className="text-2xl font-heading font-bold text-foreground"><AnimatedNumber value={weeklyCost} format={fmt} /> NOK</p>
               </div>
-              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
+              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.22)', background: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-xs text-muted-foreground mb-1">{t('calculator.monthlyWaste')}</p>
                 <p className="text-2xl font-heading font-bold text-accent"><AnimatedNumber value={monthlyCost} format={fmt} /> NOK</p>
               </div>
-              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
+              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.22)', background: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-xs text-muted-foreground mb-1">{t('calculator.annualWaste')}</p>
                 <p className="text-3xl font-heading font-bold text-foreground"><AnimatedNumber value={annualCost} format={fmt} /> NOK</p>
               </div>
-              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' }}>
+              <div className="rounded-xl p-4" style={{ border: '1px solid rgba(255,255,255,0.22)', background: 'rgba(255,255,255,0.04)' }}>
                 <p className="text-xs text-muted-foreground mb-1">{t('calculator.payback')}</p>
                 <p className="text-2xl font-heading font-bold text-kasta-green">
                   {paybackMonths < 2 ? '< 2' : paybackMonths} {t('calculator.months')}
