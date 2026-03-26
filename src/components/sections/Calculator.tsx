@@ -144,14 +144,11 @@ export default function Calculator() {
             backgroundSize: '28px 28px',
           }}
         >
-          {/* Top bar — no colored dots, monochrome */}
+          {/* Top bar */}
           <div
-            className="flex items-center justify-between px-5 py-3"
+            className="flex items-center justify-end px-5 py-3"
             style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}
           >
-            <span className="text-[11px] text-muted-foreground/60 tracking-widest uppercase">
-              kasta flow studio
-            </span>
             <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground/70">
               <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-pulse" />
               live
@@ -161,67 +158,38 @@ export default function Calculator() {
           {/* Body: left sliders / right metrics */}
           <div className="grid md:grid-cols-[1fr_1.15fr] items-stretch divide-y md:divide-y-0 md:divide-x divide-white/[0.07]">
 
-            {/* ── Left: sliders + progress bar ── */}
-            <div className="p-7 md:p-10 flex flex-col justify-between gap-8">
-              <div className="space-y-8">
-                {[
-                  {
-                    label: t('calculator.hoursLabel'),
-                    min: 1, max: 40, step: 1, value: hours, onChange: setHours,
-                    displayValue: `${hours} ${t('calculator.hoursUnit')}`,
-                    delay: 0.3,
-                  },
-                  {
-                    label: t('calculator.rateLabel'),
-                    helper: t('calculator.rateHelper'),
-                    min: 200, max: 1200, step: 50, value: rate, onChange: setRate,
-                    displayValue: `${fmt(rate)} ${t('calculator.rateUnit')}`,
-                    delay: 0.42,
-                  },
-                  {
-                    label: t('calculator.employeesLabel'),
-                    min: 1, max: 10, step: 1, value: employees, onChange: setEmployees,
-                    displayValue: String(employees),
-                    delay: 0.54,
-                  },
-                ].map(({ delay, ...props }) => (
-                  <motion.div
-                    key={props.label}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={inView ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.5, delay, ease: EASE }}
-                  >
-                    <Slider {...props} />
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Progress bar at bottom of left column */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={inView ? { opacity: 1 } : {}}
-                transition={{ duration: 0.4, delay: 0.66, ease: EASE }}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
-                    {t('calculator.progressLabel')}
-                  </p>
-                  <p className="text-xs font-heading font-bold text-foreground tabular-nums">
-                    {paybackMonths < 2 ? '< 2' : paybackMonths} {t('calculator.months')}
-                  </p>
-                </div>
-                <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
-                  <motion.div
-                    className="h-full rounded-full"
-                    style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.35), rgba(255,255,255,0.8))' }}
-                    animate={{ width: `${barWidth}%` }}
-                    transition={{ type: 'spring', stiffness: 80, damping: 18 }}
-                  />
-                </div>
-                <p className="text-[10px] text-muted-foreground/50 mt-1.5">
-                  Est. automation cost: {fmt(avgAutomationPrice)} NOK
-                </p>
-              </motion.div>
+            {/* ── Left: sliders only ── */}
+            <div className="p-7 md:p-10 flex flex-col justify-center gap-8">
+              {[
+                {
+                  label: t('calculator.hoursLabel'),
+                  min: 1, max: 40, step: 1, value: hours, onChange: setHours,
+                  displayValue: `${hours} ${t('calculator.hoursUnit')}`,
+                  delay: 0.3,
+                },
+                {
+                  label: t('calculator.rateLabel'),
+                  helper: t('calculator.rateHelper'),
+                  min: 200, max: 1200, step: 50, value: rate, onChange: setRate,
+                  displayValue: `${fmt(rate)} ${t('calculator.rateUnit')}`,
+                  delay: 0.42,
+                },
+                {
+                  label: t('calculator.employeesLabel'),
+                  min: 1, max: 10, step: 1, value: employees, onChange: setEmployees,
+                  displayValue: String(employees),
+                  delay: 0.54,
+                },
+              ].map(({ delay, ...props }) => (
+                <motion.div
+                  key={props.label}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay, ease: EASE }}
+                >
+                  <Slider {...props} />
+                </motion.div>
+              ))}
             </div>
 
             {/* ── Right: metrics ── */}
@@ -272,22 +240,32 @@ export default function Calculator() {
                 </motion.div>
               </div>
 
-              {/* Payback */}
+              {/* Payback — with embedded progress bar */}
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.45, delay: 0.64, ease: EASE }}
-                className="flex-1"
+                className="flex-1 rounded-xl p-4"
+                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
-                <MetricCard
-                  label={t('calculator.payback')}
-                  large
-                  value={
-                    <>{paybackMonths < 2 ? '< 2' : paybackMonths}{' '}
-                      <span className="text-sm font-normal text-muted-foreground">{t('calculator.months')}</span>
-                    </>
-                  }
-                />
+                <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2">
+                  {t('calculator.payback')}
+                </p>
+                <p className="text-3xl font-heading font-bold tabular-nums text-foreground mb-4">
+                  {paybackMonths < 2 ? '< 2' : paybackMonths}{' '}
+                  <span className="text-sm font-normal text-muted-foreground">{t('calculator.months')}</span>
+                </p>
+                <div className="h-1.5 rounded-full overflow-hidden mb-1.5" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                  <motion.div
+                    className="h-full rounded-full"
+                    style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.35), rgba(255,255,255,0.8))' }}
+                    animate={{ width: `${barWidth}%` }}
+                    transition={{ type: 'spring', stiffness: 80, damping: 18 }}
+                  />
+                </div>
+                <p className="text-[10px] text-muted-foreground/50">
+                  Est. automation cost: {fmt(avgAutomationPrice)} NOK
+                </p>
               </motion.div>
 
             </div>
@@ -301,7 +279,7 @@ export default function Calculator() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.8, ease: EASE }}
         >
-          <p className="text-sm text-muted-foreground mb-5">{t('calculator.resultNote')}</p>
+          <p className="text-sm text-muted-foreground mb-8">{t('calculator.resultNote')}</p>
           <a href="#contact" className="btn-primary">{t('calculator.cta')}</a>
         </motion.div>
 
