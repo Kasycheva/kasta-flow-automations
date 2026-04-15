@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Check, X } from 'lucide-react';
+import { Check, X, Shield, CheckCircle, Layers, Activity, Zap } from 'lucide-react';
+
+const stepIcons = [CheckCircle, Layers, Activity, Zap];
 
 export default function Support() {
   const { t } = useTranslation();
@@ -11,7 +13,10 @@ export default function Support() {
     <section id="support" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <span className="section-badge">{t('support.badge')}</span>
+          <span className="section-badge inline-flex items-center gap-1.5">
+            <Shield size={13} />
+            {t('support.badge')}
+          </span>
           <h2 className="section-title">{t('support.title1')}<br />{t('support.title2')}</h2>
           <p className="section-subtitle">{t('support.subtitle')}</p>
         </div>
@@ -30,12 +35,18 @@ export default function Support() {
                 key={plan}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{
+                  y: -6,
+                  boxShadow: isStandard
+                    ? '0 20px 60px rgba(0,0,0,0.4)'
+                    : '0 16px 48px rgba(0,0,0,0.3)',
+                }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-                className={`relative rounded-[20px] p-8 flex flex-col transition-all duration-300 ${
+                transition={{ duration: 0.5, delay: i * 0.15, hover: { duration: 0.3, ease: [0.23, 1, 0.32, 1] } }}
+                className={`relative rounded-[20px] p-8 flex flex-col ${
                   isStandard
-                    ? 'bg-surface-elevated border border-[rgba(200,200,200,0.4)] shadow-[0_0_30px_rgba(200,200,200,0.06)]'
-                    : 'bg-surface border border-[rgba(255,255,255,0.25)] hover:border-[rgba(255,255,255,0.3)]'
+                    ? 'bg-surface-elevated border border-[rgba(200,200,200,0.4)] shadow-[0_0_30px_rgba(200,200,200,0.06)] hover:border-[rgba(220,220,220,0.6)]'
+                    : 'bg-surface border border-[rgba(255,255,255,0.25)] hover:border-[rgba(255,255,255,0.45)]'
                 }`}
               >
                 {isStandard && (
@@ -89,8 +100,8 @@ export default function Support() {
               transition={{ delay: i * 0.1 }}
               className="text-center relative"
             >
-              <div className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center text-sm font-heading font-bold text-foreground mx-auto mb-4 relative z-10">
-                {step.num}
+              <div className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center text-foreground mx-auto mb-4 relative z-10">
+                {(() => { const Icon = stepIcons[i]; return <Icon size={18} />; })()}
               </div>
               <h4 className="text-sm font-heading font-semibold text-foreground mb-2">{step.title}</h4>
               <p className="text-xs text-muted-foreground leading-relaxed">{step.desc}</p>

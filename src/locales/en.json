@@ -112,33 +112,33 @@
     "cta": "Let's automate your business"
   },
   "support": {
-    "badge": "💎 Monthly Support",
+    "badge": "MONTHLY SUPPORT",
     "title1": "Your automation keeps working.",
     "title2": "We make sure of it.",
     "subtitle": "After we deliver your project, you can optionally subscribe to monthly support. We monitor your systems, fix technical issues and make small adjustments — so you never have to worry.",
-    "disclaimer": "ℹ️ Support covers the technical stability of your existing systems: monitoring errors, updating API keys, minor tweaks (up to 1 hour/month). New features and redesigns are quoted separately as new projects.",
+    "disclaimer": "Monthly support is designed to keep your existing systems stable and up to date. It includes monitoring, technical fixes, API key updates and small adjustments. New features, redesigns and larger changes are quoted separately.",
     "perMonth": "per month · excl. VAT",
     "getStarted": "Get started",
     "mostPopular": "✦ Most popular",
     "mini": {
       "name": "Mini",
-      "subtitle": "For simple integrations",
+      "subtitle": "For simple automations",
       "price": "1 800",
-      "includes": ["2 hours support / month", "Error monitoring", "API key updates", "Response within 48 hours", "Email communication"],
+      "includes": ["Up to 2 hours of support per month", "Basic system monitoring", "API key and connection updates", "Small fixes and adjustments", "Response within 2 business days", "Written support via email"],
       "excludes": ["New features", "Architecture changes"]
     },
     "standard": {
       "name": "Standard",
-      "subtitle": "For CRM and chatbots",
-      "price": "3 300",
-      "includes": ["5 hours support / month", "Error monitoring + alerts", "API key updates", "Minor content updates", "Response within 24 hours", "Priority email support", "Monthly optimization report"],
+      "subtitle": "For CRM, chatbots and growing systems",
+      "price": "4 000",
+      "includes": ["Up to 5 hours of support per month", "Monitoring with alerts", "API key and connection updates", "Minor content and logic updates", "Response within 1 business day", "Priority written support", "Monthly system health report"],
       "excludes": ["New features", "Architecture changes"]
     },
     "pro": {
       "name": "Pro",
-      "subtitle": "For critical business systems",
-      "price": "7 700",
-      "includes": ["15 hours support / month", "Proactive monitoring 24/7", "API key updates", "Content and logic updates", "Response within 4 hours", "Dedicated contact person", "Monthly report + analytics", "New integrations included"],
+      "subtitle": "For business-critical systems",
+      "price": "10 500",
+      "includes": ["Up to 15 hours of support per month", "Priority monitoring for critical workflows", "API key and connection updates", "Content and logic updates", "Response within 4 business hours", "Fast written support for urgent issues", "Monthly report with recommendations", "1 small integration per quarter"],
       "excludes": ["Full redesigns", "New product development"]
     },
     "finePrint": "⚡ Support is offered after project completion only. Unused hours do not carry over to the next month. Work beyond the included hours is billed at 800 NOK/hour excl. VAT. Major changes are quoted as a separate project.",

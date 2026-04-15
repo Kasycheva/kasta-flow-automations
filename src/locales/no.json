@@ -112,33 +112,33 @@
     "cta": "La oss automatisere bedriften din"
   },
   "support": {
-    "badge": "💎 Månedlig support",
+    "badge": "MÅNEDLIG SUPPORT",
     "title1": "Automatiseringen din fortsetter å jobbe.",
     "title2": "Vi sørger for det.",
     "subtitle": "Etter at vi leverer prosjektet ditt, kan du velge å abonnere på månedlig support. Vi overvåker systemene dine, fikser tekniske problemer og gjør små justeringer — så du aldri trenger å bekymre deg.",
-    "disclaimer": "ℹ️ Support dekker teknisk stabilitet i eksisterende systemer: overvåking av feil, oppdatering av API-nøkler, mindre justeringer (inntil 1 time/mnd). Nye funksjoner og redesign tilbys som separate prosjekter.",
+    "disclaimer": "Månedlig support er utviklet for å holde eksisterende systemer stabile og oppdaterte. Det inkluderer overvåking, tekniske fikser, oppdatering av API-nøkler og små justeringer. Nye funksjoner, redesign og større endringer tilbys separat.",
     "perMonth": "per måned · eks. MVA",
     "getStarted": "Kom i gang",
     "mostPopular": "✦ Mest populær",
     "mini": {
       "name": "Mini",
-      "subtitle": "For enkle integrasjoner",
+      "subtitle": "For enkle automatiseringer",
       "price": "1 800",
-      "includes": ["2 timer support / måned", "Feilovervåking", "API-nøkkeloppdateringer", "Svar innen 48 timer", "E-postkommunikasjon"],
+      "includes": ["Opptil 2 timer support per måned", "Grunnleggende systemovervåking", "Oppdatering av API-nøkler og tilkoblinger", "Små fikser og justeringer", "Svar innen 2 virkedager", "Skriftlig support via e-post"],
       "excludes": ["Nye funksjoner", "Arkitekturendringer"]
     },
     "standard": {
       "name": "Standard",
-      "subtitle": "For CRM og chatboter",
-      "price": "3 300",
-      "includes": ["5 timer support / måned", "Feilovervåking + varsler", "API-nøkkeloppdateringer", "Mindre innholdsoppdateringer", "Svar innen 24 timer", "Prioritert e-postsupport", "Månedlig optimaliseringsrapport"],
+      "subtitle": "For CRM, chatboter og voksende systemer",
+      "price": "4 000",
+      "includes": ["Opptil 5 timer support per måned", "Overvåking med varsler", "Oppdatering av API-nøkler og tilkoblinger", "Mindre innholds- og logikkoppdateringer", "Svar innen 1 virkedag", "Prioritert skriftlig support", "Månedlig systemhelserapport"],
       "excludes": ["Nye funksjoner", "Arkitekturendringer"]
     },
     "pro": {
       "name": "Pro",
-      "subtitle": "For kritiske forretningssystemer",
-      "price": "7 700",
-      "includes": ["15 timer support / måned", "Proaktiv overvåking 24/7", "API-nøkkeloppdateringer", "Innhold- og logikkoppdateringer", "Svar innen 4 timer", "Dedikert kontaktperson", "Månedlig rapport + analyse", "Nye integrasjoner inkludert"],
+      "subtitle": "For forretningskritiske systemer",
+      "price": "10 500",
+      "includes": ["Opptil 15 timer support per måned", "Prioritert overvåking av kritiske arbeidsflyter", "Oppdatering av API-nøkler og tilkoblinger", "Innholds- og logikkoppdateringer", "Svar innen 4 arbeidstimer", "Rask skriftlig support for hastesaker", "Månedlig rapport med anbefalinger", "1 liten integrasjon per kvartal"],
       "excludes": ["Fullstendig redesign", "Ny produktutvikling"]
     },
     "finePrint": "⚡ Support tilbys kun etter prosjektleveranse. Ubrukte timer overføres ikke til neste måned. Arbeid utover inkluderte timer faktureres til 800 NOK/time eks. MVA. Større endringer tilbys som separate prosjekter.",
