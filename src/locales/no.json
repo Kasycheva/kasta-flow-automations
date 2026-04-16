@@ -159,43 +159,45 @@
     "title2": "Ekte resultater.",
     "subtitle": "Her er noen av arbeidsflytene og systemene vi har bygget for bedrifter som din.",
     "case1": {
-      "badge": "Integrasjon",
+      "badge": "Bookingautomasjon",
       "industry": "Restaurant · Norge",
+      "audience": "For restauranter, salonger, klinikker, tannlegekontorer og timebaserte bedrifter",
       "title": "Bookingautomasjon for en lokal restaurant",
       "desc": "Manuelle reservasjoner via telefon og e-post forårsaket dobbeltbookinger og tapte kunder utenom åpningstid. Vi koblet bookingskjemaet direkte til Google Sheets, kalender og e-postvarsler.",
       "metrics": ["0 Dobbeltbookinger", "3t Spart per dag", "100% Automatisert"],
-      "stack": ["n8n", "Google Sheets", "Gmail", "Typeform"]
+      "stack": ["n8n", "Calendly", "Google Sheets", "Gmail", "Typeform"]
     },
     "case2": {
       "badge": "CRM + Lead Flow",
       "industry": "Konsulent · Norge",
+      "audience": "For konsulenter, byråer, coacher og tjenestebaserte bedrifter",
       "title": "Lead-fangst system for en selvstendig konsulent",
       "desc": "Leads fra nettsiden ble sporet i en personlig notatbok. Vi bygde en landingsside med automatisk lead-flyt inn i HubSpot og en velkomstsekvens på 3 e-poster.",
       "metrics": ["+40% Lead-konvertering", "5t Spart per uke", "3 E-poster automatisert"],
-      "stack": ["HubSpot", "n8n", "Framer", "Gmail"]
+      "stack": ["Landing Page", "HubSpot", "n8n", "Pipedrive", "Airtable", "Gmail"]
     },
     "case3": {
       "badge": "Vipps + Fiken",
       "industry": "Skjønnhetssalong · Norge",
+      "audience": "For salonger, coacher, frilansere og små servicebedrifter som aksepterer Vipps",
       "title": "Betalings- og fakturautomasjon for en skjønnhetssalong",
       "desc": "Eieren brukte 5–6 timer per uke på å opprette fakturaer manuelt i Fiken etter hver Vipps-betaling. Vi automatiserte hele flyten: betaling mottatt → faktura opprettet → kvittering sendt.",
       "metrics": ["6t Spart per uke", "0 Manuelle fakturaer", "Umiddelbar Fakturaopprettelse"],
       "stack": ["Vipps", "Fiken", "n8n", "Gmail"]
     },
     "testimonialsBadge": "💬 Hva kunder sier",
-    "testimonialsTitle1": "Klarert av bedrifter",
-    "testimonialsTitle2": "over hele Norge",
+    "testimonialsTitle1": "Hva kunder sier",
     "testimonials": [
-      { "quote": "Samarbeidet med Kasta Flow Studio forandret helt hvordan vi håndterer bookinger. Alt fungerer nå — ingen flere telefonsamtaler, ingen dobbeltbookinger. Og de leverte raskere enn noe byrå vi har jobbet med før.", "author": "Erik Andersen", "role": "Eier, Restaurant Brygga · Oslo" },
-      { "quote": "Jeg brukte hele formiddager på fakturering. Nå tenker jeg ikke engang på det. Vipps–Fiken-automatiseringen kjører bare i bakgrunnen. Jeg sjekker tallene på slutten av måneden. Verdt hver krone.", "author": "Marte Olsen", "role": "Frilanskonsulent · Bergen" },
-      { "quote": "Hele prosessen ble gjort skriftlig — ingen samtaler, ingen møter. De sendte meg en kort video som forklarte hvordan alt fungerer, og det var nok. Ryddig, profesjonelt og akkurat det en liten bedrift trenger.", "author": "Jonas Berg", "role": "Eier, Berg Eiendom · Stavanger" },
-      { "quote": "Vi hadde null teknisk kunnskap. Kasta Flow Studio forklarte alt tydelig via e-post, satte opp CRM fra bunnen av og trente teamet vårt. Tre måneder senere er salgsprosessen vår helt annerledes — på den beste måten.", "author": "Silje Haugen", "role": "CEO, Haugen Rekruttering · Trondheim" }
+      { "quote": "Samarbeidet med Kasta Flow Studio forandret helt hvordan vi håndterer bookinger. Alt fungerer nå — ingen flere telefonsamtaler, ingen dobbeltbookinger. Og de leverte raskere enn noe byrå vi har jobbet med før.", "author": "Restauranteier" },
+      { "quote": "Jeg brukte hele formiddager på fakturering. Nå tenker jeg ikke engang på det. Vipps–Fiken-automatiseringen kjører bare i bakgrunnen. Jeg sjekker tallene på slutten av måneden. Verdt hver krone.", "author": "Frilanskonsulent" },
+      { "quote": "Hele prosessen ble gjort skriftlig — ingen samtaler, ingen møter. De sendte meg en kort video som forklarte hvordan alt fungerer, og det var nok. Ryddig, profesjonelt og akkurat det en liten bedrift trenger.", "author": "Eiendomsforvalter" },
+      { "quote": "Vi hadde null teknisk kunnskap. Kasta Flow Studio forklarte alt tydelig via e-post, satte opp CRM fra bunnen av og trente teamet vårt. Tre måneder senere er salgsprosessen vår helt annerledes — på den beste måten.", "author": "Bedriftseier" }
     ],
     "stats": [
-      { "value": "15+", "label": "Prosjekter levert" },
-      { "value": "6", "label": "Bransjer betjent" },
-      { "value": "40t", "label": "Gjennomsnittlig tid spart / mnd" },
-      { "value": "48t", "label": "Gjennomsnittlig responstid" }
+      { "value": "15+", "label": "Prosjekter bygget" },
+      { "value": "6", "label": "Bransjer vi har jobbet med" },
+      { "value": "40t", "label": "Opptil 40t spart / mnd" },
+      { "value": "24t", "label": "gj.snitt responstid" }
     ]
   },
   "faq": {

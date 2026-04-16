@@ -159,43 +159,45 @@
     "title2": "Real results.",
     "subtitle": "Here are some of the workflows and systems we have built for businesses like yours.",
     "case1": {
-      "badge": "Integration",
+      "badge": "Booking automation",
       "industry": "Restaurant · Norway",
+      "audience": "For restaurants, salons, clinics, dental offices and any appointment-based business",
       "title": "Booking automation for a local restaurant",
       "desc": "Manual reservations via phone and email caused double bookings and lost customers after hours. We connected their booking form directly to Google Sheets, calendar and email notifications.",
       "metrics": ["0 Double bookings", "3h Saved per day", "100% Automated"],
-      "stack": ["n8n", "Google Sheets", "Gmail", "Typeform"]
+      "stack": ["n8n", "Calendly", "Google Sheets", "Gmail", "Typeform"]
     },
     "case2": {
       "badge": "CRM + Lead Flow",
       "industry": "Consulting · Norway",
+      "audience": "For consultants, agencies, coaches and service-based businesses",
       "title": "Lead capture system for an independent consultant",
       "desc": "Leads from the website were tracked in a personal notebook. We built a landing page with an automatic lead flow into HubSpot and a 3-email welcome sequence.",
       "metrics": ["+40% Lead conversion", "5h Saved per week", "3 Emails automated"],
-      "stack": ["HubSpot", "n8n", "Framer", "Gmail"]
+      "stack": ["Landing Page", "HubSpot", "n8n", "Pipedrive", "Airtable", "Gmail"]
     },
     "case3": {
       "badge": "Vipps + Fiken",
       "industry": "Beauty salon · Norway",
+      "audience": "For salons, coaches, freelancers and small service businesses accepting Vipps",
       "title": "Payment and invoicing automation for a beauty salon",
       "desc": "The owner spent 5–6 hours per week manually creating invoices in Fiken after every Vipps payment. We automated the entire flow: payment received → invoice created → receipt sent.",
       "metrics": ["6h Saved per week", "0 Manual invoices", "Instant Invoice creation"],
       "stack": ["Vipps", "Fiken", "n8n", "Gmail"]
     },
     "testimonialsBadge": "💬 What clients say",
-    "testimonialsTitle1": "Trusted by businesses",
-    "testimonialsTitle2": "across Norway",
+    "testimonialsTitle1": "What clients say",
     "testimonials": [
-      { "quote": "Working with Kasta Flow Studio completely changed how we handle bookings. Everything just works now — no more phone calls, no more double bookings. And they delivered faster than any agency we have worked with before.", "author": "Erik Andersen", "role": "Owner, Restaurant Brygga · Oslo" },
-      { "quote": "I was spending entire mornings on invoicing. Now I do not even think about it. The Vipps–Fiken automation just runs in the background. I only check the numbers at the end of the month. Worth every krone.", "author": "Marte Olsen", "role": "Freelance consultant · Bergen" },
-      { "quote": "The whole process was done in writing — no calls, no meetings. They sent me a short video explaining how everything works, and that was enough. Clean, professional and exactly what a small business needs.", "author": "Jonas Berg", "role": "Owner, Berg Eiendom · Stavanger" },
-      { "quote": "We had zero technical knowledge going in. Kasta Flow Studio explained everything clearly via email, set up our CRM from scratch and even trained our team. Three months later our sales process is completely different — in the best way.", "author": "Silje Haugen", "role": "CEO, Haugen Rekruttering · Trondheim" }
+      { "quote": "Working with Kasta Flow Studio completely changed how we handle bookings. Everything just works now — no more phone calls, no more double bookings. And they delivered faster than any agency we have worked with before.", "author": "Restaurant owner" },
+      { "quote": "I was spending entire mornings on invoicing. Now I do not even think about it. The Vipps–Fiken automation just runs in the background. I only check the numbers at the end of the month. Worth every krone.", "author": "Freelance consultant" },
+      { "quote": "The whole process was done in writing — no calls, no meetings. They sent me a short video explaining how everything works, and that was enough. Clean, professional and exactly what a small business needs.", "author": "Property manager" },
+      { "quote": "We had zero technical knowledge going in. Kasta Flow Studio explained everything clearly via email, set up our CRM from scratch and even trained our team. Three months later our sales process is completely different — in the best way.", "author": "Business owner" }
     ],
     "stats": [
-      { "value": "15+", "label": "Projects delivered" },
-      { "value": "6", "label": "Industries served" },
-      { "value": "40h", "label": "Average time saved / month" },
-      { "value": "48h", "label": "Average response time" }
+      { "value": "15+", "label": "Projects built" },
+      { "value": "6", "label": "Industries worked with" },
+      { "value": "40h", "label": "Up to 40h saved / month" },
+      { "value": "24h", "label": "avg response" }
     ]
   },
   "faq": {

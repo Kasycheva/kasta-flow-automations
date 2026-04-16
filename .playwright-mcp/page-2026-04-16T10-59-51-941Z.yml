@@ -1,0 +1,811 @@
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - navigation [ref=e4]:
+      - generic [ref=e5]:
+        - button [ref=e6] [cursor=pointer]:
+          - img [ref=e7]:
+            - generic [ref=e8]: KF
+        - generic [ref=e9]:
+          - link "Services" [ref=e10] [cursor=pointer]:
+            - /url: "#services"
+          - link "Calculator" [ref=e11] [cursor=pointer]:
+            - /url: "#calculator"
+          - link "Support" [ref=e12] [cursor=pointer]:
+            - /url: "#support"
+          - link "Cases" [ref=e13] [cursor=pointer]:
+            - /url: "#cases"
+          - link "FAQ" [ref=e14] [cursor=pointer]:
+            - /url: "#faq"
+          - link "Contact" [ref=e15] [cursor=pointer]:
+            - /url: "#contact"
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - button "EN" [ref=e18] [cursor=pointer]
+            - generic [ref=e19]: /
+            - button "NO" [ref=e20] [cursor=pointer]
+          - link "Get in touch" [ref=e21] [cursor=pointer]:
+            - /url: "#contact"
+    - generic [ref=e25]:
+      - generic [ref=e27]: ⚡ Automation Studio · Norway
+      - heading "Automate your business. Free your time." [level=1] [ref=e28]:
+        - text: Automate your business.
+        - text: Free your time.
+      - paragraph [ref=e29]: Kasta Flow Studio — we build intelligent automations, AI agents and integrations for small and medium businesses in Norway, so you can eliminate routine and focus on growing your business.
+      - generic [ref=e30]:
+        - link "Start automation" [ref=e31] [cursor=pointer]:
+          - /url: "#contact"
+        - link "See services" [ref=e32] [cursor=pointer]:
+          - /url: "#services"
+      - generic [ref=e33]:
+        - generic [ref=e34]: ✓ Norwegian market
+        - generic [ref=e35]: ✓ Vipps & Fiken integrations
+        - generic [ref=e36]: ✓ Response within 48h
+    - generic [ref=e43]:
+      - generic [ref=e44]: N8N · MAKE · ZAPIER · OPENAI · CLAUDE · VOICEFLOW · VIPPS · FIKEN · HUBSPOT · PIPEDRIVE · AIRTABLE · GOOGLE SHEETS · TELEGRAM · WHATSAPP · NOTION · SLACK · TYPEFORM · FRAMER · WEBFLOW · VERCEL · N8N · MAKE · ZAPIER · OPENAI · CLAUDE · VOICEFLOW · VIPPS · FIKEN · HUBSPOT · PIPEDRIVE · AIRTABLE · GOOGLE SHEETS · TELEGRAM · WHATSAPP · NOTION · SLACK · TYPEFORM · FRAMER · WEBFLOW · VERCEL ·
+      - generic [ref=e45]: N8N · MAKE · ZAPIER · OPENAI · CLAUDE · VOICEFLOW · VIPPS · FIKEN · HUBSPOT · PIPEDRIVE · AIRTABLE · GOOGLE SHEETS · TELEGRAM · WHATSAPP · NOTION · SLACK · TYPEFORM · FRAMER · WEBFLOW · VERCEL · N8N · MAKE · ZAPIER · OPENAI · CLAUDE · VOICEFLOW · VIPPS · FIKEN · HUBSPOT · PIPEDRIVE · AIRTABLE · GOOGLE SHEETS · TELEGRAM · WHATSAPP · NOTION · SLACK · TYPEFORM · FRAMER · WEBFLOW · VERCEL ·
+    - generic [ref=e47]:
+      - generic [ref=e48]:
+        - generic [ref=e49]: ✦ Our Services
+        - heading "Everything your business needs to run on autopilot" [level=2] [ref=e50]:
+          - text: Everything your business needs
+          - text: to run on autopilot
+        - paragraph [ref=e51]: We work with small and medium businesses in Norway — from a single integration to a full automation ecosystem. No technical knowledge required on your side.
+      - generic [ref=e52]:
+        - generic [ref=e53] [cursor=pointer]:
+          - img [ref=e56]
+          - heading "Simple Integrations" [level=3] [ref=e59]
+          - paragraph [ref=e60]: Connect 2–3 of your existing tools and eliminate manual data transfer. Forms, spreadsheets, emails — all talking to each other automatically.
+          - list:
+            - listitem [ref=e61]:
+              - generic [ref=e62]: ✓
+              - text: One automated scenario (Flow)
+            - listitem [ref=e63]:
+              - generic [ref=e64]: ✓
+              - text: Up to 3 connected services
+            - listitem [ref=e65]:
+              - generic [ref=e66]: ✓
+              - text: Testing + documentation
+            - listitem [ref=e67]:
+              - generic [ref=e68]: ✓
+              - text: Delivery in 3–5 days
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - generic [ref=e72]: From
+              - text: 3 600
+              - generic [ref=e73]: NOK excl. VAT
+            - link "Order this service" [ref=e74]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e75]: →
+        - generic [ref=e76] [cursor=pointer]:
+          - generic [ref=e77]:
+            - img [ref=e79]
+            - generic [ref=e83]: ↑ Popular
+          - heading "Advanced Integrations" [level=3] [ref=e84]
+          - paragraph [ref=e85]: Multi-step automation with logic, conditions, and branching. Everything interacts automatically, freeing you from routine work and allowing you to focus on your business.
+          - list:
+            - listitem [ref=e86]:
+              - generic [ref=e87]: ✓
+              - text: Workflow of 4–10 nodes with conditions
+            - listitem [ref=e88]:
+              - generic [ref=e89]: ✓
+              - text: Multi-branch logic (if/then scenarios)
+            - listitem [ref=e90]:
+              - generic [ref=e91]: ✓
+              - text: Data conversion between services
+            - listitem [ref=e92]:
+              - generic [ref=e93]: ✓
+              - text: Testing + documentation
+          - paragraph: Integration with accounting systems and custom API development are separate services.
+          - generic [ref=e95]:
+            - generic [ref=e96]:
+              - generic [ref=e97]: From
+              - text: 4 800
+              - generic [ref=e98]: NOK excl. VAT
+            - link "Order this service" [ref=e99]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e100]: →
+        - generic [ref=e101] [cursor=pointer]:
+          - generic [ref=e102]:
+            - img [ref=e104]
+            - generic [ref=e106]: 🇳🇴 Norwegian
+          - heading "Vipps + Fiken Automation" [level=3] [ref=e107]
+          - paragraph [ref=e108]: Automate your Norwegian payment flow. Customer pays via Vipps — invoice is created in Fiken automatically. Save 4–6 hours per week on manual bookkeeping.
+          - list:
+            - listitem [ref=e109]:
+              - generic [ref=e110]: ✓
+              - text: Vipps payment integration
+            - listitem [ref=e111]:
+              - generic [ref=e112]: ✓
+              - text: Auto-invoice creation in Fiken
+            - listitem [ref=e113]:
+              - generic [ref=e114]: ✓
+              - text: Email receipt to customer
+            - listitem [ref=e115]:
+              - generic [ref=e116]: ✓
+              - text: Google Sheets transaction log
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - generic [ref=e120]: From
+              - text: 8 000
+              - generic [ref=e121]: NOK excl. VAT
+            - link "Order this service" [ref=e122]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e123]: →
+        - generic [ref=e124] [cursor=pointer]:
+          - img [ref=e127]
+          - heading "CRM Setup & Automation" [level=3] [ref=e129]
+          - paragraph [ref=e130]: From Google Sheets to a professional CRM system. We customize a solution that fits your budget and team — whether you're starting simple or scaling.
+          - list:
+            - listitem [ref=e131]:
+              - generic [ref=e132]: ✓
+              - text: CRM selection and setup (HubSpot, Pipedrive, and others)
+            - listitem [ref=e133]:
+              - generic [ref=e134]: ✓
+              - text: Sales funnel setup
+            - listitem [ref=e135]:
+              - generic [ref=e136]: ✓
+              - text: Contact import (up to 500 records)
+            - listitem [ref=e137]:
+              - generic [ref=e138]: ✓
+              - text: Automatic notifications and follow-up
+          - generic [ref=e140]:
+            - generic [ref=e141]:
+              - generic [ref=e142]: From
+              - text: 6 400
+              - generic [ref=e143]: NOK excl. VAT
+            - link "Order this service" [ref=e144]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e145]: →
+        - generic [ref=e146] [cursor=pointer]:
+          - img [ref=e149]
+          - heading "FAQ Chatbot" [level=3] [ref=e151]
+          - paragraph [ref=e152]: A chatbot on your website that answers the 15–30 most common questions 24/7. Never lose a customer because no one answered outside business hours.
+          - list:
+            - listitem [ref=e153]:
+              - generic [ref=e154]: ✓
+              - text: Up to 30 Q&A scenarios
+            - listitem [ref=e155]:
+              - generic [ref=e156]: ✓
+              - text: Fallback to human contact
+            - listitem [ref=e157]:
+              - generic [ref=e158]: ✓
+              - text: Website embed (any platform)
+            - listitem [ref=e159]:
+              - generic [ref=e160]: ✓
+              - text: Delivery in 3–5 days
+          - generic [ref=e162]:
+            - generic [ref=e163]:
+              - generic [ref=e164]: From
+              - text: 5 600
+              - generic [ref=e165]: NOK excl. VAT
+            - link "Order this service" [ref=e166]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e167]: →
+        - generic [ref=e168] [cursor=pointer]:
+          - generic [ref=e169]:
+            - img [ref=e171]
+            - generic [ref=e181]: ✦ AI-powered
+          - heading "Smart AI Agent" [level=3] [ref=e182]
+          - paragraph [ref=e183]: "An intelligent assistant that truly knows your business. It can be used for a variety of tasks: it consults clients, onboards new employees, evaluates potential clients — and works 24/7 without a salary."
+          - list:
+            - listitem [ref=e184]:
+              - generic [ref=e185]: ✓
+              - text: Trained on your business documents
+            - listitem [ref=e186]:
+              - generic [ref=e187]: ✓
+              - text: Natural language understanding
+            - listitem [ref=e188]:
+              - generic [ref=e189]: ✓
+              - text: CRM or calendar integration
+            - listitem [ref=e190]:
+              - generic [ref=e191]: ✓
+              - text: Available on website, Telegram or WhatsApp
+          - generic [ref=e193]:
+            - generic [ref=e194]:
+              - generic [ref=e195]: From
+              - text: 9 600
+              - generic [ref=e196]: NOK excl. VAT
+            - link "Order this service" [ref=e197]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e198]: →
+        - generic [ref=e199] [cursor=pointer]:
+          - img [ref=e202]
+          - heading "Landing Page + Lead Flow" [level=3] [ref=e204]
+          - paragraph [ref=e205]: A clean and fast landing page integrated with your CRM system or a standalone integration. Designed to achieve results, not just for show — every lead is automatically captured.
+          - list:
+            - listitem [ref=e206]:
+              - generic [ref=e207]: ✓
+              - text: Single-page responsive website
+            - listitem [ref=e208]:
+              - generic [ref=e209]: ✓
+              - text: Lead capture form + CRM integration
+            - listitem [ref=e210]:
+              - generic [ref=e211]: ✓
+              - text: Delivery in 5–10 days
+          - generic [ref=e213]:
+            - generic [ref=e214]:
+              - generic [ref=e215]: From
+              - text: 9 600
+              - generic [ref=e216]: NOK excl. VAT
+            - link "Order this service" [ref=e217]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e218]: →
+        - generic [ref=e219] [cursor=pointer]:
+          - generic [ref=e220]:
+            - img [ref=e222]
+            - generic [ref=e224]: + New
+          - heading "Booking System" [level=3] [ref=e225]
+          - paragraph [ref=e226]: Online booking, connected to your calendar. Customers book themselves — you receive automatic confirmations and reminders without any effort or time.
+          - list:
+            - listitem [ref=e227]:
+              - generic [ref=e228]: ✓
+              - text: Online booking page setup
+            - listitem [ref=e229]:
+              - generic [ref=e230]: ✓
+              - text: Calendar synchronization (Google or Outlook)
+            - listitem [ref=e231]:
+              - generic [ref=e232]: ✓
+              - text: Automatic confirmations and reminders
+            - listitem [ref=e233]:
+              - generic [ref=e234]: ✓
+              - text: Payment collection (optional)
+          - generic [ref=e236]:
+            - generic [ref=e237]:
+              - generic [ref=e238]: From
+              - text: 5 500
+              - generic [ref=e239]: NOK excl. VAT
+            - link "Order this service" [ref=e240]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e241]: →
+        - generic [ref=e242] [cursor=pointer]:
+          - img [ref=e245]
+          - heading "Automatic Reminders" [level=3] [ref=e248]
+          - paragraph [ref=e249]: Never lose clients because of a forgotten appointment or a missed payment. Automatic reminders are sent at the right time — you no longer need to remember everything.
+          - list:
+            - listitem [ref=e250]:
+              - generic [ref=e251]: ✓
+              - text: Meeting reminders via SMS or email
+            - listitem [ref=e252]:
+              - generic [ref=e253]: ✓
+              - text: Payment due date notifications
+            - listitem [ref=e254]:
+              - generic [ref=e255]: ✓
+              - text: Customizable time and message templates
+            - listitem [ref=e256]:
+              - generic [ref=e257]: ✓
+              - text: Compatible with your existing calendar or CRM
+          - generic [ref=e259]:
+            - generic [ref=e260]:
+              - generic [ref=e261]: From
+              - text: 3 200
+              - generic [ref=e262]: NOK excl. VAT
+            - link "Order this service" [ref=e263]:
+              - /url: "#contact"
+              - text: Order this service
+              - generic [ref=e264]: →
+      - generic [ref=e265]:
+        - heading "Don't see what you need?" [level=3] [ref=e266]
+        - paragraph [ref=e267]: We work with the most innovative automation tools available and love solving non-standard problems. If you have a workflow, a repetitive task, or just an idea — describe it to us. We'll figure out how to automate it.
+        - link "Describe your task" [ref=e268] [cursor=pointer]:
+          - /url: "#contact"
+          - text: Describe your task
+          - generic [ref=e269]: →
+        - paragraph [ref=e270]: Prices are for setup and implementation only, excluding VAT. Third-party services (n8n Cloud, OpenAI API, CRM subscriptions, Vipps ePay, Fiken) are paid separately by the client at their standard rates. Monthly support is available as an additional option.
+    - generic [ref=e272]:
+      - generic [ref=e273]:
+        - generic [ref=e274]: ROI Calculator
+        - heading "How much is your routine actually costing you?" [level=2] [ref=e275]:
+          - text: How much is your routine
+          - text: actually costing you?
+        - paragraph [ref=e276]: Labour costs in Norway are among the highest in the world. Every hour spent on manual tasks is money you could invest in growth. Calculate your real cost in 30 seconds.
+      - generic [ref=e277]:
+        - generic [ref=e278]:
+          - generic [ref=e279]: kasta flow studio
+          - generic [ref=e280]: live
+        - generic [ref=e282]:
+          - generic [ref=e283]:
+            - generic [ref=e285]:
+              - generic [ref=e286]:
+                - generic [ref=e287]: Hours per week spent on manual tasks
+                - generic [ref=e288]: 10 hours / week
+              - slider [ref=e291] [cursor=pointer]: "10"
+            - generic [ref=e293]:
+              - generic [ref=e294]:
+                - generic [ref=e295]: Hourly cost of one employee (NOK)
+                - generic [ref=e296]: 500 NOK / hour
+              - slider [ref=e299] [cursor=pointer]: "500"
+              - paragraph [ref=e300]: "Average in Norway: 500–700 NOK/hour"
+            - generic [ref=e302]:
+              - generic [ref=e303]:
+                - generic [ref=e304]: Number of employees doing this task
+                - generic [ref=e305]: "1"
+              - slider [ref=e307] [cursor=pointer]: "1"
+          - generic [ref=e308]:
+            - generic [ref=e309]:
+              - paragraph [ref=e310]: Annual waste
+              - paragraph [ref=e311]: 244 878NOK
+            - generic [ref=e312]:
+              - generic [ref=e314]:
+                - paragraph [ref=e315]: Weekly waste
+                - paragraph [ref=e316]: 4 746NOK
+              - generic [ref=e318]:
+                - paragraph [ref=e319]: Monthly waste
+                - paragraph [ref=e320]: 20 407NOK
+            - generic [ref=e321]:
+              - paragraph [ref=e322]: Payback period
+              - paragraph [ref=e323]: < 2 months
+              - paragraph [ref=e326]: "Est. automation cost: 8 000 NOK"
+      - generic [ref=e327]:
+        - paragraph [ref=e328]: These numbers are based on your input. The actual savings depend on which processes we automate together.
+        - link "Let's automate your business" [ref=e329] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e331]:
+      - generic [ref=e332]:
+        - generic [ref=e333]:
+          - img [ref=e334]
+          - text: MONTHLY SUPPORT
+        - heading "Your automation keeps working. We make sure of it." [level=2] [ref=e336]:
+          - text: Your automation keeps working.
+          - text: We make sure of it.
+        - paragraph [ref=e337]: After we deliver your project, you can optionally subscribe to monthly support. We monitor your systems, fix technical issues and make small adjustments — so you never have to worry.
+      - paragraph [ref=e338]: Monthly support is designed to keep your existing systems stable and up to date. It includes monitoring, technical fixes, API key updates and small adjustments. New features, redesigns and larger changes are quoted separately.
+      - generic [ref=e339]:
+        - generic [ref=e340]:
+          - heading "Mini" [level=3] [ref=e341]
+          - paragraph [ref=e342]: For simple automations
+          - generic [ref=e343]:
+            - text: 1 800NOK
+            - paragraph [ref=e344]: per month · excl. VAT
+          - list [ref=e345]:
+            - listitem [ref=e346]:
+              - img [ref=e347]
+              - text: Up to 2 hours of support per month
+            - listitem [ref=e349]:
+              - img [ref=e350]
+              - text: Basic system monitoring
+            - listitem [ref=e352]:
+              - img [ref=e353]
+              - text: API key and connection updates
+            - listitem [ref=e355]:
+              - img [ref=e356]
+              - text: Small fixes and adjustments
+            - listitem [ref=e358]:
+              - img [ref=e359]
+              - text: Response within 2 business days
+            - listitem [ref=e361]:
+              - img [ref=e362]
+              - text: Written support via email
+            - listitem [ref=e364]:
+              - img [ref=e365]
+              - text: New features
+            - listitem [ref=e368]:
+              - img [ref=e369]
+              - text: Architecture changes
+          - link "Get started" [ref=e372] [cursor=pointer]:
+            - /url: "#contact"
+        - generic [ref=e373]:
+          - generic [ref=e374]: ✦ Most popular
+          - heading "Standard" [level=3] [ref=e375]
+          - paragraph [ref=e376]: For CRM, chatbots and growing systems
+          - generic [ref=e377]:
+            - text: 4 000NOK
+            - paragraph [ref=e378]: per month · excl. VAT
+          - list [ref=e379]:
+            - listitem [ref=e380]:
+              - img [ref=e381]
+              - text: Up to 5 hours of support per month
+            - listitem [ref=e383]:
+              - img [ref=e384]
+              - text: Monitoring with alerts
+            - listitem [ref=e386]:
+              - img [ref=e387]
+              - text: API key and connection updates
+            - listitem [ref=e389]:
+              - img [ref=e390]
+              - text: Minor content and logic updates
+            - listitem [ref=e392]:
+              - img [ref=e393]
+              - text: Response within 1 business day
+            - listitem [ref=e395]:
+              - img [ref=e396]
+              - text: Priority written support
+            - listitem [ref=e398]:
+              - img [ref=e399]
+              - text: Monthly system health report
+            - listitem [ref=e401]:
+              - img [ref=e402]
+              - text: New features
+            - listitem [ref=e405]:
+              - img [ref=e406]
+              - text: Architecture changes
+          - link "Get started" [ref=e409] [cursor=pointer]:
+            - /url: "#contact"
+        - generic [ref=e410]:
+          - heading "Pro" [level=3] [ref=e411]
+          - paragraph [ref=e412]: For business-critical systems
+          - generic [ref=e413]:
+            - text: 10 500NOK
+            - paragraph [ref=e414]: per month · excl. VAT
+          - list [ref=e415]:
+            - listitem [ref=e416]:
+              - img [ref=e417]
+              - text: Up to 15 hours of support per month
+            - listitem [ref=e419]:
+              - img [ref=e420]
+              - text: Priority monitoring for critical workflows
+            - listitem [ref=e422]:
+              - img [ref=e423]
+              - text: API key and connection updates
+            - listitem [ref=e425]:
+              - img [ref=e426]
+              - text: Content and logic updates
+            - listitem [ref=e428]:
+              - img [ref=e429]
+              - text: Response within 4 business hours
+            - listitem [ref=e431]:
+              - img [ref=e432]
+              - text: Fast written support for urgent issues
+            - listitem [ref=e434]:
+              - img [ref=e435]
+              - text: Monthly report with recommendations
+            - listitem [ref=e437]:
+              - img [ref=e438]
+              - text: 1 small integration per quarter
+            - listitem [ref=e440]:
+              - img [ref=e441]
+              - text: Full redesigns
+            - listitem [ref=e444]:
+              - img [ref=e445]
+              - text: New product development
+          - link "Get started" [ref=e448] [cursor=pointer]:
+            - /url: "#contact"
+      - paragraph [ref=e449]: ⚡ Support is offered after project completion only. Unused hours do not carry over to the next month. Work beyond the included hours is billed at 800 NOK/hour excl. VAT. Major changes are quoted as a separate project.
+      - heading "How support works" [level=3] [ref=e450]
+      - generic [ref=e451]:
+        - generic [ref=e453]:
+          - img [ref=e455]
+          - heading "Project delivered" [level=4] [ref=e458]
+          - paragraph [ref=e459]: We complete your automation and hand it over fully tested and documented.
+        - generic [ref=e460]:
+          - img [ref=e462]
+          - heading "You choose a plan" [level=4] [ref=e466]
+          - paragraph [ref=e467]: After delivery you optionally subscribe to the support plan that fits your needs.
+        - generic [ref=e468]:
+          - img [ref=e470]
+          - heading "We monitor silently" [level=4] [ref=e472]
+          - paragraph [ref=e473]: We proactively check your systems weekly. You only hear from us when something needs attention.
+        - generic [ref=e474]:
+          - img [ref=e476]
+          - heading "Fast fixes, no calls" [level=4] [ref=e478]
+          - paragraph [ref=e479]: All communication is written. We fix issues and report back — no unnecessary meetings.
+      - generic [ref=e480]:
+        - heading "Not sure which plan you need?" [level=3] [ref=e481]
+        - paragraph [ref=e482]: Write to us and we will recommend the right support level based on your project complexity.
+        - link "Ask us" [ref=e483] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e485]:
+      - generic [ref=e486]:
+        - generic [ref=e487]: ✦ Case Studies
+        - heading "Real automations. Real results." [level=2] [ref=e488]:
+          - text: Real automations.
+          - text: Real results.
+        - paragraph [ref=e489]: Typical systems we build for small businesses that want less manual work, fewer errors and more clarity.
+      - generic [ref=e490]:
+        - generic [ref=e491]:
+          - generic [ref=e492]:
+            - img "Booking automation" [ref=e493]
+            - generic [ref=e495]: Booking automation
+          - generic [ref=e496]:
+            - paragraph [ref=e497]: For restaurants, salons, clinics and appointment-based businesses
+            - paragraph [ref=e498]: Bookings come through calls, messages and forms. Requests get missed, schedules overlap, customers are lost after hours.
+            - blockquote [ref=e499]: We used to lose bookings during the lunch rush because no one could pick up the phone. Now, the system handles the table, the calendar, and the confirmation while we cook.
+            - paragraph [ref=e500]: "We fix this: We connect your booking form, calendar and notifications into one clear automated system."
+            - generic [ref=e501]:
+              - paragraph [ref=e503]: — No double bookings
+              - paragraph [ref=e505]: — All requests in one place
+              - paragraph [ref=e507]: — Instant notifications to your team
+            - generic [ref=e508]:
+              - generic [ref=e509]: Typeform
+              - generic [ref=e510]: Google Calendar
+              - generic [ref=e511]: Gmail
+              - generic [ref=e512]: n8n
+        - generic [ref=e513]:
+          - generic [ref=e514]:
+            - img "Lead capture + CRM" [ref=e515]
+            - generic [ref=e517]: Lead capture + CRM
+          - generic [ref=e518]:
+            - paragraph [ref=e519]: For consultants, agencies and service-based businesses
+            - paragraph [ref=e520]: Leads come from your website, messages and referrals — but there is no structured system to track or follow up.
+            - blockquote [ref=e521]: Leads were scattered across my inbox and DMs. I was exhausted from manual follow-ups. We built a bridge that qualifies every inquiry and puts them straight into my CRM.
+            - paragraph [ref=e522]: "We fix this: We build a lead capture flow and automatically send every new contact into your CRM with follow-up."
+            - generic [ref=e523]:
+              - paragraph [ref=e525]: — No lost leads
+              - paragraph [ref=e527]: — Structured sales pipeline
+              - paragraph [ref=e529]: — Automated follow-up from day one
+            - generic [ref=e530]:
+              - generic [ref=e531]: Landing page
+              - generic [ref=e532]: HubSpot / Pipedrive
+              - generic [ref=e533]: Gmail
+              - generic [ref=e534]: n8n
+        - generic [ref=e535]:
+          - generic [ref=e536]:
+            - img "Payment + invoicing" [ref=e537]
+            - generic [ref=e539]: Payment + invoicing
+          - generic [ref=e540]:
+            - paragraph [ref=e541]: For salons, coaches, freelancers and small service businesses
+            - paragraph [ref=e542]: After every Vipps payment you manually create invoices and send confirmations. It takes hours every week.
+            - blockquote [ref=e543]: I dreaded Sundays because of invoicing. Matching Vipps payments to Fiken felt like a second job. Now, it happens in the background. My bookkeeping is done before I even open my laptop.
+            - paragraph [ref=e544]: "We fix this: We automate the full flow: payment received → invoice created → receipt sent."
+            - generic [ref=e545]:
+              - paragraph [ref=e547]: — No manual invoices
+              - paragraph [ref=e549]: — Instant processing after every payment
+              - paragraph [ref=e551]: — Clean financial tracking in Fiken
+            - generic [ref=e552]:
+              - generic [ref=e553]: Vipps
+              - generic [ref=e554]: Fiken
+              - generic [ref=e555]: Gmail
+              - generic [ref=e556]: n8n
+        - generic [ref=e557]:
+          - generic [ref=e558]:
+            - img "AI FAQ + inquiry handling" [ref=e559]
+            - generic [ref=e561]: AI FAQ + inquiry handling
+          - generic [ref=e562]:
+            - paragraph [ref=e563]: For service businesses with repeated questions and incoming requests
+            - paragraph [ref=e564]: You answer the same questions every day and spend time sorting serious inquiries from random ones.
+            - blockquote [ref=e565]: I was answering the same 5 questions fifty times a day. We added an AI layer that handles the noise and only notifies me when a hot lead is actually ready to talk.
+            - paragraph [ref=e566]: "We fix this: We implement an AI assistant that handles FAQs and routes qualified leads directly to your inbox."
+            - generic [ref=e567]:
+              - paragraph [ref=e569]: — Faster responses around the clock
+              - paragraph [ref=e571]: — Less repetitive manual work
+              - paragraph [ref=e573]: — Better quality leads reaching you
+            - generic [ref=e574]:
+              - generic [ref=e575]: Website chat
+              - generic [ref=e576]: AI model
+              - generic [ref=e577]: Email / CRM
+              - generic [ref=e578]: n8n
+      - generic [ref=e579]:
+        - generic [ref=e580]:
+          - paragraph [ref=e581]: 15+
+          - paragraph [ref=e582]: Projects built
+        - generic [ref=e583]:
+          - paragraph [ref=e584]: "6"
+          - paragraph [ref=e585]: Industries worked with
+        - generic [ref=e586]:
+          - paragraph [ref=e587]: 40h
+          - paragraph [ref=e588]: Up to 40h saved / month
+        - generic [ref=e589]:
+          - paragraph [ref=e590]: 24h
+          - paragraph [ref=e591]: avg response
+    - generic [ref=e593]:
+      - generic [ref=e594]:
+        - generic [ref=e595]: ❓ FAQ
+        - heading "Questions we hear most often" [level=2] [ref=e596]:
+          - text: Questions we hear
+          - text: most often
+        - paragraph [ref=e597]: Still have questions? Write to us — we typically respond within 24 hours on business days.
+      - generic [ref=e598]:
+        - generic [ref=e599]:
+          - button "Do I need any technical knowledge to work with you?" [ref=e601] [cursor=pointer]:
+            - generic [ref=e602]: Do I need any technical knowledge to work with you?
+            - img [ref=e604]
+          - button "How does collaboration work?" [ref=e606] [cursor=pointer]:
+            - generic [ref=e607]: How does collaboration work?
+            - img [ref=e609]
+          - button "What tools do I need before starting work?" [ref=e611] [cursor=pointer]:
+            - generic [ref=e612]: What tools do I need before starting work?
+            - img [ref=e614]
+          - button "How long does a typical project take?" [ref=e616] [cursor=pointer]:
+            - generic [ref=e617]: How long does a typical project take?
+            - img [ref=e619]
+          - button "What results can I expect?" [ref=e621] [cursor=pointer]:
+            - generic [ref=e622]: What results can I expect?
+            - img [ref=e624]
+          - button "What are the payment terms?" [ref=e626] [cursor=pointer]:
+            - generic [ref=e627]: What are the payment terms?
+            - img [ref=e629]
+          - button "What happens if something stops working after delivery?" [ref=e631] [cursor=pointer]:
+            - generic [ref=e632]: What happens if something stops working after delivery?
+            - img [ref=e634]
+          - button "Can you work with tools not listed on your website?" [ref=e636] [cursor=pointer]:
+            - generic [ref=e637]: Can you work with tools not listed on your website?
+            - img [ref=e639]
+        - generic [ref=e641]:
+          - generic [ref=e642]:
+            - generic [ref=e644]: Hi, I run a small salon in Oslo. I spend so much time on invoicing every week. Can you help?
+            - generic [ref=e646]: Hi! Yes, this is exactly what we do. Tell me — do you use Vipps for payments? And do you have a Fiken account?
+            - generic [ref=e648]: Yes to both! But I create invoices manually every time...
+            - generic [ref=e650]: Perfect. We can fully automate that. Payment received → invoice created → receipt sent. No more manual work. Let me send you a proposal.
+          - paragraph [ref=e651]: ✓ Proposal sent within 24 hours
+          - generic [ref=e652]: 💬 All communication is written
+      - generic [ref=e653]:
+        - paragraph [ref=e654]: Still have questions?
+        - link "Write to us directly" [ref=e655] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e657]:
+      - generic [ref=e658]:
+        - generic [ref=e659]: 📋 Free Audit
+        - heading "Not sure where to start? Let us figure it out together." [level=2] [ref=e660]:
+          - text: Not sure where to start?
+          - text: Let us figure it out together.
+        - paragraph [ref=e661]: Tell us about your business and the tasks that eat your time. We will come back to you within 48 hours with a concrete proposal. No calls required — everything happens in writing.
+      - generic [ref=e662]:
+        - button "✏️ Fill in a form 5 minutes" [ref=e663] [cursor=pointer]:
+          - text: ✏️ Fill in a form
+          - generic [ref=e664]: 5 minutes
+        - button "🎙️ Record your voice Just talk — we handle the rest" [ref=e665] [cursor=pointer]:
+          - text: 🎙️ Record your voice
+          - generic [ref=e666]: Just talk — we handle the rest
+      - generic [ref=e668]:
+        - generic [ref=e669]:
+          - generic [ref=e670]: Your name
+          - textbox "Erik Andersen" [ref=e671]
+        - generic [ref=e672]:
+          - generic [ref=e673]: Email address
+          - textbox "erik@bedriften.no" [ref=e674]
+          - paragraph [ref=e675]: We will reply here within 48 hours
+        - generic [ref=e676]:
+          - generic [ref=e677]: Company name (optional)
+          - textbox "Kasta Flow Studio" [ref=e678]
+        - generic [ref=e679]:
+          - generic [ref=e680]: Team size
+          - combobox [ref=e681]:
+            - option "—" [selected]
+            - option "Just me"
+            - option "2–5 people"
+            - option "6–15 people"
+            - option "16–50 people"
+            - option "50+ people"
+        - generic [ref=e682]:
+          - generic [ref=e683]: What are you interested in?
+          - generic [ref=e684]:
+            - generic [ref=e685] [cursor=pointer]:
+              - checkbox "Simple integrations" [ref=e686]
+              - text: Simple integrations
+            - generic [ref=e687] [cursor=pointer]:
+              - checkbox "Vipps + Fiken automation" [ref=e688]
+              - text: Vipps + Fiken automation
+            - generic [ref=e689] [cursor=pointer]:
+              - checkbox "CRM setup" [ref=e690]
+              - text: CRM setup
+            - generic [ref=e691] [cursor=pointer]:
+              - checkbox "FAQ chatbot" [ref=e692]
+              - text: FAQ chatbot
+            - generic [ref=e693] [cursor=pointer]:
+              - checkbox "Smart AI agent" [ref=e694]
+              - text: Smart AI agent
+            - generic [ref=e695] [cursor=pointer]:
+              - checkbox "Landing page" [ref=e696]
+              - text: Landing page
+            - generic [ref=e697] [cursor=pointer]:
+              - checkbox "Not sure yet" [ref=e698]
+              - text: Not sure yet
+        - generic [ref=e699]:
+          - generic [ref=e700]: Describe your situation
+          - textbox "What tasks take the most time in your business? What tools do you already use? What would you like to automate?" [ref=e701]
+        - generic [ref=e702]:
+          - generic [ref=e703]: Preferred contact channel
+          - generic [ref=e704]:
+            - generic [ref=e705] [cursor=pointer]:
+              - radio "📧 Email" [ref=e706]
+              - text: 📧 Email
+            - generic [ref=e707] [cursor=pointer]:
+              - radio "💬 WhatsApp" [ref=e708]
+              - text: 💬 WhatsApp
+            - generic [ref=e709] [cursor=pointer]:
+              - radio "✈️ Telegram" [ref=e710]
+              - text: ✈️ Telegram
+        - button "Send request" [ref=e711] [cursor=pointer]
+        - paragraph [ref=e712]: By submitting this form you agree to our Privacy Policy and consent to processing of your personal data for the purpose of responding to your request.
+      - generic [ref=e713]:
+        - generic [ref=e714]:
+          - img [ref=e715]
+          - heading "Email" [level=4] [ref=e718]
+          - link "kontakt@kastaflow.no" [ref=e719] [cursor=pointer]:
+            - /url: mailto:kontakt@kastaflow.no
+          - paragraph [ref=e720]: Response within 48 hours
+        - generic [ref=e721]:
+          - img [ref=e722]
+          - heading "WhatsApp" [level=4] [ref=e724]
+          - paragraph [ref=e725]: Write to our studio chat
+          - paragraph [ref=e726]: Messages forwarded to our team
+          - link "Open WhatsApp" [ref=e727] [cursor=pointer]:
+            - /url: https://wa.me/4700000000
+        - generic [ref=e728]:
+          - img [ref=e729]
+          - heading "Telegram" [level=4] [ref=e732]
+          - link "@kastaflow" [ref=e733] [cursor=pointer]:
+            - /url: https://t.me/kastaflow
+          - paragraph [ref=e734]: Your number stays private
+      - paragraph [ref=e735]: 💬 We prefer written communication — it saves your time and creates a clear record of everything we agree on.
+    - contentinfo [ref=e736]:
+      - generic [ref=e739]:
+        - generic [ref=e740]:
+          - generic [ref=e741]:
+            - img [ref=e742]:
+              - generic [ref=e743]: KF
+            - generic [ref=e744]: Kasta Flow Studio
+          - paragraph [ref=e745]: Automation studio for small and medium businesses in Norway.
+        - generic [ref=e746]:
+          - heading "Services" [level=4] [ref=e747]
+          - list [ref=e748]:
+            - listitem [ref=e749]:
+              - link "Simple Integrations" [ref=e750] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e751]:
+              - link "Vipps + Fiken" [ref=e752] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e753]:
+              - link "CRM Setup" [ref=e754] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e755]:
+              - link "FAQ Chatbot" [ref=e756] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e757]:
+              - link "Smart AI Agent" [ref=e758] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e759]:
+              - link "Landing Page" [ref=e760] [cursor=pointer]:
+                - /url: "#services"
+            - listitem [ref=e761]:
+              - link "Monthly Support" [ref=e762] [cursor=pointer]:
+                - /url: "#support"
+        - generic [ref=e763]:
+          - heading "Company" [level=4] [ref=e764]
+          - list [ref=e765]:
+            - listitem [ref=e766]:
+              - link "How it works" [ref=e767] [cursor=pointer]:
+                - /url: "#faq"
+            - listitem [ref=e768]:
+              - link "Case Studies" [ref=e769] [cursor=pointer]:
+                - /url: "#cases"
+            - listitem [ref=e770]:
+              - link "ROI Calculator" [ref=e771] [cursor=pointer]:
+                - /url: "#calculator"
+            - listitem [ref=e772]:
+              - link "FAQ" [ref=e773] [cursor=pointer]:
+                - /url: "#faq"
+            - listitem [ref=e774]:
+              - link "Free Audit" [ref=e775] [cursor=pointer]:
+                - /url: "#contact"
+            - listitem [ref=e776]:
+              - button "Privacy Policy" [ref=e777] [cursor=pointer]
+            - listitem [ref=e778]:
+              - button "Terms of Service" [ref=e779] [cursor=pointer]
+        - generic [ref=e780]:
+          - heading "Contact" [level=4] [ref=e781]
+          - list [ref=e782]:
+            - listitem [ref=e783]:
+              - img [ref=e784]
+              - link "kontakt@kastaflow.no" [ref=e787] [cursor=pointer]:
+                - /url: mailto:kontakt@kastaflow.no
+            - listitem [ref=e788]:
+              - img [ref=e789]
+              - text: Norway · Remote
+            - listitem [ref=e792]:
+              - img [ref=e793]
+              - text: Response within 48h
+          - generic [ref=e796]: 🟢 Currently accepting new clients
+      - generic [ref=e798]:
+        - paragraph [ref=e799]: © 2026 Kasta Flow Studio · Norway
+        - generic [ref=e800]:
+          - button "EN" [ref=e801] [cursor=pointer]
+          - generic [ref=e802]: ·
+          - button "NO" [ref=e803] [cursor=pointer]
+    - generic [ref=e805]:
+      - paragraph [ref=e806]: We use cookies to improve your experience. Essential cookies are always active.
+      - generic [ref=e807]:
+        - button "Accept all" [ref=e808] [cursor=pointer]
+        - button "Essential only" [ref=e809] [cursor=pointer]
+    - button [ref=e810] [cursor=pointer]:
+      - img [ref=e811]
