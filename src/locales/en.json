@@ -108,6 +108,8 @@
     "payback": "Payback period",
     "months": "months",
     "progressLabel": "Automation covers itself in:",
+    "live": "live",
+    "estimatedCost": "Est. automation cost:",
     "resultNote": "These numbers are based on your input. The actual savings depend on which processes we automate together.",
     "cta": "Let's automate your business"
   },
@@ -292,7 +294,11 @@
   "chat": {
     "tooltip": "👋 Questions about automation?",
     "online": "Online",
-    "welcome": "Hi! 👋 I am the Kasta Flow Studio assistant. I can tell you about our services, pricing and process — or help you figure out which automation fits your business best. What would you like to know?",
-    "quickReplies": ["What services do you offer?", "How much does it cost?", "How does the process work?", "I want to start"]
+    "title": "Kasta Flow · Assistant",
+    "welcome": "Hi! I can help you find the right automation for your business. What are you looking to automate?",
+    "placeholder": "Ask about our services...",
+    "formCta": "Fill out the form →",
+    "error": "Something went wrong. Please try again.",
+    "errorRateLimit": "Too many requests — please wait a moment and try again."
   }
 }

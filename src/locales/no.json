@@ -108,6 +108,8 @@
     "payback": "Tilbakebetalingstid",
     "months": "måneder",
     "progressLabel": "Automatisering dekker seg selv på:",
+    "live": "live",
+    "estimatedCost": "Estimert automatiseringskostnad:",
     "resultNote": "Disse tallene er basert på dine inndata. De faktiske besparelsene avhenger av hvilke prosesser vi automatiserer sammen.",
     "cta": "La oss automatisere bedriften din"
   },
@@ -292,7 +294,11 @@
   "chat": {
     "tooltip": "👋 Spørsmål om automatisering?",
     "online": "Online",
-    "welcome": "Hei! 👋 Jeg er assistenten til Kasta Flow Studio. Jeg kan fortelle deg om tjenestene, prisene og prosessen vår — eller hjelpe deg med å finne ut hvilken automatisering som passer best for bedriften din. Hva ønsker du å vite?",
-    "quickReplies": ["Hvilke tjenester tilbyr dere?", "Hva koster det?", "Hvordan fungerer prosessen?", "Jeg vil starte"]
+    "title": "Kasta Flow · Assistent",
+    "welcome": "Hei! Jeg kan hjelpe deg med å finne riktig automatisering for bedriften din. Hva ønsker du å automatisere?",
+    "placeholder": "Spør om tjenestene våre...",
+    "formCta": "Fyll ut skjemaet →",
+    "error": "Noe gikk galt. Prøv igjen.",
+    "errorRateLimit": "For mange forespørsler — vent litt og prøv igjen."
   }
 }

@@ -1,21 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X } from 'lucide-react';
+import { MessageCircle, X, Send } from 'lucide-react';
+
+
+interface Message {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+function containsFormMention(text: string): boolean {
+  return /\b(form|skjema|fill out|fyll ut)\b/i.test(text);
+}
 
 export default function ChatWidget() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [messages, setMessages] = useState<{ from: 'bot' | 'user'; text: string }[]>([]);
-  const [showQuickReplies, setShowQuickReplies] = useState(true);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
+  const [error, setError] = useState('');
+  const [showCta, setShowCta] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowTooltip(true), 4000);
     const hide = setTimeout(() => setShowTooltip(false), 9000);
     return () => { clearTimeout(timer); clearTimeout(hide); };
   }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, typing]);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      sessionStorage.setItem('chat_history', JSON.stringify(messages));
+    }
+  }, [messages]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -24,25 +48,68 @@ export default function ChatWidget() {
       setTyping(true);
       setTimeout(() => {
         setTyping(false);
-        setMessages([{ from: 'bot', text: t('chat.welcome') }]);
-      }, 1500);
+        const welcome: Message = { role: 'assistant', content: t('chat.welcome') };
+        setMessages([welcome]);
+        sessionStorage.setItem('chat_history', JSON.stringify([welcome]));
+      }, 800);
+    }
+    setTimeout(() => inputRef.current?.focus(), 300);
+  };
+
+  const sendMessage = async () => {
+    const text = input.trim();
+    if (!text || typing) return;
+
+    setInput('');
+    setError('');
+    const userMsg: Message = { role: 'user', content: text };
+    const updatedMessages = [...messages, userMsg];
+    setMessages(updatedMessages);
+    setTyping(true);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: updatedMessages }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error === 'rate_limit' ? 'rate_limit' : 'api_error');
+      }
+
+      const data = await response.json();
+      const reply: string = data.reply ?? t('chat.error');
+
+      const assistantMsg: Message = { role: 'assistant', content: reply };
+      const finalMessages = [...updatedMessages, assistantMsg];
+      setMessages(finalMessages);
+      sessionStorage.setItem('chat_history', JSON.stringify(finalMessages));
+
+      if (containsFormMention(reply)) {
+        setShowCta(true);
+      }
+    } catch (err) {
+      const isRateLimit = err instanceof Error && err.message === 'rate_limit';
+      setError(isRateLimit ? t('chat.errorRateLimit') : t('chat.error'));
+    } finally {
+      setTyping(false);
+      setTimeout(() => inputRef.current?.focus(), 50);
     }
   };
 
-  const handleQuickReply = (reply: string) => {
-    setShowQuickReplies(false);
-    setMessages(prev => [...prev, { from: 'user', text: reply }]);
-    setTyping(true);
-    setTimeout(() => {
-      setTyping(false);
-      setMessages(prev => [...prev, {
-        from: 'bot',
-        text: 'Thank you for your interest! Please fill out our audit form below and we\'ll get back to you within 48 hours. 👇',
-      }]);
-    }, 1500);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
   };
 
-  const quickReplies = t('chat.quickReplies', { returnObjects: true }) as string[];
+  const scrollToContact = () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    setOpen(false);
+  };
 
   return (
     <>
@@ -50,90 +117,270 @@ export default function ChatWidget() {
       <AnimatePresence>
         {showTooltip && !open && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed bottom-24 right-6 z-[9999] bg-surface border border-border rounded-xl px-4 py-2.5 text-sm text-foreground shadow-lg max-w-[220px]"
+            initial={{ opacity: 0, scale: 0.9, y: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 8 }}
+            transition={{ duration: 0.2 }}
+            className="fixed bottom-24 right-6 z-[9999] cursor-pointer"
             onClick={() => { setShowTooltip(false); handleOpen(); }}
           >
-            {t('chat.tooltip')}
+            <div style={{
+              background: '#111111',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '12px',
+              padding: '10px 14px',
+              color: '#F5F5F5',
+              fontSize: '13px',
+              maxWidth: '200px',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+            }}>
+              {t('chat.tooltip')}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Trigger */}
+      {/* Trigger button */}
       {!open && (
         <motion.button
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
           onClick={handleOpen}
-          className="fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full bg-foreground flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
+          aria-label="Open chat"
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 9999,
+            width: '56px',
+            height: '56px',
+            borderRadius: '50%',
+            background: '#111111',
+            border: '1px solid rgba(255,255,255,0.25)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+          }}
         >
-          <MessageCircle size={24} className="text-background" />
+          <MessageCircle size={22} color="#F5F5F5" />
         </motion.button>
       )}
 
-      {/* Chat window */}
+      {/* Chat panel */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, transformOrigin: 'bottom right' }}
+            initial={{ opacity: 0, scale: 0.85, transformOrigin: 'bottom right' }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ duration: 0.25 }}
-            className="fixed bottom-6 right-6 z-[9999] w-[380px] h-[520px] max-w-[calc(100vw-48px)] max-h-[calc(100vh-48px)] bg-background border border-border rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+            exit={{ opacity: 0, scale: 0.85 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              position: 'fixed',
+              bottom: '24px',
+              right: '24px',
+              zIndex: 9999,
+              width: '360px',
+              height: '480px',
+              maxWidth: 'calc(100vw - 32px)',
+              maxHeight: 'calc(100vh - 32px)',
+              background: '#111111',
+              border: '1px solid rgba(255,255,255,0.2)',
+              borderRadius: '20px',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.5)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+            }}
           >
             {/* Header */}
-            <div className="bg-surface border-b border-border px-4 py-3 flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 100 100">
-                  <text x="50" y="70" textAnchor="middle" fontFamily="Syne, sans-serif" fontWeight="800" fontSize="52" fill="hsl(0 0% 96%)">KF</text>
+            <div style={{
+              padding: '14px 16px',
+              borderBottom: '1px solid rgba(255,255,255,0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexShrink: 0,
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <svg width="20" height="20" viewBox="0 0 100 100" aria-hidden="true">
+                  <text x="50" y="70" textAnchor="middle" fontFamily="Syne, sans-serif" fontWeight="800" fontSize="52" fill="#F5F5F5">KF</text>
                 </svg>
-                <span className="text-sm text-foreground font-medium">Kasta Flow Studio</span>
+                <span style={{ color: '#F5F5F5', fontSize: '14px', fontWeight: 500 }}>
+                  {t('chat.title')}
+                </span>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1 text-xs text-muted-foreground">
-                  <span className="w-2 h-2 rounded-full bg-kasta-green" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', color: 'rgba(245,245,245,0.5)' }}>
+                  <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4ade80', display: 'inline-block' }} />
                   {t('chat.online')}
                 </span>
-                <button onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground">
+                <button
+                  onClick={() => setOpen(false)}
+                  aria-label="Close chat"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(245,245,245,0.5)', display: 'flex', alignItems: 'center' }}
+                >
                   <X size={18} />
                 </button>
               </div>
             </div>
 
-            {/* Body */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+            {/* Messages */}
+            <div style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+            }}>
               {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.from === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-                    msg.from === 'user' ? 'bg-foreground text-background' : 'bg-surface text-foreground'
-                  }`}>{msg.text}</div>
+                <div key={i} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
+                  <div style={{
+                    maxWidth: '82%',
+                    padding: '10px 14px',
+                    borderRadius: msg.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
+                    background: msg.role === 'user' ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.05)',
+                    color: '#F5F5F5',
+                    fontSize: '14px',
+                    lineHeight: '1.5',
+                    whiteSpace: 'pre-wrap',
+                  }}>
+                    {msg.content}
+                  </div>
                 </div>
               ))}
+
+              {/* Typing indicator */}
               {typing && (
-                <div className="flex justify-start">
-                  <div className="bg-surface rounded-2xl px-4 py-3 flex gap-1">
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-muted-foreground animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                  <div style={{
+                    padding: '12px 16px',
+                    borderRadius: '12px 12px 12px 4px',
+                    background: 'rgba(255,255,255,0.05)',
+                    display: 'flex',
+                    gap: '5px',
+                    alignItems: 'center',
+                  }}>
+                    {[0, 150, 300].map((delay) => (
+                      <span key={delay} style={{
+                        width: '6px',
+                        height: '6px',
+                        borderRadius: '50%',
+                        background: 'rgba(245,245,245,0.4)',
+                        display: 'inline-block',
+                        animation: 'bounce 1.2s infinite',
+                        animationDelay: `${delay}ms`,
+                      }} />
+                    ))}
                   </div>
                 </div>
               )}
-              {showQuickReplies && messages.length > 0 && !typing && (
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {quickReplies.map((reply, i) => (
-                    <button key={i} onClick={() => handleQuickReply(reply)}
-                      className="text-xs px-3 py-1.5 rounded-full border border-border text-foreground hover:bg-surface transition-colors">
-                      {reply}
-                    </button>
-                  ))}
+
+              {/* CTA button */}
+              {showCta && !typing && (
+                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                  <button
+                    onClick={scrollToContact}
+                    style={{
+                      background: '#F5F5F5',
+                      color: '#111111',
+                      border: 'none',
+                      borderRadius: '999px',
+                      padding: '10px 20px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      width: '100%',
+                      maxWidth: '82%',
+                    }}
+                  >
+                    {t('chat.formCta')}
+                  </button>
                 </div>
               )}
+
+              {/* Error */}
+              {error && (
+                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                  <div style={{
+                    padding: '10px 14px',
+                    borderRadius: '12px 12px 12px 4px',
+                    background: 'rgba(239,68,68,0.15)',
+                    color: '#fca5a5',
+                    fontSize: '13px',
+                  }}>
+                    {error}
+                  </div>
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input area */}
+            <div style={{
+              padding: '12px 16px',
+              borderTop: '1px solid rgba(255,255,255,0.1)',
+              display: 'flex',
+              gap: '8px',
+              alignItems: 'center',
+              flexShrink: 0,
+            }}>
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={e => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder={t('chat.placeholder')}
+                disabled={typing}
+                style={{
+                  flex: 1,
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  borderRadius: '10px',
+                  padding: '9px 12px',
+                  color: '#F5F5F5',
+                  fontSize: '14px',
+                  outline: 'none',
+                  opacity: typing ? 0.6 : 1,
+                }}
+              />
+              <button
+                onClick={sendMessage}
+                disabled={typing || !input.trim()}
+                aria-label="Send message"
+                style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '10px',
+                  background: '#F5F5F5',
+                  border: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: typing || !input.trim() ? 'not-allowed' : 'pointer',
+                  opacity: typing || !input.trim() ? 0.4 : 1,
+                  flexShrink: 0,
+                  transition: 'opacity 0.15s',
+                }}
+              >
+                <Send size={16} color="#111111" />
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style>{`
+        @keyframes bounce {
+          0%, 60%, 100% { transform: translateY(0); }
+          30% { transform: translateY(-5px); }
+        }
+      `}</style>
     </>
   );
 }
