@@ -1,20 +1,20 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+export const maxDuration = 30;
 
-const SYSTEM_PROMPT = `You are a helpful assistant for Kasta Flow Studio — a business automation agency in Norway.
+const SYSTEM_PROMPT = `You are a helpful assistant for Kasta Flow Studio, a business automation agency in Norway.
 
-Your personality: friendly, professional, concise. Max 3 sentences per reply. No bullet points in chat.
+Your personality: friendly, professional, concise. Maximum 3 sentences per reply. Do not use bullet points in chat.
 
-You ONLY discuss these services:
-1. Simple Integrations — from 3 600 NOK
-2. Advanced Integrations — from 4 800 NOK
-3. Vipps + Fiken Automation — from 8 000 NOK
-4. CRM Setup — from 6 400 NOK
-5. FAQ Chatbot — from 5 600 NOK
-6. Smart AI Agent — from 9 600 NOK
-7. Landing Page + Lead Flow — from 9 600 NOK
-8. Booking System — from 5 500 NOK
-9. Automated Reminders — from 3 200 NOK
-10. Monthly Support — from 1 800 NOK/month
+You only discuss these services:
+1. Simple Integrations - from 3 600 NOK
+2. Advanced Integrations - from 4 800 NOK
+3. Vipps + Fiken Automation - from 8 000 NOK
+4. CRM Setup - from 6 400 NOK
+5. FAQ Chatbot - from 5 600 NOK
+6. Smart AI Agent - from 9 600 NOK
+7. Landing Page + Lead Flow - from 9 600 NOK
+8. Booking System - from 5 500 NOK
+9. Automated Reminders - from 3 200 NOK
+10. Monthly Support - from 1 800 NOK/month
 
 Key facts:
 - All communication is written, no calls or video meetings
@@ -23,68 +23,111 @@ Key facts:
 - Contact: kastaflow.studio@gmail.com
 - Prices shown are starting prices, final quote depends on complexity
 
-If asked about price: give starting price and say "exact quote depends on your setup — fill out the form and we will assess your case."
+If asked about price: give the starting price and say "exact quote depends on your setup - fill out the form and we will assess your case."
 
-If user seems interested or asks how to start: suggest filling the contact form.
+If the user seems interested or asks how to start: suggest filling the contact form.
 
 After 2-3 exchanges always end with: "Ready to move forward? Fill out our short form and we will get back to you within 24 hours."
 
-Respond in the same language the user writes in (English or Norwegian Bokmål).
+Respond in the same language the user writes in (English or Norwegian Bokmal).
 
 If asked about anything unrelated to automation or these services: politely redirect.`;
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+type ChatMessage = {
+  role: 'user' | 'assistant';
+  content: string;
+};
 
-  const { messages } = req.body;
+type ChatRequestBody = {
+  messages?: ChatMessage[];
+};
 
-  if (!Array.isArray(messages) || messages.length === 0) {
-    return res.status(400).json({ error: 'Invalid messages' });
-  }
+function jsonResponse(body: unknown, init?: ResponseInit) {
+  return Response.json(body, {
+    headers: {
+      'Cache-Control': 'no-store',
+    },
+    ...init,
+  });
+}
 
+export async function POST(request: Request) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'API key not configured' });
+    return jsonResponse({ error: 'API key not configured' }, { status: 500 });
+  }
+
+  let body: ChatRequestBody;
+
+  try {
+    body = await request.json();
+  } catch {
+    return jsonResponse({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+
+  const messages = Array.isArray(body.messages)
+    ? body.messages.filter(
+        (message): message is ChatMessage =>
+          (message.role === 'user' || message.role === 'assistant') &&
+          typeof message.content === 'string' &&
+          message.content.trim().length > 0
+      )
+    : [];
+
+  if (messages.length === 0) {
+    return jsonResponse({ error: 'Invalid messages' }, { status: 400 });
   }
 
   try {
-    const response = await fetch(
+    const upstreamResponse = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: messages.map((m: { role: string; content: string }) => ({
-            role: m.role === 'user' ? 'user' : 'model',
-            parts: [{ text: m.content }],
+          system_instruction: {
+            parts: [{ text: SYSTEM_PROMPT }],
+          },
+          contents: messages.map((message) => ({
+            role: message.role === 'user' ? 'user' : 'model',
+            parts: [{ text: message.content }],
           })),
         }),
       }
     );
 
-    if (response.status === 429) {
-      return res.status(429).json({ error: 'rate_limit' });
+    if (upstreamResponse.status === 429) {
+      return jsonResponse({ error: 'rate_limit' }, { status: 429 });
     }
 
-    if (!response.ok) {
-      const errText = await response.text().catch(() => '');
-      console.error('[api/chat] Gemini error', response.status, errText);
-      return res.status(502).json({ error: 'upstream_error' });
+    if (!upstreamResponse.ok) {
+      const upstreamError = await upstreamResponse.text().catch(() => '');
+      console.error('[api/chat] Gemini error', upstreamResponse.status, upstreamError);
+      return jsonResponse({ error: 'upstream_error' }, { status: 502 });
     }
 
-    const data = await response.json();
-    const reply: string = data.candidates?.[0]?.content?.parts?.[0]?.text ?? '';
+    const data = await upstreamResponse.json();
+    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-    if (!reply) {
-      return res.status(502).json({ error: 'empty_response' });
+    if (typeof reply !== 'string' || reply.trim().length === 0) {
+      return jsonResponse({ error: 'empty_response' }, { status: 502 });
     }
 
-    return res.status(200).json({ reply });
-  } catch (err) {
-    console.error('[api/chat] Fetch failed', err);
-    return res.status(500).json({ error: 'internal_error' });
+    return jsonResponse({ reply });
+  } catch (error) {
+    console.error('[api/chat] Fetch failed', error);
+    return jsonResponse({ error: 'internal_error' }, { status: 500 });
   }
+}
+
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      Allow: 'POST, OPTIONS',
+      'Cache-Control': 'no-store',
+    },
+  });
 }
