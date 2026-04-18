@@ -1,5 +1,7 @@
 export const maxDuration = 30;
 
+const MODEL_CANDIDATES = ['gemini-2.0-flash-lite', 'gemini-2.0-flash'] as const;
+
 const SYSTEM_PROMPT = `You are a helpful assistant for Kasta Flow Studio, a business automation agency in Norway.
 
 Your personality: friendly, professional, concise. Maximum 3 sentences per reply. Do not use bullet points in chat.
@@ -79,43 +81,63 @@ export async function POST(request: Request) {
   }
 
   try {
-    const upstreamResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: SYSTEM_PROMPT }],
-          },
-          contents: messages.map((message) => ({
-            role: message.role === 'user' ? 'user' : 'model',
-            parts: [{ text: message.content }],
-          })),
-        }),
-      }
-    );
+    let sawRateLimit = false;
+    let lastError = '';
 
-    if (upstreamResponse.status === 429) {
+    for (const model of MODEL_CANDIDATES) {
+      const upstreamResponse = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            system_instruction: {
+              parts: [{ text: SYSTEM_PROMPT }],
+            },
+            generationConfig: {
+              maxOutputTokens: 220,
+              temperature: 0.5,
+            },
+            contents: messages.map((message) => ({
+              role: message.role === 'user' ? 'user' : 'model',
+              parts: [{ text: message.content }],
+            })),
+          }),
+        }
+      );
+
+      if (upstreamResponse.status === 429) {
+        sawRateLimit = true;
+        lastError = `rate_limited:${model}`;
+        continue;
+      }
+
+      if (!upstreamResponse.ok) {
+        const upstreamError = await upstreamResponse.text().catch(() => '');
+        console.error('[api/chat] Gemini error', model, upstreamResponse.status, upstreamError);
+        lastError = `${model}:${upstreamResponse.status}`;
+        continue;
+      }
+
+      const data = await upstreamResponse.json();
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+      if (typeof reply === 'string' && reply.trim().length > 0) {
+        return jsonResponse({ reply });
+      }
+
+      lastError = `empty_response:${model}`;
+    }
+
+    if (sawRateLimit) {
+      console.error('[api/chat] Rate limited across candidate models', lastError);
       return jsonResponse({ error: 'rate_limit' }, { status: 429 });
     }
 
-    if (!upstreamResponse.ok) {
-      const upstreamError = await upstreamResponse.text().catch(() => '');
-      console.error('[api/chat] Gemini error', upstreamResponse.status, upstreamError);
-      return jsonResponse({ error: 'upstream_error' }, { status: 502 });
-    }
-
-    const data = await upstreamResponse.json();
-    const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (typeof reply !== 'string' || reply.trim().length === 0) {
-      return jsonResponse({ error: 'empty_response' }, { status: 502 });
-    }
-
-    return jsonResponse({ reply });
+    console.error('[api/chat] No usable response from Gemini', lastError);
+    return jsonResponse({ error: 'upstream_error' }, { status: 502 });
   } catch (error) {
     console.error('[api/chat] Fetch failed', error);
     return jsonResponse({ error: 'internal_error' }, { status: 500 });
