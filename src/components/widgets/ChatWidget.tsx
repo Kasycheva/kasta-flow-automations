@@ -78,6 +78,25 @@ export default function ChatWidget() {
     // Detect email in user message
     if (containsEmail(text) && !emailCaptured) {
       setEmailCaptured(true);
+
+      // Auto-capture: silently send the transcript to email right away
+      const capturePayload = {
+        _subject: "Live Chat Auto-Capture (Email Provided)",
+        _template: "box",
+        _cc: "kasycheva00@ukr.net",
+        emailCapturedMessage: text,
+        chatTranscript: JSON.stringify(updatedMessages),
+        note: "User provided their email in the live chat. This is an auto-capture to ensure the lead is not lost."
+      };
+      
+      fetch("https://formsubmit.co/ajax/kastaflow.studio@gmail.com", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(capturePayload)
+      }).catch(console.error);
     }
 
     try {

@@ -60,6 +60,7 @@ export default function Contact() {
         body: JSON.stringify({
           _subject: "New automated lead from Kasta Flow Studio",
           _template: "box",
+          _cc: "kasycheva00@ukr.net",
           ...payload
         })
       });
