@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 /* ------------------------------------------------------------------ */
 /*  SDK initialization moved inside POST to ensure env vars exist      */
 /* ------------------------------------------------------------------ */
-const MODEL_NAME = 'gemini-1.5-flash';
+const MODEL_NAME = 'gemini-2.5-flash';
 
 /* ------------------------------------------------------------------ */
 /*  System prompt — multilingual, concise, ROI-aware, form-oriented   */
