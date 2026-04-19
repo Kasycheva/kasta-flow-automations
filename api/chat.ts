@@ -5,7 +5,6 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 /* ------------------------------------------------------------------ */
 /*  SDK initialization moved inside POST to ensure env vars exist      */
 /* ------------------------------------------------------------------ */
-const MODEL_NAME = 'gemini-2.5-flash';
 
 /* ------------------------------------------------------------------ */
 /*  System prompt — multilingual, concise, ROI-aware, form-oriented   */
@@ -136,14 +135,19 @@ export async function POST(request: Request) {
 
   const lastUserMessage = messages[messages.length - 1].content;
 
-  /* Retry with exponential backoff: 1s → 2s → 4s */
-  const MAX_RETRIES = 3;
-  const BASE_DELAY_MS = 1000;
+  /* Model Fallback Cascade: Bypass rate limits per model */
+  const MODEL_FALLBACKS = [
+    'gemini-2.5-flash',
+    'gemini-2.5-flash-lite',
+    'gemini-2.0-flash-lite',
+    'gemini-1.5-flash-8b'
+  ];
 
-  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+  for (let attempt = 0; attempt < MODEL_FALLBACKS.length; attempt++) {
+    const currentModelName = MODEL_FALLBACKS[attempt];
     try {
       const model = genAI.getGenerativeModel({
-        model: MODEL_NAME,
+        model: currentModelName,
         systemInstruction: SYSTEM_PROMPT,
         generationConfig: {
           maxOutputTokens: 350,
@@ -160,20 +164,21 @@ export async function POST(request: Request) {
       }
 
       /* Empty response — retry */
-      console.error(`[api/chat] Empty response on attempt ${attempt + 1}`);
+      console.error(`[api/chat] Empty response from ${currentModelName}`);
     } catch (error: unknown) {
       const status = (error as { status?: number })?.status;
       const message = (error as { message?: string })?.message ?? '';
 
       if (status === 429 || message.includes('429') || message.includes('RESOURCE_EXHAUSTED')) {
-        console.warn(`[api/chat] Rate limited on attempt ${attempt + 1}, retrying...`);
+        console.warn(`[api/chat] Rate limited on ${currentModelName}`);
 
-        if (attempt < MAX_RETRIES - 1) {
-          await sleep(BASE_DELAY_MS * Math.pow(2, attempt));
+        if (attempt < MODEL_FALLBACKS.length - 1) {
+          console.warn(`[api/chat] Falling back to next model...`);
+          await sleep(500 * (attempt + 1)); // Small pause before switching model
           continue;
         }
 
-        /* All retries exhausted — return rate limit error */
+        /* All models exhausted — return rate limit error */
         return jsonResponse({ error: 'rate_limit' }, { status: 429 });
       }
 
