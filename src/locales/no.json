@@ -263,7 +263,7 @@
     "transcript": "Her er det vi hørte:",
     "reRecord": "Ta opp på nytt",
     "sendTranscript": "Dette ser riktig ut — send",
-    "emailCard": { "title": "E-post", "address": "kontakt@kastaflow.no", "note": "Svar innen 48 timer" },
+    "emailCard": { "title": "E-post", "address": "kastaflow.studio@gmail.com", "note": "Svar innen 48 timer" },
     "whatsappCard": { "title": "WhatsApp", "text": "Skriv til studioets chat", "note": "Meldinger videresendt til teamet", "cta": "Åpne WhatsApp" },
     "telegramCard": { "title": "Telegram", "username": "@kastaflow", "note": "Nummeret ditt forblir privat" },
     "channelNote": "💬 Vi foretrekker skriftlig kommunikasjon — det sparer tiden din og skaper et tydelig spor av alt vi avtaler."

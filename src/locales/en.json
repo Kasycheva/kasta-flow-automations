@@ -263,7 +263,7 @@
     "transcript": "Here is what we heard:",
     "reRecord": "Re-record",
     "sendTranscript": "This looks correct — send",
-    "emailCard": { "title": "Email", "address": "kontakt@kastaflow.no", "note": "Response within 48 hours" },
+    "emailCard": { "title": "Email", "address": "kastaflow.studio@gmail.com", "note": "Response within 48 hours" },
     "whatsappCard": { "title": "WhatsApp", "text": "Write to our studio chat", "note": "Messages forwarded to our team", "cta": "Open WhatsApp" },
     "telegramCard": { "title": "Telegram", "username": "@kastaflow", "note": "Your number stays private" },
     "channelNote": "💬 We prefer written communication — it saves your time and creates a clear record of everything we agree on."
