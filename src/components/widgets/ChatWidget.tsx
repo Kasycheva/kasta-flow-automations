@@ -10,7 +10,12 @@ interface Message {
 }
 
 function containsFormMention(text: string): boolean {
-  return /\b(form|skjema|fill out|fyll ut)\b/i.test(text);
+  return /\b(form|skjema|fill out|fyll ut|форм|заполн|анкет)\b/i.test(text);
+}
+
+/** Detect email addresses in a string */
+function containsEmail(text: string): boolean {
+  return /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/.test(text);
 }
 
 export default function ChatWidget() {
@@ -22,6 +27,7 @@ export default function ChatWidget() {
   const [typing, setTyping] = useState(false);
   const [error, setError] = useState('');
   const [showCta, setShowCta] = useState(false);
+  const [emailCaptured, setEmailCaptured] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -38,6 +44,8 @@ export default function ChatWidget() {
   useEffect(() => {
     if (messages.length > 0) {
       sessionStorage.setItem('chat_history', JSON.stringify(messages));
+      // Also store for the contact form to read
+      sessionStorage.setItem('chat_transcript_for_form', JSON.stringify(messages));
     }
   }, [messages]);
 
@@ -66,6 +74,11 @@ export default function ChatWidget() {
     const updatedMessages = [...messages, userMsg];
     setMessages(updatedMessages);
     setTyping(true);
+
+    // Detect email in user message
+    if (containsEmail(text) && !emailCaptured) {
+      setEmailCaptured(true);
+    }
 
     try {
       const response = await fetch('/api/chat', {
@@ -107,6 +120,8 @@ export default function ChatWidget() {
   };
 
   const scrollToContact = () => {
+    // Store transcript in sessionStorage for the contact form
+    sessionStorage.setItem('chat_transcript_for_form', JSON.stringify(messages));
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
     setOpen(false);
   };
@@ -252,6 +267,21 @@ export default function ChatWidget() {
                   </div>
                 </div>
               ))}
+
+              {/* Email captured confirmation */}
+              {emailCaptured && (
+                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                  <div style={{
+                    padding: '8px 12px',
+                    borderRadius: '12px 12px 12px 4px',
+                    background: 'rgba(74, 222, 128, 0.12)',
+                    color: '#4ade80',
+                    fontSize: '12px',
+                  }}>
+                    {t('chat.emailCaptured')}
+                  </div>
+                </div>
+              )}
 
               {/* Typing indicator */}
               {typing && (

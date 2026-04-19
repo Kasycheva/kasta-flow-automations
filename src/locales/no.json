@@ -298,7 +298,9 @@
     "welcome": "Hei! Jeg kan hjelpe deg med å finne riktig automatisering for bedriften din. Hva ønsker du å automatisere?",
     "placeholder": "Spør om tjenestene våre...",
     "formCta": "Fyll ut skjemaet →",
+    "emailCaptured": "✓ Notert! Jeg har lagret e-posten din.",
     "error": "Noe gikk galt. Prøv igjen.",
-    "errorRateLimit": "For mange forespørsler — vent litt og prøv igjen."
+    "errorRateLimit": "Assistenten vår er opptatt akkurat nå. Vent litt og prøv igjen, eller fyll ut skjemaet nedenfor.",
+    "errorOverloaded": "Assistenten vår er opptatt akkurat nå. Prøv igjen om litt, eller fyll ut skjemaet nedenfor — vi svarer innen 24 timer."
   }
 }

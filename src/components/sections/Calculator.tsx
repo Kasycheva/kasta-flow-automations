@@ -22,7 +22,7 @@ function AnimatedNumber({ value, format }: { value: number; format: (n: number) 
     requestAnimationFrame(animate);
   }, [value]);
 
-  return <>{format(display)}</>;
+  return <span translate="no">{format(display)}</span>;
 }
 
 const fmt = (n: number) => new Intl.NumberFormat('no-NO').format(n);
@@ -38,7 +38,7 @@ function Slider({
     <div>
       <div className="flex items-center justify-between mb-2.5">
         <label className="text-xs text-muted-foreground uppercase tracking-wider">{label}</label>
-        <span className="text-sm font-heading font-bold text-foreground tabular-nums">{displayValue}</span>
+        <span className="text-sm font-heading font-bold text-foreground tabular-nums" translate="no">{displayValue}</span>
       </div>
       <div className="relative h-1.5 rounded-full bg-white/10">
         <div
@@ -76,7 +76,7 @@ function MetricCard({ label, value, color = 'text-foreground', large = false }: 
   );
 }
 
-const NOK = <span className="text-xs font-normal text-muted-foreground ml-1">NOK</span>;
+const NOK = <span className="text-xs font-normal text-muted-foreground ml-1" translate="no">NOK</span>;
 
 const EASE = [0.23, 1, 0.32, 1] as const;
 
@@ -126,7 +126,7 @@ export default function Calculator() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: EASE }}
         >
-          <span className="section-badge">ROI Calculator</span>
+          <span className="section-badge">{t('calculator.badge')}</span>
           <h2 className="section-title">{t('calculator.title1')}<br />{t('calculator.title2')}</h2>
           <p className="section-subtitle">{t('calculator.subtitle')}</p>
         </motion.div>
@@ -138,7 +138,8 @@ export default function Calculator() {
           transition={{ duration: 0.75, delay: 0.1, ease: EASE }}
           className="rounded-2xl overflow-hidden"
           style={{
-            border: '1px solid rgba(255,255,255,0.25)',
+            border: '1px solid rgba(255,255,255,0.45)',
+            boxShadow: '0 0 0 1px rgba(255,255,255,0.06), 0 8px 40px rgba(0,0,0,0.6)',
             background: '#0D0D0D',
             backgroundImage: 'radial-gradient(rgba(255,255,255,0.025) 1px, transparent 1px)',
             backgroundSize: '28px 28px',
@@ -149,12 +150,12 @@ export default function Calculator() {
             className="flex items-center justify-between px-5 py-3"
             style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}
           >
-            <span className="text-[11px] text-muted-foreground/60 tracking-widest uppercase">
+            <span className="text-[11px] text-muted-foreground/60 tracking-widest uppercase" translate="no">
               kasta flow studio
             </span>
             <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground/70">
               <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-pulse" />
-              live
+              <span>{t('calculator.live')}</span>
             </span>
           </div>
 
@@ -214,7 +215,7 @@ export default function Calculator() {
                   style={{ textShadow: '0 0 32px rgba(255,255,255,0.1)' }}
                 >
                   <AnimatedNumber value={annualCost} format={fmt} />
-                  <span className="text-lg font-normal text-muted-foreground ml-2">NOK</span>
+                  <span className="text-lg font-normal text-muted-foreground ml-2" translate="no">NOK</span>
                 </p>
               </motion.div>
 
@@ -255,7 +256,7 @@ export default function Calculator() {
                   {t('calculator.payback')}
                 </p>
                 <p className="text-3xl font-heading font-bold tabular-nums text-foreground mb-4">
-                  {paybackMonths < 2 ? '< 2' : paybackMonths}{' '}
+                  <span translate="no">{paybackMonths < 2 ? '< 2' : paybackMonths}</span>{' '}
                   <span className="text-sm font-normal text-muted-foreground">{t('calculator.months')}</span>
                 </p>
                 <div className="h-1.5 rounded-full overflow-hidden mb-1.5" style={{ background: 'rgba(255,255,255,0.08)' }}>
@@ -267,7 +268,8 @@ export default function Calculator() {
                   />
                 </div>
                 <p className="text-[10px] text-muted-foreground/50">
-                  Est. automation cost: {fmt(avgAutomationPrice)} NOK
+                  {t('calculator.estimatedCost')}{' '}
+                  <span translate="no">{fmt(avgAutomationPrice)} NOK</span>
                 </p>
               </motion.div>
 

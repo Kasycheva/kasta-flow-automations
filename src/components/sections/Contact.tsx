@@ -34,8 +34,27 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    // Simulate submission
+
+    // Read chat transcript from sessionStorage (set by ChatWidget)
+    const chatTranscript = sessionStorage.getItem('chat_transcript_for_form') || '';
+
+    // Build the full payload including chat history
+    const payload = {
+      ...formData,
+      chatTranscript,
+      voiceTranscript: transcript || '',
+      voiceEmail: voiceEmail || '',
+      voiceChannel: voiceChannel || '',
+    };
+
+    console.log('[Contact] Form submission payload:', payload);
+
+    // Simulate submission (replace with actual API call)
     await new Promise(r => setTimeout(r, 1500));
+
+    // Clear chat transcript after successful submit
+    sessionStorage.removeItem('chat_transcript_for_form');
+
     setSending(false);
     setSent(true);
   };
@@ -104,6 +123,8 @@ export default function Contact() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Hidden field: chat transcript for manager review */}
+                  <input type="hidden" name="chatTranscript" value={typeof window !== 'undefined' ? (sessionStorage.getItem('chat_transcript_for_form') ?? '') : ''} />
                   <div>
                     <label className="text-sm text-muted-foreground mb-2 block">{t('contact.nameLabel')}</label>
                     <input type="text" required placeholder={t('contact.namePlaceholder')}

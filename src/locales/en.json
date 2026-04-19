@@ -298,7 +298,9 @@
     "welcome": "Hi! I can help you find the right automation for your business. What are you looking to automate?",
     "placeholder": "Ask about our services...",
     "formCta": "Fill out the form →",
+    "emailCaptured": "✓ Got it! I've noted your email.",
     "error": "Something went wrong. Please try again.",
-    "errorRateLimit": "Too many requests — please wait a moment and try again."
+    "errorRateLimit": "Our assistant is busy right now. Please wait a moment and try again, or fill out the form below.",
+    "errorOverloaded": "Our assistant is busy right now. Please try again in a moment, or fill out the form below — we'll get back to you within 24 hours."
   }
 }
