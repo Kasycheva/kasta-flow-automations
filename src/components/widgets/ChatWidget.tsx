@@ -10,7 +10,8 @@ interface Message {
 }
 
 function containsFormMention(text: string): boolean {
-  return /\b(form|skjema|fill out|fyll ut|форм|заполн|анкет)\b/i.test(text);
+  // Removed \b boundaries to catch Russian/Ukrainian endings (форму, форме, заполните, анкету etc)
+  return /(form|skjema|fill out|fyll ut|форм|заполн|анкет)/i.test(text);
 }
 
 /** Detect email addresses in a string */
