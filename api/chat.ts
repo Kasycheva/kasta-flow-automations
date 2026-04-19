@@ -121,10 +121,16 @@ export async function POST(request: Request) {
   }
 
   /* Build the Gemini chat history */
-  const history = messages.slice(0, -1).map((msg) => ({
+  const rawHistory = messages.slice(0, -1).map((msg) => ({
     role: msg.role === 'user' ? 'user' as const : 'model' as const,
     parts: [{ text: msg.content }],
   }));
+
+  /* Gemini SDK strictly requires history to start with a 'user' message */
+  const history = [...rawHistory];
+  while (history.length > 0 && history[0].role === 'model') {
+    history.shift();
+  }
 
   const lastUserMessage = messages[messages.length - 1].content;
 
