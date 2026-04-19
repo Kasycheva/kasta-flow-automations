@@ -3,10 +3,8 @@ export const maxDuration = 30;
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 /* ------------------------------------------------------------------ */
-/*  Singleton SDK instance — created once per cold start               */
+/*  SDK initialization moved inside POST to ensure env vars exist      */
 /* ------------------------------------------------------------------ */
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? '');
-
 const MODEL_NAME = 'gemini-1.5-flash';
 
 /* ------------------------------------------------------------------ */
@@ -98,6 +96,9 @@ export async function POST(request: Request) {
   if (!apiKey) {
     return jsonResponse({ error: 'API key not configured' }, { status: 500 });
   }
+
+  // Initialize SDK inside the request scope so env vars are fully hydrated
+  const genAI = new GoogleGenerativeAI(apiKey);
 
   let body: ChatRequestBody;
 
