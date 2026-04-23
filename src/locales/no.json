@@ -310,21 +310,45 @@
     "channelNote": "💬 Vi foretrekker skriftlig kommunikasjon — det sparer tiden din og skaper et tydelig spor av alt vi avtaler."
   },
   "footer": {
-    "tagline": "Automatiseringsstudio for små og mellomstore bedrifter i Norge.",
+    "statement": "Mindre rutine. Mer flyt.",
+    "supporting": "Automatisering, struktur og intelligente arbeidsflyter for team som vil ha ryddigere drift.",
     "servicesHeading": "Tjenester",
-    "companyHeading": "Selskap",
-    "contactHeading": "Kontakt",
+    "exploreHeading": "Utforsk",
+    "services": {
+      "automationSystems": "Automatiseringssystemer",
+      "crmLeadFlow": "CRM og lead-flyt",
+      "aiAssistants": "AI-assistenter",
+      "paymentAutomation": "Betalingsautomatisering",
+      "customWorkflows": "Tilpassede arbeidsflyter"
+    },
+    "explore": {
+      "howItWorks": "Slik fungerer det",
+      "caseStudies": "Prosjekter",
+      "faq": "FAQ",
+      "contact": "Kontakt"
+    },
     "howItWorks": "Slik fungerer det",
     "caseStudies": "Prosjekter",
     "roiCalc": "ROI-kalkulator",
     "freeAudit": "Gratis analyse",
+    "socialHeading": "Vi er på sosiale medier",
+    "ctaTitle": "Trenger du en smartere arbeidsflyt?",
+    "ctaText": "Beskriv prosessen, flaskehalsen eller verktøystakken din — så hjelper vi deg med å finne neste riktige steg.",
+    "ctaButton": "Ta kontakt",
+    "notes": {
+      "asyncFirst": "Asynkron kommunikasjon først",
+      "responseTime": "Raskt svar"
+    },
     "privacyPolicy": "Personvern",
     "terms": "Vilkår",
     "cookiePolicy": "Informasjonskapsler",
     "location": "Norge · Fjernarbeid",
     "responseTime": "Svar innen 48 timer",
     "accepting": "Tar for øyeblikket imot nye kunder",
-    "copyright": "© 2026 Kasta Flow Studio · Norge"
+    "copyright": "© 2026 Kasta Flow Studio",
+    "madePrefix": "Laget med",
+    "heartLabel": "kjærlighet",
+    "madeSuffix": "i Norge"
   },
   "cookie": {
     "text": "Vi bruker informasjonskapsler for å forbedre opplevelsen din. Nødvendige informasjonskapsler er alltid aktive.",

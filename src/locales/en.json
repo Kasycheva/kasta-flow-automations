@@ -310,21 +310,45 @@
     "channelNote": "💬 We prefer written communication — it saves your time and creates a clear record of everything we agree on."
   },
   "footer": {
-    "tagline": "Automation studio for small and medium businesses in Norway.",
+    "statement": "Less routine. More flow.",
+    "supporting": "Automation, structure and intelligent workflows for teams that want cleaner operations.",
     "servicesHeading": "Services",
-    "companyHeading": "Company",
-    "contactHeading": "Contact",
+    "exploreHeading": "Explore",
+    "services": {
+      "automationSystems": "Automation Systems",
+      "crmLeadFlow": "CRM & Lead Flow",
+      "aiAssistants": "AI Assistants",
+      "paymentAutomation": "Payment Automation",
+      "customWorkflows": "Custom Workflows"
+    },
+    "explore": {
+      "howItWorks": "How it works",
+      "caseStudies": "Case Studies",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
     "howItWorks": "How it works",
     "caseStudies": "Case Studies",
     "roiCalc": "ROI Calculator",
     "freeAudit": "Free Audit",
+    "socialHeading": "We are on social",
+    "ctaTitle": "Need a smarter workflow?",
+    "ctaText": "Describe your process, bottleneck or tool stack — we'll help you map the right next step.",
+    "ctaButton": "Get in touch",
+    "notes": {
+      "asyncFirst": "Async-first communication",
+      "responseTime": "Fast response"
+    },
     "privacyPolicy": "Privacy Policy",
     "terms": "Terms of Service",
     "cookiePolicy": "Cookie Policy",
     "location": "Norway · Remote",
     "responseTime": "Response within 48h",
     "accepting": "Currently accepting new clients",
-    "copyright": "© 2026 Kasta Flow Studio · Norway"
+    "copyright": "© 2026 Kasta Flow Studio",
+    "madePrefix": "Made with",
+    "heartLabel": "love",
+    "madeSuffix": "in Norway"
   },
   "cookie": {
     "text": "We use cookies to improve your experience. Essential cookies are always active.",
