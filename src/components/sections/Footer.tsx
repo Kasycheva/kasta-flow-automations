@@ -1,94 +1,220 @@
+import { useEffect, useRef, useState } from 'react';
+import { Check, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Mail, MapPin, Clock } from 'lucide-react';
 
 const serviceLinks = [
-  { label: 'Simple Integrations', href: '#services' },
-  { label: 'Vipps + Fiken', href: '#services' },
-  { label: 'CRM Setup', href: '#services' },
-  { label: 'FAQ Chatbot', href: '#services' },
-  { label: 'Smart AI Agent', href: '#services' },
-  { label: 'Landing Page', href: '#services' },
-  { label: 'Monthly Support', href: '#support' },
+  { key: 'automationSystems', href: '#services' },
+  { key: 'crmLeadFlow', href: '#services' },
+  { key: 'aiAssistants', href: '#services' },
+  { key: 'paymentAutomation', href: '#services' },
+  { key: 'customWorkflows', href: '#services' },
+];
+
+const exploreLinks = [
+  { key: 'howItWorks', href: '#faq' },
+  { key: 'caseStudies', href: '#cases' },
+  { key: 'faq', href: '#faq' },
+  { key: 'contact', href: '#contact' },
+];
+
+const supportNotes = ['asyncFirst', 'responseTime'];
+
+const socialLinks = [
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/profile.php?id=61573183250223&locale=ru_RU',
+    Icon: Facebook,
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/maria-kasta-flow/',
+    Icon: Linkedin,
+  },
+  {
+    label: 'Instagram',
+    href: 'https://www.instagram.com/',
+    Icon: Instagram,
+  },
 ];
 
 export default function Footer() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const statement = t('footer.statement');
+  const footerRef = useRef<HTMLElement>(null);
+  const [typedStatement, setTypedStatement] = useState('');
+  const [statementMode, setStatementMode] = useState<'typing' | 'shine'>('typing');
+  const [shouldAnimateStatement, setShouldAnimateStatement] = useState(false);
+
+  useEffect(() => {
+    let frameId: number | undefined;
+
+    const checkFooterVisibility = () => {
+      const footer = footerRef.current;
+      if (!footer) return;
+
+      const rect = footer.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight * 0.82 && rect.bottom > 0;
+
+      if (isVisible) {
+        setShouldAnimateStatement(true);
+        window.removeEventListener('scroll', scheduleCheck);
+        window.removeEventListener('resize', scheduleCheck);
+      }
+    };
+
+    const scheduleCheck = () => {
+      if (frameId) return;
+      frameId = window.requestAnimationFrame(() => {
+        frameId = undefined;
+        checkFooterVisibility();
+      });
+    };
+
+    scheduleCheck();
+    window.addEventListener('scroll', scheduleCheck, { passive: true });
+    window.addEventListener('resize', scheduleCheck);
+
+    return () => {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      window.removeEventListener('scroll', scheduleCheck);
+      window.removeEventListener('resize', scheduleCheck);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!shouldAnimateStatement) return;
+
+    let index = 0;
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const tick = () => {
+      if (index >= statement.length) {
+        setTypedStatement(statement);
+        setStatementMode('shine');
+        return;
+      }
+
+      const nextIndex = index + 1;
+      setTypedStatement(statement.slice(0, nextIndex));
+      index = nextIndex;
+      timeoutId = setTimeout(tick, 68);
+    };
+
+    setStatementMode('typing');
+    setTypedStatement('');
+    timeoutId = setTimeout(tick, 350);
+    return () => clearTimeout(timeoutId);
+  }, [statement, shouldAnimateStatement]);
 
   return (
-    <footer className="bg-[hsl(0,0%,3%)] border-t border-border">
-      {/* Gradient strip (replaces Spline) */}
-      <div className="h-20 md:h-36 bg-gradient-to-b from-surface to-[hsl(0,0%,3%)]" />
+    <footer ref={footerRef} className="relative overflow-hidden bg-[hsl(0,0%,3%)] border-t border-white/10">
+      <div className="footer-grid-mask absolute inset-0 opacity-60" aria-hidden="true" />
+      <div className="footer-flow-line footer-flow-line-a" aria-hidden="true" />
+      <div className="footer-flow-line footer-flow-line-b" aria-hidden="true" />
+      <div className="absolute right-0 top-10 h-72 w-72 rounded-full bg-white/[0.055] blur-[120px]" aria-hidden="true" />
+      <div className="absolute left-12 bottom-16 h-44 w-44 rounded-full bg-white/[0.035] blur-[90px]" aria-hidden="true" />
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <svg width="28" height="28" viewBox="0 0 100 100">
-                <text x="50" y="70" textAnchor="middle" fontFamily="Syne, sans-serif" fontWeight="800" fontSize="52" fill="hsl(0 0% 96%)">KF</text>
-              </svg>
-              <span className="text-[13px] text-muted-foreground tracking-[0.15em] uppercase">Kasta Flow Studio</span>
-            </div>
-            <p className="text-sm text-muted-foreground max-w-[220px] leading-relaxed">{t('footer.tagline')}</p>
+      <div className="relative max-w-7xl mx-auto px-4 md:px-8 pt-14 md:pt-20 pb-5 md:pb-6">
+        <div className="grid min-h-[390px] items-start gap-12 lg:grid-cols-[1.15fr_0.8fr_0.7fr_0.95fr] lg:gap-10 xl:gap-16">
+          <div className="max-w-md">
+            <a href="#" className="group inline-flex items-center gap-3 mb-7" aria-label="Kasta Flow Studio">
+              <span className="relative flex h-11 w-11 items-center justify-center rounded-sm border border-white/15 bg-white/[0.035]">
+                <span className="absolute inset-1 border border-white/[0.06]" />
+                <span className="font-heading text-[18px] font-extrabold tracking-[-0.02em] text-foreground">KF</span>
+              </span>
+              <span className="text-[12px] font-medium uppercase tracking-[0.24em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
+                Kasta Flow Studio
+              </span>
+            </a>
+
+            <h2 className="footer-statement text-3xl md:text-[2.45rem] font-semibold leading-tight" aria-label={statement}>
+              <span className="footer-statement-ghost" aria-hidden="true">{statement}</span>
+              <span className={statementMode === 'shine' ? 'footer-shine-text' : undefined}>
+                {typedStatement}
+              </span>
+              {statementMode === 'typing' && typedStatement.length < statement.length && (
+                <span className="footer-caret" aria-hidden="true" />
+              )}
+            </h2>
+            <p className="mt-5 max-w-sm text-sm md:text-base leading-7 text-muted-foreground">
+              {t('footer.supporting')}
+            </p>
           </div>
 
-          {/* Services */}
-          <div>
-            <h4 className="text-[13px] text-foreground uppercase tracking-[0.1em] mb-5">{t('footer.servicesHeading')}</h4>
-            <ul className="space-y-2.5">
-              {serviceLinks.map(link => (
-                <li key={link.label}>
-                  <a href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{link.label}</a>
+          <nav aria-label={t('footer.servicesHeading')} className="lg:pt-24">
+            <h3 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground">
+              {t('footer.servicesHeading')}
+            </h3>
+            <ul className="space-y-3">
+              {serviceLinks.map((link) => (
+                <li key={link.key}>
+                  <a className="footer-link" href={link.href}>
+                    {t(`footer.services.${link.key}`)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label={t('footer.exploreHeading')} className="lg:pt-24">
+            <h3 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground">
+              {t('footer.exploreHeading')}
+            </h3>
+            <ul className="space-y-3">
+              {exploreLinks.map((link) => (
+                <li key={link.key}>
+                  <a className="footer-link" href={link.href}>
+                    {t(`footer.explore.${link.key}`)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="lg:pt-24">
+            <h3 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground">
+              {t('footer.socialHeading')}
+            </h3>
+            <div className="flex items-center gap-3">
+              {socialLinks.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/[0.035] text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/10 hover:text-foreground"
+                >
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
+
+            <ul className="mt-6 space-y-2.5">
+              {supportNotes.map((note) => (
+                <li key={note} className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Check size={14} className="text-foreground/80" />
+                  <span>{t(`footer.notes.${note}`)}</span>
                 </li>
               ))}
             </ul>
           </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="text-[13px] text-foreground uppercase tracking-[0.1em] mb-5">{t('footer.companyHeading')}</h4>
-            <ul className="space-y-2.5">
-              <li><a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.howItWorks')}</a></li>
-              <li><a href="#cases" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.caseStudies')}</a></li>
-              <li><a href="#calculator" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.roiCalc')}</a></li>
-              <li><a href="#faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">FAQ</a></li>
-              <li><a href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.freeAudit')}</a></li>
-              <li><button className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.privacyPolicy')}</button></li>
-              <li><button className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.terms')}</button></li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-[13px] text-foreground uppercase tracking-[0.1em] mb-5">{t('footer.contactHeading')}</h4>
-            <ul className="space-y-3">
-              <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Mail size={14} /> <a href="mailto:kontakt@kastaflow.no" className="hover:text-foreground transition-colors">kontakt@kastaflow.no</a>
-              </li>
-              <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin size={14} /> {t('footer.location')}
-              </li>
-              <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock size={14} /> {t('footer.responseTime')}
-              </li>
-            </ul>
-            <div className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[hsl(142,50%,8%)] border border-[hsl(142,50%,15%)] text-kasta-green text-xs">
-              🟢 {t('footer.accepting')}
-            </div>
-          </div>
         </div>
-      </div>
 
-      {/* Legal strip */}
-      <div className="border-t border-border">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-5 flex flex-wrap items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground">{t('footer.copyright')}</p>
-          <div className="flex items-center gap-1 text-xs">
-            <button onClick={() => i18n.changeLanguage('en')}
-              className={`px-2 py-1 ${i18n.language === 'en' ? 'text-foreground' : 'text-muted-foreground'}`}>EN</button>
-            <span className="text-muted-foreground">·</span>
-            <button onClick={() => i18n.changeLanguage('no')}
-              className={`px-2 py-1 ${i18n.language === 'no' ? 'text-foreground' : 'text-muted-foreground'}`}>NO</button>
+        <div className="border-t border-white/10 py-2.5 flex flex-col gap-2 text-xs leading-none text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pr-32">
+          <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-4">
+            <p>{t('footer.copyright')}</p>
+            <p>
+              {t('footer.madePrefix')}{' '}
+              <span className="footer-heart" aria-hidden="true">♥</span>
+              <span className="sr-only">{t('footer.heartLabel')}</span>{' '}
+              {t('footer.madeSuffix')}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <button className="transition-colors duration-200 hover:text-foreground">{t('footer.privacyPolicy')}</button>
+            <span className="text-white/25">·</span>
+            <button className="transition-colors duration-200 hover:text-foreground">{t('footer.terms')}</button>
           </div>
         </div>
       </div>

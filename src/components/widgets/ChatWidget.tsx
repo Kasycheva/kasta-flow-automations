@@ -185,7 +185,7 @@ export default function ChatWidget() {
           aria-label="Open chat"
           style={{
             position: 'fixed',
-            bottom: '24px',
+            bottom: '96px',
             right: '24px',
             zIndex: 9999,
             width: '56px',
@@ -214,7 +214,7 @@ export default function ChatWidget() {
             transition={{ duration: 0.2 }}
             style={{
               position: 'fixed',
-              bottom: '24px',
+              bottom: '96px',
               right: '24px',
               zIndex: 9999,
               width: '360px',
