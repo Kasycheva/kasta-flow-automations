@@ -11,7 +11,7 @@ import Contact from '../components/sections/Contact';
 import Footer from '../components/sections/Footer';
 import CookieBanner from '../components/widgets/CookieBanner';
 import ChatWidget from '../components/widgets/ChatWidget';
-import ParallaxDivider from '../components/ui/ParallaxDivider';
+import StackSection from '../components/ui/StackSection';
 
 const Index = () => {
   return (
@@ -19,15 +19,12 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Ticker />
-      <Services />
-      <Calculator />
-      <ParallaxDivider variant="a" />
-      <Support />
-      <ParallaxDivider variant="b" />
-      <Cases />
-      <ParallaxDivider variant="c" />
-      <FAQ />
-      <Contact />
+      <StackSection zIndex={11}><Services /></StackSection>
+      <StackSection zIndex={12}><Calculator /></StackSection>
+      <StackSection zIndex={13}><Support /></StackSection>
+      <StackSection zIndex={14}><Cases /></StackSection>
+      <StackSection zIndex={15}><FAQ /></StackSection>
+      <StackSection zIndex={16}><Contact /></StackSection>
       <Footer />
       <CookieBanner />
       <ChatWidget />

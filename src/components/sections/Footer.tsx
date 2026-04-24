@@ -132,9 +132,6 @@ export default function Footer() {
               <span className={statementMode === 'shine' ? 'footer-shine-text' : undefined}>
                 {typedStatement}
               </span>
-              {statementMode === 'typing' && typedStatement.length < statement.length && (
-                <span className="footer-caret" aria-hidden="true" />
-              )}
             </h2>
             <p className="mt-5 max-w-sm text-sm md:text-base leading-7 text-muted-foreground">
               {t('footer.supporting')}

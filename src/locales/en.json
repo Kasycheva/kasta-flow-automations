@@ -92,7 +92,7 @@
     "exVat": "excl. VAT"
   },
   "calculator": {
-    "badge": "📊 ROI Calculator",
+    "badge": "ROI Calculator",
     "title1": "How much is your routine",
     "title2": "actually costing you?",
     "subtitle": "Labour costs in Norway are among the highest in the world. Every hour spent on manual tasks is money you could invest in growth. Calculate your real cost in 30 seconds.",
@@ -203,7 +203,7 @@
     ]
   },
   "faq": {
-    "badge": "❓ FAQ",
+    "badge": "FAQ",
     "title1": "Questions we hear",
     "title2": "most often",
     "subtitle": "Still have questions? Write to us — we typically respond within 24 hours on business days.",
@@ -230,14 +230,14 @@
     "bottomCtaLink": "Write to us directly"
   },
   "contact": {
-    "badge": "📋 Free Audit",
+    "badge": "Free Audit",
     "title1": "Tell us about your project.",
     "title2": "We will get back to you shortly.",
     "subtitle": "Tell us about your business and what takes up your time. Fill in the form or record a voice message — whichever feels easier. We will get back to you shortly.",
     "tabHint": "Both options work equally well — choose what feels easier for you.",
-    "formToggle": "✏️ Fill in a form",
+    "formToggle": "Fill in a form",
     "formToggleSub": "5 minutes",
-    "voiceToggle": "🎙️ Record your voice",
+    "voiceToggle": "Record your voice",
     "voiceToggleSub": "Just talk — we handle the rest",
     "nameLabel": "Full name",
     "namePlaceholder": "Full name",
@@ -270,7 +270,7 @@
     "descLabel": "Describe your situation",
     "descPlaceholder": "What tasks take most of your time? What tools do you use? Any details help.",
     "channelLabel": "Preferred contact channel",
-    "channels": ["📧 Email", "💬 WhatsApp", "💼 LinkedIn", "✈️ Telegram", "📘 Facebook"],
+    "channels": ["Email", "WhatsApp", "LinkedIn", "Telegram", "Facebook"],
     "whatsappContactLabel": "WhatsApp number",
     "whatsappContactPlaceholder": "+47 000 00 000",
     "linkedinContactLabel": "LinkedIn profile URL",
@@ -308,7 +308,7 @@
     "whatsappCard": { "title": "WhatsApp", "text": "Write to us in the studio chat", "note": "Messages forwarded to our manager", "cta": "Open WhatsApp" },
     "telegramCard": { "title": "Telegram", "username": "@kastaflow_assist_bot", "note": "Available in Telegram", "cta": "Open Telegram" },
     "linkedinCard": { "title": "LinkedIn", "handle": "maria-kasta-flow", "note": "Connect with us on LinkedIn", "cta": "Open LinkedIn" },
-    "channelNote": "💬 We prefer written communication — it saves your time and creates a clear record of everything we agree on."
+    "channelNote": "We prefer written communication — it saves your time and creates a clear record of everything we agree on."
   },
   "footer": {
     "statement": "Less routine. More flow.",

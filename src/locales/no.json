@@ -92,7 +92,7 @@
     "exVat": "eks. MVA"
   },
   "calculator": {
-    "badge": "📊 ROI-kalkulator",
+    "badge": "ROI-kalkulator",
     "title1": "Hva koster rutinearbeidet ditt",
     "title2": "deg egentlig?",
     "subtitle": "Arbeidskostnadene i Norge er blant de høyeste i verden. Hver time brukt på manuelle oppgaver er penger du kunne investert i vekst. Beregn din reelle kostnad på 30 sekunder.",
@@ -203,7 +203,7 @@
     ]
   },
   "faq": {
-    "badge": "❓ Ofte stilte spørsmål",
+    "badge": "Ofte stilte spørsmål",
     "title1": "Spørsmål vi hører",
     "title2": "oftest",
     "subtitle": "Har du fortsatt spørsmål? Skriv til oss — vi svarer vanligvis innen 24 timer på virkedager.",
@@ -230,14 +230,14 @@
     "bottomCtaLink": "Skriv til oss direkte"
   },
   "contact": {
-    "badge": "📋 Gratis analyse",
+    "badge": "Gratis analyse",
     "title1": "Fortell oss om prosjektet ditt.",
     "title2": "Vi svarer deg snart.",
     "subtitle": "Fortell oss om bedriften din og hva som tar opp tiden din. Fyll ut skjemaet eller ta opp en stemmemelding — hva som føles enklest. Vi svarer deg snart.",
     "tabHint": "Begge alternativer fungerer like bra — velg det som føles enklest for deg.",
-    "formToggle": "✏️ Fyll ut et skjema",
+    "formToggle": "Fyll ut et skjema",
     "formToggleSub": "5 minutter",
-    "voiceToggle": "🎙️ Ta opp stemmen din",
+    "voiceToggle": "Ta opp stemmen din",
     "voiceToggleSub": "Bare snakk — vi tar oss av resten",
     "nameLabel": "Fullt navn",
     "namePlaceholder": "Fullt navn",
@@ -270,7 +270,7 @@
     "descLabel": "Beskriv situasjonen din",
     "descPlaceholder": "Hvilke oppgaver tar mest tid? Hvilke verktøy bruker du? Detaljer hjelper.",
     "channelLabel": "Foretrukket kontaktkanal",
-    "channels": ["📧 E-post", "💬 WhatsApp", "💼 LinkedIn", "✈️ Telegram", "📘 Facebook"],
+    "channels": ["E-post", "WhatsApp", "LinkedIn", "Telegram", "Facebook"],
     "whatsappContactLabel": "WhatsApp-nummer",
     "whatsappContactPlaceholder": "+47 000 00 000",
     "linkedinContactLabel": "LinkedIn-profil-URL",
@@ -308,7 +308,7 @@
     "whatsappCard": { "title": "WhatsApp", "text": "Skriv til oss i studiochatten", "note": "Meldinger videresendt til leder", "cta": "Åpne WhatsApp" },
     "telegramCard": { "title": "Telegram", "username": "@kastaflow_assist_bot", "note": "Tilgjengelig på Telegram", "cta": "Åpne Telegram" },
     "linkedinCard": { "title": "LinkedIn", "handle": "maria-kasta-flow", "note": "Koble til oss på LinkedIn", "cta": "Åpne LinkedIn" },
-    "channelNote": "💬 Vi foretrekker skriftlig kommunikasjon — det sparer tiden din og skaper et tydelig spor av alt vi avtaler."
+    "channelNote": "Vi foretrekker skriftlig kommunikasjon — det sparer tiden din og skaper et tydelig spor av alt vi avtaler."
   },
   "footer": {
     "statement": "Mindre rutine. Mer flyt.",
