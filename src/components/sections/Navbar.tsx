@@ -44,8 +44,29 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
           <button onClick={scrollToTop} className="flex items-center gap-3">
-            <KFLogo size={36} className="text-foreground animate-logo-glow" />
-            <span className="hidden sm:block text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground leading-tight">
+
+            {/* ── animated logo ─────────────────────────────────────────
+                To revert: replace this motion.div block with:
+                  <KFLogo size={36} className="text-foreground animate-logo-glow" />
+            ──────────────────────────────────────────────────────────── */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1, y: [0, -3, 0] }}
+              transition={{
+                opacity: { duration: 0.5, ease: 'easeOut' },
+                scale:   { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] },
+                y:       { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.6 },
+              }}
+              whileHover={{
+                scale: 1.1,
+                filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.45))',
+                transition: { duration: 0.25, ease: 'easeOut' },
+              }}
+            >
+              <KFLogo size={36} className="text-foreground" />
+            </motion.div>
+
+            <span className="hidden sm:block text-[11px] font-bold uppercase tracking-[0.22em] text-foreground leading-tight">
               Kasta Flow<br />Studio
             </span>
           </button>
