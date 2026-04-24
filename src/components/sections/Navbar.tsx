@@ -4,6 +4,41 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import KFLogo from '../ui/KFLogo';
 
+/* ── Assembly logo: 4 fragments fly in from corners, then settle into glow.
+   To revert entirely: remove this component and use plain
+   <KFLogo size={36} className="text-foreground animate-logo-glow" /> in the button. */
+const FRAGMENTS = [
+  { clip: 'inset(0 50% 50% 0)',  x: -14, y: -14, delay: 0    },
+  { clip: 'inset(0 0 50% 50%)',  x:  14, y: -14, delay: 0.08 },
+  { clip: 'inset(50% 50% 0 0)',  x: -14, y:  14, delay: 0.14 },
+  { clip: 'inset(50% 0 0 50%)',  x:  14, y:  14, delay: 0.20 },
+] as const;
+
+function AssemblyLogo({ size = 36 }: { size?: number }) {
+  const [done, setDone] = useState(false);
+
+  if (done) {
+    return <KFLogo size={size} className="text-foreground animate-logo-glow" />;
+  }
+
+  return (
+    <div style={{ width: size, height: size, position: 'relative', flexShrink: 0 }}>
+      {FRAGMENTS.map((f, i) => (
+        <motion.div
+          key={i}
+          style={{ position: 'absolute', inset: 0, clipPath: f.clip }}
+          initial={{ x: f.x, y: f.y, opacity: 0 }}
+          animate={{ x: 0, y: 0, opacity: 1 }}
+          transition={{ duration: 0.48, delay: f.delay, ease: [0.34, 1.56, 0.64, 1] }}
+          onAnimationComplete={i === FRAGMENTS.length - 1 ? () => setDone(true) : undefined}
+        >
+          <KFLogo size={size} className="text-foreground" />
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 const navLinks = [
   { key: 'services', href: '#services' },
   { key: 'calculator', href: '#calculator' },
@@ -44,28 +79,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
           <button onClick={scrollToTop} className="flex items-center gap-3">
-
-            {/* ── animated logo ─────────────────────────────────────────
-                To revert: replace this motion.div block with:
-                  <KFLogo size={36} className="text-foreground animate-logo-glow" />
-            ──────────────────────────────────────────────────────────── */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1, y: [0, -3, 0] }}
-              transition={{
-                opacity: { duration: 0.5, ease: 'easeOut' },
-                scale:   { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] },
-                y:       { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.6 },
-              }}
-              whileHover={{
-                scale: 1.1,
-                filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.45))',
-                transition: { duration: 0.25, ease: 'easeOut' },
-              }}
-            >
-              <KFLogo size={36} className="text-foreground" />
-            </motion.div>
-
+            <AssemblyLogo size={36} />
             <span className="hidden sm:block text-[11px] font-bold uppercase tracking-[0.22em] text-foreground leading-tight">
               Kasta Flow<br />Studio
             </span>
