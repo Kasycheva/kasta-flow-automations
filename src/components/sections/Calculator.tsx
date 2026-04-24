@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { BarChart3 } from 'lucide-react';
+import SectionReveal from '../ui/SectionReveal';
 
 function AnimatedNumber({ value, format }: { value: number; format: (n: number) => string }) {
   const [display, setDisplay] = useState(value);
@@ -120,16 +122,28 @@ export default function Calculator() {
       <div className="max-w-5xl mx-auto">
 
         {/* Section header */}
-        <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 24 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: EASE }}
-        >
-          <span className="section-badge">{t('calculator.badge')}</span>
-          <h2 className="section-title">{t('calculator.title1')}<br />{t('calculator.title2')}</h2>
-          <p className="section-subtitle">{t('calculator.subtitle')}</p>
-        </motion.div>
+        <div className="text-center mb-12">
+          <motion.span
+            className="section-badge inline-flex items-center gap-1.5"
+            initial={{ opacity: 0, y: 10 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.4, ease: EASE }}
+          >
+            <BarChart3 size={12} />
+            {t('calculator.badge')}
+          </motion.span>
+          <SectionReveal as="h2" className="section-title" delay={0.1}>
+            {`${t('calculator.title1')} ${t('calculator.title2')}`}
+          </SectionReveal>
+          <motion.p
+            className="section-subtitle"
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+          >
+            {t('calculator.subtitle')}
+          </motion.p>
+        </div>
 
         {/* Dashboard card — slides up from below */}
         <motion.div

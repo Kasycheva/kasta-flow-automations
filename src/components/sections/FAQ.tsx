@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { Plus, X } from 'lucide-react';
+import { Plus, HelpCircle } from 'lucide-react';
+import SectionReveal from '../ui/SectionReveal';
 
 export default function FAQ() {
   const { t } = useTranslation();
@@ -11,14 +11,34 @@ export default function FAQ() {
   const chatMessages = t('faq.chatMessages', { returnObjects: true }) as { from: string; text: string }[];
   const chatRef = useRef<HTMLDivElement>(null);
   const chatInView = useInView(chatRef, { once: true, margin: '-80px 0px' });
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
+  const EASE = [0.23, 1, 0.32, 1] as const;
 
   return (
     <section id="faq" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="section-badge">{t('faq.badge')}</span>
-          <h2 className="section-title">{t('faq.title1')}<br />{t('faq.title2')}</h2>
-          <p className="section-subtitle">{t('faq.subtitle')}</p>
+        <div ref={headerRef} className="text-center mb-16">
+          <motion.span
+            className="section-badge inline-flex items-center gap-1.5"
+            initial={{ opacity: 0, y: 10 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.4, ease: EASE }}
+          >
+            <HelpCircle size={12} />
+            {t('faq.badge')}
+          </motion.span>
+          <SectionReveal as="h2" className="section-title" delay={0.1}>
+            {`${t('faq.title1')} ${t('faq.title2')}`}
+          </SectionReveal>
+          <motion.p
+            className="section-subtitle"
+            initial={{ opacity: 0, y: 12 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+          >
+            {t('faq.subtitle')}
+          </motion.p>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-12">

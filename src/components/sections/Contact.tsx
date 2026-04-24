@@ -1,7 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, Mail, ChevronDown, Linkedin } from 'lucide-react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { Mic, Mail, ChevronDown, Linkedin, MessageCircle, Send, Facebook, FileSearch } from 'lucide-react';
+import SectionReveal from '../ui/SectionReveal';
+
+const EASE = [0.23, 1, 0.32, 1] as const;
+
+function getChannelIcon(ch: string) {
+  const l = ch.toLowerCase();
+  if (l.includes('email') || l.includes('e-post')) return Mail;
+  if (l.includes('whatsapp'))  return MessageCircle;
+  if (l.includes('linkedin'))  return Linkedin;
+  if (l.includes('telegram'))  return Send;
+  if (l.includes('facebook'))  return Facebook;
+  return null;
+}
 
 // Brand SVG icons — WhatsApp and Telegram don't exist in lucide
 const WhatsAppIcon = ({ size = 28, className }: { size?: number; className?: string }) => (
@@ -111,6 +124,8 @@ function isValidEmail(email: string) {
 export default function Contact() {
   const { t, i18n } = useTranslation();
   const [mode, setMode] = useState<'form' | 'voice'>('form');
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
 
   // Written form
   const [formData, setFormData] = useState({
@@ -340,10 +355,27 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-16">
-          <span className="section-badge">{t('contact.badge')}</span>
-          <h2 className="section-title">{t('contact.title1')}<br />{t('contact.title2')}</h2>
-          <p className="section-subtitle">{t('contact.subtitle')}</p>
+        <div ref={headerRef} className="text-center mb-16">
+          <motion.span
+            className="section-badge inline-flex items-center gap-1.5"
+            initial={{ opacity: 0, y: 10 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.4, ease: EASE }}
+          >
+            <FileSearch size={12} />
+            {t('contact.badge')}
+          </motion.span>
+          <SectionReveal as="h2" className="section-title" delay={0.1}>
+            {`${t('contact.title1')} ${t('contact.title2')}`}
+          </SectionReveal>
+          <motion.p
+            className="section-subtitle"
+            initial={{ opacity: 0, y: 12 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+          >
+            {t('contact.subtitle')}
+          </motion.p>
         </div>
 
         {/* Tab switcher */}
@@ -462,13 +494,17 @@ export default function Contact() {
                   <div>
                     <label className={labelOpt}>{t('contact.channelLabel')}</label>
                     <div className="flex gap-3 flex-wrap">
-                      {channels.map(ch => (
-                        <label key={ch} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
-                          <input type="radio" name="channel" value={ch} checked={formData.channel === ch}
-                            onChange={() => handleChannelChange(ch)} className="accent-accent" />
-                          {ch}
-                        </label>
-                      ))}
+                      {channels.map(ch => {
+                        const ChIcon = getChannelIcon(ch);
+                        return (
+                          <label key={ch} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+                            <input type="radio" name="channel" value={ch} checked={formData.channel === ch}
+                              onChange={() => handleChannelChange(ch)} className="accent-accent" />
+                            {ChIcon && <ChIcon size={14} />}
+                            {ch}
+                          </label>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -530,13 +566,17 @@ export default function Contact() {
                   <div>
                     <label className={labelReq}>{t('contact.channelLabel')}{asterisk}</label>
                     <div className="flex gap-3 flex-wrap">
-                      {channels.map(ch => (
-                        <label key={ch} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer">
-                          <input type="radio" name="voiceChannel" value={ch} checked={voiceChannel === ch}
-                            onChange={() => handleVoiceChannelChange(ch)} className="accent-accent" />
-                          {ch}
-                        </label>
-                      ))}
+                      {channels.map(ch => {
+                        const ChIcon = getChannelIcon(ch);
+                        return (
+                          <label key={ch} className="flex items-center gap-2 text-sm text-muted-foreground cursor-pointer hover:text-foreground transition-colors">
+                            <input type="radio" name="voiceChannel" value={ch} checked={voiceChannel === ch}
+                              onChange={() => handleVoiceChannelChange(ch)} className="accent-accent" />
+                            {ChIcon && <ChIcon size={14} />}
+                            {ch}
+                          </label>
+                        );
+                      })}
                     </div>
                   </div>
 

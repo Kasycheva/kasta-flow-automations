@@ -1,10 +1,12 @@
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import {
   ArrowRightLeft, GitBranch, Zap, Filter,
   MessageSquare, Brain, Monitor, Calendar, Bell,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import SectionReveal from '../ui/SectionReveal';
 
 const icons: LucideIcon[] = [
   ArrowRightLeft, GitBranch, Zap, Filter,
@@ -36,9 +38,15 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
     >
       {/* Icon + badge */}
       <div className="flex items-start justify-between mb-5 gap-3">
-        <div className="services-icon shrink-0">
+        <motion.div
+          className="services-icon shrink-0"
+          initial={{ scale: 0, rotate: -15 }}
+          whileInView={{ scale: 1, rotate: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ type: 'spring', stiffness: 220, damping: 14, delay: index * 0.05 }}
+        >
           <Icon size={18} color="#C8C8C8" />
-        </div>
+        </motion.div>
         {badge && (
           <span className="h-6 px-3 rounded-full bg-white text-[#0a0a0a] font-semibold text-[10px] tracking-[0.14em] uppercase shrink-0 inline-flex items-center whitespace-nowrap">
             {badge}
@@ -94,16 +102,32 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
 
 export default function Services() {
   const { t } = useTranslation();
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
 
   return (
     <section id="services" className="pt-16 md:pt-28 pb-8 md:pb-10 px-4 md:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="section-badge">{t('services.badge')}</span>
-          <h2 className="section-title">
-            {t('services.title1')}<br />{t('services.title2')}
-          </h2>
-          <p className="section-subtitle">{t('services.subtitle')}</p>
+        <div ref={headerRef} className="text-center mb-16">
+          <motion.span
+            className="section-badge"
+            initial={{ opacity: 0, y: 10 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.4, ease: EASE }}
+          >
+            {t('services.badge')}
+          </motion.span>
+          <SectionReveal as="h2" className="section-title" delay={0.1}>
+            {`${t('services.title1')} ${t('services.title2')}`}
+          </SectionReveal>
+          <motion.p
+            className="section-subtitle"
+            initial={{ opacity: 0, y: 12 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+          >
+            {t('services.subtitle')}
+          </motion.p>
         </div>
 
         {/* 3-column grid — 3×3 = 9 cards */}

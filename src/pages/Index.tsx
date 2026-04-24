@@ -11,7 +11,6 @@ import Contact from '../components/sections/Contact';
 import Footer from '../components/sections/Footer';
 import CookieBanner from '../components/widgets/CookieBanner';
 import ChatWidget from '../components/widgets/ChatWidget';
-import StackSection from '../components/ui/StackSection';
 
 const Index = () => {
   return (
@@ -19,12 +18,12 @@ const Index = () => {
       <Navbar />
       <Hero />
       <Ticker />
-      <StackSection zIndex={11}><Services /></StackSection>
-      <StackSection zIndex={12}><Calculator /></StackSection>
-      <StackSection zIndex={13}><Support /></StackSection>
-      <StackSection zIndex={14}><Cases /></StackSection>
-      <StackSection zIndex={15}><FAQ /></StackSection>
-      <StackSection zIndex={16}><Contact /></StackSection>
+      <Services />
+      <Calculator />
+      <Support />
+      <Cases />
+      <FAQ />
+      <Contact />
       <Footer />
       <CookieBanner />
       <ChatWidget />
