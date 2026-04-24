@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import KFLogo from '../ui/KFLogo';
 
 const navLinks = [
   { key: 'services', href: '#services' },
@@ -43,9 +44,8 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
           <button onClick={scrollToTop} className="flex items-center gap-2">
-            <svg width="36" height="36" viewBox="0 0 100 100" className="animate-logo-glow">
-              <text x="50" y="70" textAnchor="middle" fontFamily="Syne, sans-serif" fontWeight="800" fontSize="52" fill="hsl(0 0% 96%)" className="select-none">KF</text>
-            </svg>
+            {/* Brand monogram — to revert: replace KFLogo with original SVG text block */}
+            <KFLogo size={38} className="text-foreground animate-logo-glow" />
           </button>
 
           {/* Desktop nav */}

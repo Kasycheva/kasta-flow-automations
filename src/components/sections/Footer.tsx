@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import KFLogo from '../ui/KFLogo';
 
 const serviceLinks = [
   { key: 'automationSystems', href: '#services' },
@@ -118,9 +119,10 @@ export default function Footer() {
         <div className="grid min-h-[390px] items-start gap-12 lg:grid-cols-[1.15fr_0.8fr_0.7fr_0.95fr] lg:gap-10 xl:gap-16">
           <div className="max-w-md">
             <a href="#" className="group inline-flex items-center gap-3 mb-7" aria-label="Kasta Flow Studio">
+              {/* Brand monogram — to revert: replace KFLogo with the original 3-span block */}
               <span className="relative flex h-11 w-11 items-center justify-center rounded-sm border border-white/15 bg-white/[0.035]">
                 <span className="absolute inset-1 border border-white/[0.06]" />
-                <span className="font-heading text-[18px] font-extrabold tracking-[-0.02em] text-foreground">KF</span>
+                <KFLogo size={28} className="text-foreground" />
               </span>
               <span className="text-[12px] font-medium uppercase tracking-[0.24em] text-muted-foreground transition-colors duration-300 group-hover:text-foreground">
                 Kasta Flow Studio
