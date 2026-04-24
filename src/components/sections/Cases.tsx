@@ -6,6 +6,20 @@ import SectionReveal from '../ui/SectionReveal';
 
 const EASE = [0.23, 1, 0.32, 1] as const;
 
+/* ── SVG shimmer overlay ──────────────────────────────────────────── */
+function SvgShimmer() {
+  return (
+    <motion.div
+      className="absolute inset-y-0 w-1/2 pointer-events-none"
+      style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%)' }}
+      initial={{ x: '-110%' }}
+      whileInView={{ x: ['-110%', '210%'] }}
+      viewport={{ once: false }}
+      transition={{ duration: 1.8, ease: 'easeInOut', repeat: Infinity, repeatDelay: 3.5 }}
+    />
+  );
+}
+
 /* ─── SVG shared styles ─────────────────────────────────────────── */
 
 const BOX  = { fill: '#111111', stroke: 'rgba(255,255,255,0.13)', strokeWidth: 1.5 } as const;
@@ -318,7 +332,7 @@ export default function Cases() {
             onClick={() => scrollBy(-1)}
             animate={{ opacity: hasScrolled ? 0 : 1 }}
             transition={{ duration: 0.4 }}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
+            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
           >
             <ChevronLeft size={16}/>
           </motion.button>
@@ -327,7 +341,7 @@ export default function Cases() {
             onClick={() => scrollBy(1)}
             animate={{ opacity: hasScrolled ? 0.4 : 1 }}
             transition={{ duration: 0.4 }}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
+            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
           >
             <ChevronRight size={16}/>
           </motion.button>
@@ -353,8 +367,9 @@ export default function Cases() {
                   className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default snap-start flex-shrink-0 w-[85vw] sm:w-[420px] lg:w-[380px] xl:w-[420px]"
                   style={{ borderColor: 'rgba(255,255,255,0.25)', borderLeft: '2px solid rgba(200,200,200,0.5)' }}
                 >
-                  <div className="overflow-hidden" style={{ height: 180, background: '#0A0A0A' }}>
+                  <div className="overflow-hidden relative" style={{ height: 180, background: '#0A0A0A' }}>
                     {CARD_SVGS[i]}
+                    <SvgShimmer />
                   </div>
                   <div className="px-6 pt-4 pb-6">
                     <span className="inline-block text-[11px] px-2.5 py-1 rounded-full text-foreground border border-border mb-4">
@@ -427,7 +442,7 @@ export default function Cases() {
         {/* Stats — staggered entrance */}
         <div className="bg-surface rounded-2xl p-8 md:p-10 grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, i) => (
-            <CountUpStat key={i} value={stat.value} label={stat.label} delay={i * 0.18} />
+            <CountUpStat key={i} value={stat.value} label={stat.label} delay={i * 0.28} />
           ))}
         </div>
       </div>

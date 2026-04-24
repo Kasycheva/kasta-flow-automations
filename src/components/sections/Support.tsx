@@ -148,14 +148,14 @@ export default function Support() {
                 key={i}
                 initial={{ opacity: 0, x: xOffset, y: 10 }}
                 animate={stepsInView ? { opacity: 1, x: 0, y: 0 } : {}}
-                transition={{ type: 'spring', stiffness: 100, damping: 16, delay: 0.2 + i * 0.12 }}
+                transition={{ type: 'spring', stiffness: 80, damping: 18, delay: 0.3 + i * 0.25 }}
                 className="text-center relative"
               >
                 <motion.div
                   className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center text-foreground mx-auto mb-4 relative z-10"
                   initial={{ scale: 0 }}
                   animate={stepsInView ? { scale: 1 } : {}}
-                  transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.25 + i * 0.12 }}
+                  transition={{ type: 'spring', stiffness: 180, damping: 14, delay: 0.35 + i * 0.25 }}
                 >
                   <Icon size={18} />
                 </motion.div>

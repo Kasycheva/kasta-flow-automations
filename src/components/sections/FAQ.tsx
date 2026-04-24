@@ -71,12 +71,6 @@ export default function FAQ() {
             animate={chatInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.55, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
           >
-            {/* Demo label */}
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border text-muted-foreground bg-surface">
-                💬 {t('faq.chatDemoLabel')}
-              </span>
-            </div>
             <div className="bg-surface border border-border rounded-[20px] p-6 sticky top-24">
               <div className="space-y-4">
                 {chatMessages.map((msg, i) => (

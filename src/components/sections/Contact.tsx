@@ -629,7 +629,7 @@ export default function Contact() {
             transition={{ type: 'spring', stiffness: 220, damping: 14, delay: 0 }}
             whileHover={{ scale: 1.03 }}
             className="card-base rounded-2xl p-7 flex flex-col items-center text-center gap-2">
-            <Mail size={28} className="text-accent mb-1" />
+            <Mail size={28} className="text-muted-foreground mb-1" />
             <h4 className="text-foreground font-medium">{t('contact.emailCard.title')}</h4>
             <a href="mailto:kastaflow.studio@gmail.com"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors break-all">
@@ -648,7 +648,7 @@ export default function Contact() {
             transition={{ type: 'spring', stiffness: 220, damping: 14, delay: 0.08 }}
             whileHover={{ scale: 1.03 }}
             className="card-base rounded-2xl p-7 flex flex-col items-center text-center gap-2">
-            <WhatsAppIcon size={28} className="text-kasta-green mb-1" />
+            <WhatsAppIcon size={28} className="text-muted-foreground mb-1" />
             <h4 className="text-foreground font-medium">{t('contact.whatsappCard.title')}</h4>
             <p className="text-sm text-muted-foreground">{t('contact.whatsappCard.text')}</p>
             <p className="text-xs text-muted-foreground flex-1 flex items-center">{t('contact.whatsappCard.note')}</p>
@@ -664,7 +664,7 @@ export default function Contact() {
             transition={{ type: 'spring', stiffness: 220, damping: 14, delay: 0.16 }}
             whileHover={{ scale: 1.03 }}
             className="card-base rounded-2xl p-7 flex flex-col items-center text-center gap-2">
-            <TelegramIcon size={28} className="text-[#2AABEE] mb-1" />
+            <TelegramIcon size={28} className="text-muted-foreground mb-1" />
             <h4 className="text-foreground font-medium">{t('contact.telegramCard.title')}</h4>
             <a href="https://t.me/kastaflow_assist_bot" target="_blank" rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors">
@@ -683,7 +683,7 @@ export default function Contact() {
             transition={{ type: 'spring', stiffness: 220, damping: 14, delay: 0.24 }}
             whileHover={{ scale: 1.03 }}
             className="card-base rounded-2xl p-7 flex flex-col items-center text-center gap-2">
-            <Linkedin size={28} className="text-[#0A66C2] mb-1" />
+            <Linkedin size={28} className="text-muted-foreground mb-1" />
             <h4 className="text-foreground font-medium">{t('contact.linkedinCard.title')}</h4>
             <a href="https://www.linkedin.com/in/maria-kasta-flow/" target="_blank" rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors">
