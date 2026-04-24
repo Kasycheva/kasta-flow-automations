@@ -125,7 +125,7 @@ export default function Contact() {
   const { t, i18n } = useTranslation();
   const [mode, setMode] = useState<'form' | 'voice'>('form');
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
+  const headerInView = useInView(headerRef, { once: false, margin: '-60px 0px' });
 
   // Written form
   const [formData, setFormData] = useState({
@@ -355,11 +355,11 @@ export default function Contact() {
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-16">
+        <div key={i18n.language} ref={headerRef} className="text-center mb-16">
           <motion.span
             className="section-badge inline-flex items-center gap-1.5"
             initial={{ opacity: 0, y: 10 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             <FileSearch size={12} />
@@ -371,7 +371,7 @@ export default function Contact() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
           >
             {t('contact.subtitle')}

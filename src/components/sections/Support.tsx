@@ -8,12 +8,12 @@ const EASE = [0.23, 1, 0.32, 1] as const;
 const stepIcons = [CheckCircle, Layers, Activity, Zap];
 
 export default function Support() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const plans = ['mini', 'standard', 'pro'] as const;
   const steps = t('support.steps', { returnObjects: true }) as { num: string; title: string; desc: string }[];
 
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
+  const headerInView = useInView(headerRef, { once: false, margin: '-60px 0px' });
 
   const stepsRef = useRef<HTMLDivElement>(null);
   const stepsInView = useInView(stepsRef, { once: true, margin: '-60px 0px' });
@@ -23,11 +23,11 @@ export default function Support() {
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-8">
+        <div key={i18n.language} ref={headerRef} className="text-center mb-8">
           <motion.span
             className="section-badge inline-flex items-center gap-1.5"
             initial={{ opacity: 0, y: 10 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             <Shield size={13} />
@@ -39,7 +39,7 @@ export default function Support() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
           >
             {t('support.subtitle')}
@@ -47,9 +47,10 @@ export default function Support() {
         </div>
 
         <motion.p
+          key={`support-disclaimer-${i18n.language}`}
           className="text-sm text-muted-foreground text-center max-w-[600px] mx-auto mb-16"
           initial={{ opacity: 0 }}
-          animate={headerInView ? { opacity: 1 } : {}}
+          animate={headerInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
           {t('support.disclaimer')}

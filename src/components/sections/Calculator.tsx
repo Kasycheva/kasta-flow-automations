@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { BarChart3 } from 'lucide-react';
 import SectionReveal from '../ui/SectionReveal';
 
@@ -83,23 +83,12 @@ const NOK = <span className="text-xs font-normal text-muted-foreground ml-1" tra
 const EASE = [0.23, 1, 0.32, 1] as const;
 
 export default function Calculator() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [hours, setHours] = useState(10);
   const [rate, setRate] = useState(500);
   const [employees, setEmployees] = useState(1);
-  const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
-      { threshold: 0.1 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+  const inView = useInView(sectionRef, { once: false, amount: 0.1 });
 
   const weeklyCost  = hours * rate * employees;
   const monthlyCost = Math.round(weeklyCost * 4.3);
@@ -122,11 +111,11 @@ export default function Calculator() {
       <div className="max-w-5xl mx-auto">
 
         {/* Section header */}
-        <div className="text-center mb-12">
+        <div key={i18n.language} className="text-center mb-12">
           <motion.span
             className="section-badge inline-flex items-center gap-1.5"
             initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             <BarChart3 size={12} />
@@ -138,7 +127,7 @@ export default function Calculator() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
           >
             {t('calculator.subtitle')}

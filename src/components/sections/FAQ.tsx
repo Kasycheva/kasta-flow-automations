@@ -5,24 +5,24 @@ import { Plus, HelpCircle } from 'lucide-react';
 import SectionReveal from '../ui/SectionReveal';
 
 export default function FAQ() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const items = t('faq.items', { returnObjects: true }) as { q: string; a: string }[];
   const chatMessages = t('faq.chatMessages', { returnObjects: true }) as { from: string; text: string }[];
   const chatRef = useRef<HTMLDivElement>(null);
   const chatInView = useInView(chatRef, { once: true, margin: '-80px 0px' });
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
+  const headerInView = useInView(headerRef, { once: false, margin: '-60px 0px' });
   const EASE = [0.23, 1, 0.32, 1] as const;
 
   return (
     <section id="faq" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <div ref={headerRef} className="text-center mb-16">
+        <div key={i18n.language} ref={headerRef} className="text-center mb-16">
           <motion.span
             className="section-badge inline-flex items-center gap-1.5"
             initial={{ opacity: 0, y: 10 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             <HelpCircle size={12} />
@@ -34,7 +34,7 @@ export default function FAQ() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
           >
             {t('faq.subtitle')}

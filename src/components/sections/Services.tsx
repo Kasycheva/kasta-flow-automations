@@ -101,18 +101,18 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
 }
 
 export default function Services() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
+  const headerInView = useInView(headerRef, { once: false, margin: '-60px 0px' });
 
   return (
     <section id="services" className="pt-16 md:pt-28 pb-8 md:pb-10 px-4 md:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div ref={headerRef} className="text-center mb-16">
+        <div key={i18n.language} ref={headerRef} className="text-center mb-16">
           <motion.span
             className="section-badge"
             initial={{ opacity: 0, y: 10 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             {t('services.badge')}
@@ -123,7 +123,7 @@ export default function Services() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
           >
             {t('services.subtitle')}

@@ -42,6 +42,16 @@ function AnimPath({ d, delay = 0, markerId }: { d: string; delay?: number; marke
   );
 }
 
+/* Animated data pulse — moves along the path to suggest automation */
+function FlowPulse({ d, begin = '0s', duration = '3.2s' }: { d: string; begin?: string; duration?: string }) {
+  return (
+    <circle r="2.5" fill="rgba(255,255,255,0.9)" opacity="0.95">
+      <animateMotion dur={duration} begin={begin} repeatCount="indefinite" path={d} />
+      <animate attributeName="opacity" values="0;1;1;0" dur={duration} begin={begin} repeatCount="indefinite" />
+    </circle>
+  );
+}
+
 /* Animated node box — fades in */
 function AnimNode({ x, y, w, h, rx, delay = 0 }: { x: number; y: number; w: number; h: number; rx: number; delay?: number }) {
   return (
@@ -93,6 +103,9 @@ function Card1SVG() {
       <AnimPath d="M62,44 C108,44 138,90 156,90"  delay={0.15} markerId="a1"/>
       <AnimPath d="M62,90 C102,90 132,90 156,90"  delay={0.2}  markerId="a1"/>
       <AnimPath d="M62,136 C108,136 138,90 156,90" delay={0.25} markerId="a1"/>
+      <FlowPulse d="M62,44 C108,44 138,90 156,90" begin="0s" duration="2.8s" />
+      <FlowPulse d="M62,90 C102,90 132,90 156,90" begin="0.45s" duration="2.8s" />
+      <FlowPulse d="M62,136 C108,136 138,90 156,90" begin="0.9s" duration="2.8s" />
 
       {/* n8n */}
       <AnimNode x={156} y={63} w={54} h={54} rx={13} delay={0.3}/>
@@ -107,6 +120,7 @@ function Card1SVG() {
 
       {/* n8n → Calendar */}
       <AnimPath d="M210,90 L258,90" delay={0.4} markerId="a1"/>
+      <FlowPulse d="M210,90 L258,90" begin="1.25s" duration="2.6s" />
 
       {/* Google Calendar */}
       <AnimNode x={258} y={66} w={48} h={48} rx={11} delay={0.45}/>
@@ -120,6 +134,7 @@ function Card1SVG() {
 
       {/* Calendar → Gmail */}
       <AnimPath d="M306,90 L342,90" delay={0.55} markerId="a1"/>
+      <FlowPulse d="M306,90 L342,90" begin="1.8s" duration="2.4s" />
 
       {/* Gmail */}
       <AnimNode x={342} y={66} w={48} h={48} rx={11} delay={0.6}/>
@@ -151,6 +166,7 @@ function Card2SVG() {
       <text x="48" y="121" {...LBL}>Landing page</text>
 
       <AnimPath d="M72,79 L132,79" delay={0.15} markerId="a2"/>
+      <FlowPulse d="M72,79 L132,79" begin="0s" duration="2.6s" />
 
       <AnimNode x={132} y={55} w={48} h={48} rx={11} delay={0.2}/>
       <motion.text
@@ -160,6 +176,7 @@ function Card2SVG() {
       <text x="156" y="121" {...LBL}>n8n</text>
 
       <AnimPath d="M180,79 L240,79" delay={0.35} markerId="a2"/>
+      <FlowPulse d="M180,79 L240,79" begin="0.75s" duration="2.6s" />
 
       <AnimNode x={240} y={55} w={48} h={48} rx={11} delay={0.4}/>
       <g transform="translate(252,67) scale(1.08)" {...ICO}>
@@ -170,6 +187,7 @@ function Card2SVG() {
       <text x="264" y="121" {...LBL}>CRM</text>
 
       <AnimPath d="M288,79 L348,79" delay={0.55} markerId="a2"/>
+      <FlowPulse d="M288,79 L348,79" begin="1.45s" duration="2.6s" />
 
       <AnimNode x={348} y={55} w={48} h={48} rx={11} delay={0.6}/>
       <g transform="translate(360,67) scale(1.08)" {...ICO}>
@@ -201,6 +219,7 @@ function Card3SVG() {
       <text x="48" y="121" {...LBL}>Vipps</text>
 
       <AnimPath d="M72,79 L132,79" delay={0.15} markerId="a3"/>
+      <FlowPulse d="M72,79 L132,79" begin="0s" duration="2.6s" />
 
       <AnimNode x={132} y={55} w={48} h={48} rx={11} delay={0.2}/>
       <motion.text
@@ -210,6 +229,7 @@ function Card3SVG() {
       <text x="156" y="121" {...LBL}>n8n</text>
 
       <AnimPath d="M180,79 L240,79" delay={0.35} markerId="a3"/>
+      <FlowPulse d="M180,79 L240,79" begin="0.75s" duration="2.6s" />
 
       <AnimNode x={240} y={55} w={48} h={48} rx={11} delay={0.4}/>
       <g transform="translate(252,67) scale(1.08)" {...ICO}>
@@ -219,6 +239,7 @@ function Card3SVG() {
       <text x="264" y="121" {...LBL}>Fiken</text>
 
       <AnimPath d="M288,79 L348,79" delay={0.55} markerId="a3"/>
+      <FlowPulse d="M288,79 L348,79" begin="1.45s" duration="2.6s" />
 
       <AnimNode x={348} y={55} w={48} h={48} rx={11} delay={0.6}/>
       <g transform="translate(360,67) scale(1.08)" {...ICO}>
@@ -271,7 +292,7 @@ function CountUpStat({ value, label, delay = 0 }: { value: string; label: string
 /* ─── Section ───────────────────────────────────────────────────── */
 
 export default function Cases() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [hasScrolled, setHasScrolled] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -279,7 +300,7 @@ export default function Cases() {
   const stats = t('cases.stats', { returnObjects: true }) as { value: string; label: string }[];
   const caseKeys = ['case1', 'case2', 'case3'] as const;
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
+  const headerInView = useInView(headerRef, { once: false, margin: '-60px 0px' });
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -302,11 +323,11 @@ export default function Cases() {
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div ref={headerRef} className="text-center mb-16">
+        <div key={i18n.language} ref={headerRef} className="text-center mb-16">
           <motion.span
             className="section-badge"
             initial={{ opacity: 0, y: 10 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             {t('cases.badge')}
@@ -317,7 +338,7 @@ export default function Cases() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
             transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
           >
             {t('cases.subtitle')}
@@ -364,7 +385,7 @@ export default function Cases() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1, ease: EASE }}
                   whileHover={{ y: -6, transition: { duration: 0.22, ease: 'easeOut' } }}
-                  className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default snap-start flex-shrink-0 w-[85vw] sm:w-[420px] lg:w-[380px] xl:w-[420px]"
+                  className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default snap-start flex-shrink-0 w-[85vw] sm:w-[420px] lg:w-[calc((100%-3rem)/3)]"
                   style={{ borderColor: 'rgba(255,255,255,0.25)', borderLeft: '2px solid rgba(200,200,200,0.5)' }}
                 >
                   <div className="overflow-hidden relative" style={{ height: 180, background: '#0A0A0A' }}>
