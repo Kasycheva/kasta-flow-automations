@@ -1,73 +1,79 @@
-# Welcome to your Lovable project
+# Kasta Flow Studio
 
-## Project info
+Marketing site and lead capture experience for Kasta Flow Studio, focused on automation services for Norwegian businesses.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Purpose
 
-## How can I edit this code?
+This project powers the public-facing Kasta Flow Studio website, including:
 
-There are several ways of editing your application.
+- service positioning and case studies
+- ROI calculator and support plans
+- multilingual content (`en` and `no`)
+- lead capture via form, voice input, and chat assistant
 
-**Use Lovable**
+## Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- i18next / react-i18next
+- Vercel serverless functions for chat and text punctuation helpers
 
-Changes made via Lovable will be committed automatically to this repo.
+## Local Development
 
-**Use your preferred IDE**
+Requirements:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Node.js 18+
+- npm
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Commands:
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Useful scripts:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+npm run preview
+npm run test
+```
 
-**Use GitHub Codespaces**
+## Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The project is configured for Vercel deployment.
 
-## What technologies are used for this project?
+- Frontend is built with `vite build`
+- API endpoints live in `api/`
+- Static brand assets live in `public/`
 
-This project is built with:
+Before deploying, confirm that required environment variables are available in the target environment.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Project Structure
 
-## How can I deploy this project?
+```text
+api/                    Serverless endpoints
+public/                 Favicons, robots, social assets, static files
+src/components/         Sections, widgets, shared UI, SEO
+src/lib/                i18n and utilities
+src/locales/            English and Norwegian copy
+src/pages/              Route-level pages
+```
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Branding Notes
 
-## Can I connect a custom domain to my Lovable project?
+- All public metadata, favicons, and social preview assets should reflect Kasta Flow Studio only.
+- Avoid reintroducing Lovable boilerplate, placeholder copy, or generic Vite starter assets.
+- Keep the visual language aligned with the existing monochrome Kasta Flow Studio brand system unless a redesign is intentional.
 
-Yes, you can!
+## Verification
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+For production-safe changes, validate with:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+npm run build
+```

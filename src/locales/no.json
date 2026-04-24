@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "siteName": "Kasta Flow Studio",
+    "title": "Kasta Flow Studio | Intelligent bedriftsautomatisering for Norge",
+    "description": "Kasta Flow Studio utvikler intelligente automatiseringer, AI-agenter og integrasjoner for små og mellomstore bedrifter i Norge."
+  },
   "nav": {
     "services": "Tjenester",
     "calculator": "Kalkulator",
@@ -368,5 +373,11 @@
     "error": "Noe gikk galt. Prøv igjen.",
     "errorRateLimit": "Assistenten vår er opptatt akkurat nå. Vent litt og prøv igjen, eller fyll ut skjemaet nedenfor.",
     "errorOverloaded": "Assistenten vår er opptatt akkurat nå. Prøv igjen om litt, eller fyll ut skjemaet nedenfor — vi svarer innen 24 timer."
+  },
+  "notFound": {
+    "metaTitle": "Siden ble ikke funnet | Kasta Flow Studio",
+    "metaDescription": "Siden du prøvde å åpne finnes ikke.",
+    "title": "Siden du prøvde å åpne finnes ikke.",
+    "cta": "Tilbake til forsiden"
   }
 }

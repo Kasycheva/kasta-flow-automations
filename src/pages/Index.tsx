@@ -11,10 +11,12 @@ import Contact from '../components/sections/Contact';
 import Footer from '../components/sections/Footer';
 import CookieBanner from '../components/widgets/CookieBanner';
 import ChatWidget from '../components/widgets/ChatWidget';
+import Seo from '../components/Seo';
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <Seo />
       <Navbar />
       <Hero />
       <Ticker />

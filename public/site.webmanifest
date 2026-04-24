@@ -1,0 +1,23 @@
+{
+  "name": "Kasta Flow Studio",
+  "short_name": "Kasta Flow",
+  "description": "Intelligent automations, AI agents, and integrations for businesses in Norway.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#0A0A0A",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

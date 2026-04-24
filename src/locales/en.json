@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "siteName": "Kasta Flow Studio",
+    "title": "Kasta Flow Studio | Intelligent Business Automation for Norway",
+    "description": "Kasta Flow Studio designs intelligent automations, AI agents, and integrations for small and medium businesses in Norway."
+  },
   "nav": {
     "services": "Services",
     "calculator": "Calculator",
@@ -368,5 +373,11 @@
     "error": "Something went wrong. Please try again.",
     "errorRateLimit": "Our assistant is busy right now. Please wait a moment and try again, or fill out the form below.",
     "errorOverloaded": "Our assistant is busy right now. Please try again in a moment, or fill out the form below — we'll get back to you within 24 hours."
+  },
+  "notFound": {
+    "metaTitle": "Page Not Found | Kasta Flow Studio",
+    "metaDescription": "The page you requested could not be found.",
+    "title": "The page you requested could not be found.",
+    "cta": "Return to the homepage"
   }
 }
