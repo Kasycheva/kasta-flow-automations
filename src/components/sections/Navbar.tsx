@@ -43,9 +43,11 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
-          <button onClick={scrollToTop} className="flex items-center gap-2">
-            {/* Brand monogram — to revert: replace KFLogo with original SVG text block */}
-            <KFLogo size={38} className="text-foreground animate-logo-glow" />
+          <button onClick={scrollToTop} className="flex items-center gap-3">
+            <KFLogo size={36} className="text-foreground animate-logo-glow" />
+            <span className="hidden sm:block text-[11px] font-semibold uppercase tracking-[0.22em] text-foreground leading-tight">
+              Kasta Flow<br />Studio
+            </span>
           </button>
 
           {/* Desktop nav */}
