@@ -1,14 +1,16 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c ' *)",
+      "Bash(node -e ' *)",
+      "Bash(npm show *)",
+      "Bash(vercel --help)"
+    ]
+  },
   "enabledMcpjsonServers": [
     "filesystem",
     "notion",
     "github",
     "playwright"
-  ],
-  "permissions": {
-    "allow": [
-      "Bash(python3 -c ' *)",
-      "Bash(node -e ' *)"
-    ]
-  }
+  ]
 }

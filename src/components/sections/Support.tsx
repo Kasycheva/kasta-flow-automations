@@ -1,7 +1,10 @@
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { Check, X, Shield, CheckCircle, Layers, Activity, Zap } from 'lucide-react';
+import SectionReveal from '../ui/SectionReveal';
 
+const EASE = [0.23, 1, 0.32, 1] as const;
 const stepIcons = [CheckCircle, Layers, Activity, Zap];
 
 export default function Support() {
@@ -9,21 +12,50 @@ export default function Support() {
   const plans = ['mini', 'standard', 'pro'] as const;
   const steps = t('support.steps', { returnObjects: true }) as { num: string; title: string; desc: string }[];
 
+  const headerRef = useRef<HTMLDivElement>(null);
+  const headerInView = useInView(headerRef, { once: true, margin: '-60px 0px' });
+
+  const stepsRef = useRef<HTMLDivElement>(null);
+  const stepsInView = useInView(stepsRef, { once: true, margin: '-60px 0px' });
+
   return (
     <section id="support" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <span className="section-badge inline-flex items-center gap-1.5">
+
+        {/* Header */}
+        <div ref={headerRef} className="text-center mb-8">
+          <motion.span
+            className="section-badge inline-flex items-center gap-1.5"
+            initial={{ opacity: 0, y: 10 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.4, ease: EASE }}
+          >
             <Shield size={13} />
             {t('support.badge')}
-          </span>
-          <h2 className="section-title">{t('support.title1')}<br />{t('support.title2')}</h2>
-          <p className="section-subtitle">{t('support.subtitle')}</p>
+          </motion.span>
+          <SectionReveal as="h2" className="section-title" delay={0.1}>
+            {`${t('support.title1')} ${t('support.title2')}`}
+          </SectionReveal>
+          <motion.p
+            className="section-subtitle"
+            initial={{ opacity: 0, y: 12 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+          >
+            {t('support.subtitle')}
+          </motion.p>
         </div>
 
-        <p className="text-sm text-muted-foreground text-center max-w-[600px] mx-auto mb-16">{t('support.disclaimer')}</p>
+        <motion.p
+          className="text-sm text-muted-foreground text-center max-w-[600px] mx-auto mb-16"
+          initial={{ opacity: 0 }}
+          animate={headerInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          {t('support.disclaimer')}
+        </motion.p>
 
-        {/* Pricing cards */}
+        {/* Pricing cards — spring bounce entrance, center card emphasized */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           {plans.map((plan, i) => {
             const isStandard = plan === 'standard';
@@ -33,16 +65,23 @@ export default function Support() {
             return (
               <motion.div
                 key={plan}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 40, scale: isStandard ? 0.94 : 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: isStandard ? 1.02 : 1 }}
                 whileHover={{
                   y: -6,
+                  scale: isStandard ? 1.04 : 1.01,
                   boxShadow: isStandard
                     ? '0 20px 60px rgba(0,0,0,0.4)'
                     : '0 16px 48px rgba(0,0,0,0.3)',
                 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15, hover: { duration: 0.3, ease: [0.23, 1, 0.32, 1] } }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 120,
+                  damping: 14,
+                  delay: i * 0.15,
+                  hover: { duration: 0.28, ease: EASE },
+                }}
                 className={`relative rounded-[20px] p-8 flex flex-col ${
                   isStandard
                     ? 'bg-surface-elevated border border-[rgba(200,200,200,0.4)] shadow-[0_0_30px_rgba(200,200,200,0.06)] hover:border-[rgba(220,220,220,0.6)]'
@@ -50,9 +89,13 @@ export default function Support() {
                 }`}
               >
                 {isStandard && (
-                  <span className="absolute top-4 right-4 text-[11px] px-3 py-1 rounded-full bg-foreground text-background font-medium">
+                  <motion.span
+                    className="absolute top-4 right-4 text-[11px] px-3 py-1 rounded-full bg-foreground text-background font-medium"
+                    animate={{ opacity: [0.7, 1, 0.7] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                  >
                     {t('support.mostPopular')}
-                  </span>
+                  </motion.span>
                 )}
                 <h3 className="text-2xl font-heading font-bold text-foreground mb-1">
                   {t(`support.${plan}.name`)}
@@ -87,26 +130,40 @@ export default function Support() {
 
         <p className="text-[13px] text-muted-foreground text-center mb-20">{t('support.finePrint')}</p>
 
-        {/* How support works */}
+        {/* How support works — alternating slide-in */}
         <h3 className="text-xl font-heading font-bold text-foreground text-center mb-12">{t('support.howTitle')}</h3>
-        <div className="grid md:grid-cols-4 gap-8 mb-16 relative">
-          <div className="hidden md:block absolute top-8 left-[12.5%] right-[12.5%] h-px border-t border-dashed border-border" />
-          {steps.map((step, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="text-center relative"
-            >
-              <div className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center text-foreground mx-auto mb-4 relative z-10">
-                {(() => { const Icon = stepIcons[i]; return <Icon size={18} />; })()}
-              </div>
-              <h4 className="text-sm font-heading font-semibold text-foreground mb-2">{step.title}</h4>
-              <p className="text-xs text-muted-foreground leading-relaxed">{step.desc}</p>
-            </motion.div>
-          ))}
+        <div ref={stepsRef} className="grid md:grid-cols-4 gap-8 mb-16 relative">
+          {/* Connecting line — draws itself left to right */}
+          <motion.div
+            className="hidden md:block absolute top-[19px] left-[12.5%] right-[12.5%] h-px border-t border-dashed border-border origin-left"
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={stepsInView ? { scaleX: 1, opacity: 1 } : {}}
+            transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+          />
+          {steps.map((step, i) => {
+            const xOffset = i % 2 === 0 ? -40 : 40;
+            const Icon = stepIcons[i];
+            return (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: xOffset, y: 10 }}
+                animate={stepsInView ? { opacity: 1, x: 0, y: 0 } : {}}
+                transition={{ type: 'spring', stiffness: 100, damping: 16, delay: 0.2 + i * 0.12 }}
+                className="text-center relative"
+              >
+                <motion.div
+                  className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center text-foreground mx-auto mb-4 relative z-10"
+                  initial={{ scale: 0 }}
+                  animate={stepsInView ? { scale: 1 } : {}}
+                  transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.25 + i * 0.12 }}
+                >
+                  <Icon size={18} />
+                </motion.div>
+                <h4 className="text-sm font-heading font-semibold text-foreground mb-2">{step.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{step.desc}</p>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* CTA */}

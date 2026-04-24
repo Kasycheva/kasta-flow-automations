@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useRef } from 'react';
 import { Plus, X } from 'lucide-react';
 
 export default function FAQ() {
@@ -8,6 +9,8 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const items = t('faq.items', { returnObjects: true }) as { q: string; a: string }[];
   const chatMessages = t('faq.chatMessages', { returnObjects: true }) as { from: string; text: string }[];
+  const chatRef = useRef<HTMLDivElement>(null);
+  const chatInView = useInView(chatRef, { once: true, margin: '-80px 0px' });
 
   return (
     <section id="faq" className="section-padding bg-background">
@@ -61,7 +64,19 @@ export default function FAQ() {
           </div>
 
           {/* Chat mockup */}
-          <div className="lg:col-span-2 hidden lg:block">
+          <motion.div
+            ref={chatRef}
+            className="lg:col-span-2 hidden lg:block"
+            initial={{ opacity: 0, x: 40 }}
+            animate={chatInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.3, ease: [0.23, 1, 0.32, 1] }}
+          >
+            {/* Demo label */}
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-[11px] px-2.5 py-1 rounded-full border border-border text-muted-foreground bg-surface">
+                💬 {t('faq.chatDemoLabel')}
+              </span>
+            </div>
             <div className="bg-surface border border-border rounded-[20px] p-6 sticky top-24">
               <div className="space-y-4">
                 {chatMessages.map((msg, i) => (
@@ -90,7 +105,7 @@ export default function FAQ() {
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         <div className="text-center mt-12">

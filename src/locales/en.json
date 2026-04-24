@@ -225,6 +225,7 @@
     ],
     "chatStatus": "✓ Proposal sent within 24 hours",
     "chatBadge": "💬 All communication is written",
+    "chatDemoLabel": "Example conversation",
     "bottomCta": "Still have questions?",
     "bottomCtaLink": "Write to us directly"
   },

@@ -23,6 +23,7 @@ export default function ChatWidget() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [hasShownTooltip, setHasShownTooltip] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [typing, setTyping] = useState(false);
@@ -34,7 +35,7 @@ export default function ChatWidget() {
 
   useEffect(() => {
     const timer = setTimeout(() => setShowTooltip(true), 4000);
-    const hide = setTimeout(() => setShowTooltip(false), 9000);
+    const hide = setTimeout(() => { setShowTooltip(false); setHasShownTooltip(true); }, 9000);
     return () => { clearTimeout(timer); clearTimeout(hide); };
   }, []);
 
@@ -156,7 +157,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 8 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 z-[9999] cursor-pointer"
+            className="fixed bottom-[100px] right-6 z-[9999] cursor-pointer"
             onClick={() => { setShowTooltip(false); handleOpen(); }}
           >
             <div style={{
@@ -182,10 +183,12 @@ export default function ChatWidget() {
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 260, damping: 20 }}
           onClick={handleOpen}
+          onMouseEnter={() => { if (hasShownTooltip) setShowTooltip(true); }}
+          onMouseLeave={() => { if (hasShownTooltip) setShowTooltip(false); }}
           aria-label="Open chat"
           style={{
             position: 'fixed',
-            bottom: '96px',
+            bottom: '28px',
             right: '24px',
             zIndex: 9999,
             width: '56px',
@@ -214,7 +217,7 @@ export default function ChatWidget() {
             transition={{ duration: 0.2 }}
             style={{
               position: 'fixed',
-              bottom: '96px',
+              bottom: '28px',
               right: '24px',
               zIndex: 9999,
               width: '360px',
