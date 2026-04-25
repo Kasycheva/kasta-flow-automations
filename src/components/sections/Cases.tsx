@@ -325,7 +325,10 @@ export default function Cases() {
     if (!scrollRef.current) return;
     const cards = scrollRef.current.querySelectorAll('[data-card]');
     const card = cards[index] as HTMLElement;
-    if (card) scrollRef.current.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+    if (card) {
+      // offsetLeft is relative to scrollRef, which already has px-4 padding applied
+      scrollRef.current.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+    }
     setHasScrolled(true);
   };
 
@@ -356,15 +359,16 @@ export default function Cases() {
           </motion.p>
         </div>
 
-        {/* Case cards — horizontal scroll on all screen sizes ≥ md */}
-        <div className="relative mb-20">
-          {/* Scroll hint arrows — desktop only, fade after first scroll */}
+        {/* Case cards — full-bleed horizontal scroll on mobile/tablet, 3-col on desktop */}
+        <div className="relative mb-20 -mx-4 md:-mx-8 lg:mx-0">
+
+          {/* Desktop nav arrows */}
           <motion.button
             aria-label="Scroll left"
             onClick={() => scrollBy(-1)}
             animate={{ opacity: hasScrolled ? 0 : 1 }}
             transition={{ duration: 0.4 }}
-            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
+            className="absolute left-2 top-[90px] z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronLeft size={16}/>
           </motion.button>
@@ -373,16 +377,17 @@ export default function Cases() {
             onClick={() => scrollBy(1)}
             animate={{ opacity: hasScrolled ? 0.4 : 1 }}
             transition={{ duration: 0.4 }}
-            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
+            className="absolute right-2 top-[90px] z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronRight size={16}/>
           </motion.button>
 
+          {/* Scroll track */}
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 px-1"
-            style={{ WebkitOverflowScrolling: 'touch' }}
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 px-4 md:px-8 lg:px-0 lg:gap-6"
+            style={{ WebkitOverflowScrolling: 'touch', scrollPaddingLeft: '1rem' }}
           >
             {caseKeys.map((key, i) => {
               const metrics = t(`cases.${key}.metrics`, { returnObjects: true }) as string[];
@@ -396,19 +401,19 @@ export default function Cases() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: i * 0.12, ease: EASE }}
                   whileHover={{ y: -6, transition: { duration: 0.22, ease: 'easeOut' } }}
-                  className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default snap-start flex-shrink-0 w-[85vw] sm:w-[400px] lg:w-[calc((100%-3rem)/3)]"
+                  className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default snap-start flex-shrink-0 w-[82vw] sm:w-[380px] lg:w-[calc((100%-3rem)/3)]"
                   style={{ borderColor: 'rgba(255,255,255,0.25)', borderLeft: '2px solid rgba(200,200,200,0.5)' }}
                 >
                   <div className="overflow-hidden relative" style={{ height: 180, background: '#0A0A0A' }}>
                     {CARD_SVGS[i]}
                     <SvgShimmer />
                   </div>
-                  <div className="px-6 pt-4 pb-6">
+                  <div className="px-5 pt-4 pb-6">
                     <span className="inline-block text-[11px] px-2.5 py-1 rounded-full text-foreground border border-border mb-4">
                       {t(`cases.${key}.badge`)}
                     </span>
-                    <h3 className="text-lg font-heading font-semibold text-foreground mb-2">{t(`cases.${key}.title`)}</h3>
-                    <p className="inline-flex items-center gap-1 text-[11px] text-muted-foreground bg-surface-elevated border border-border/50 rounded-md px-2 py-1 mb-4">
+                    <h3 className="text-base font-heading font-semibold text-foreground mb-2">{t(`cases.${key}.title`)}</h3>
+                    <p className="inline-flex items-center gap-1 text-[11px] text-muted-foreground bg-surface-elevated border border-border/50 rounded-md px-2 py-1 mb-3">
                       <span className="opacity-60">→</span> {t(`cases.${key}.audience`)}
                     </p>
                     <p className="text-sm text-muted-foreground leading-relaxed mb-4">{t(`cases.${key}.desc`)}</p>
@@ -428,6 +433,22 @@ export default function Cases() {
                 </motion.div>
               );
             })}
+          </div>
+
+          {/* Dot indicators — mobile/tablet only */}
+          <div className="flex justify-center gap-2 mt-2 lg:hidden">
+            {caseKeys.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => scrollToCard(i)}
+                aria-label={`Case ${i + 1}`}
+                className={`transition-all duration-200 rounded-full ${
+                  i === activeCard
+                    ? 'w-5 h-2 bg-foreground'
+                    : 'w-2 h-2 bg-border hover:bg-muted-foreground'
+                }`}
+              />
+            ))}
           </div>
         </div>
 
