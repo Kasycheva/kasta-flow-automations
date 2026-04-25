@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+﻿import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Plus, HelpCircle } from 'lucide-react';
@@ -11,18 +11,17 @@ export default function FAQ() {
   const chatMessages = t('faq.chatMessages', { returnObjects: true }) as { from: string; text: string }[];
   const chatRef = useRef<HTMLDivElement>(null);
   const chatInView = useInView(chatRef, { once: true, margin: '-80px 0px' });
-  const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: false, margin: '-60px 0px' });
   const EASE = [0.23, 1, 0.32, 1] as const;
 
   return (
     <section id="faq" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <div key={i18n.language} ref={headerRef} className="text-center mb-16">
+        <div key={i18n.language} className="text-center mb-16">
           <motion.span
             className="section-badge inline-flex items-center gap-1.5"
             initial={{ opacity: 0, y: 10 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: '0px' }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             <HelpCircle size={12} />
@@ -34,8 +33,9 @@ export default function FAQ() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '0px' }}
+            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
           >
             {t('faq.subtitle')}
           </motion.p>
@@ -75,7 +75,7 @@ export default function FAQ() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <p className="px-5 pb-5 text-[15px] text-muted-foreground leading-[1.7]">{item.a}</p>
+                      <p className="px-5 pb-5 text-[15px] text-muted-foreground leading-[1.7] text-center">{item.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -130,3 +130,5 @@ export default function FAQ() {
     </section>
   );
 }
+
+

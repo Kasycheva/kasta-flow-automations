@@ -1,6 +1,5 @@
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { motion, useInView } from 'framer-motion';
+﻿import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 import {
   ArrowRightLeft, GitBranch, Zap, Filter,
   MessageSquare, Brain, Monitor, Calendar, Bell,
@@ -34,10 +33,17 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, ease: EASE, delay: index * 0.06 }}
-      className="services-card flex flex-col"
+      className="services-card flex flex-col relative"
     >
-      {/* Icon + badge */}
-      <div className="flex items-start justify-between mb-5 gap-3">
+      {/* Badge â€” top right corner */}
+      {badge && (
+        <span className="absolute top-4 right-4 h-6 px-3 rounded-full bg-white text-[#0a0a0a] font-semibold text-[10px] tracking-[0.14em] uppercase shrink-0 inline-flex items-center whitespace-nowrap">
+          {badge}
+        </span>
+      )}
+
+      {/* Icon â€” centered */}
+      <div className="flex justify-center mb-5">
         <motion.div
           className="services-icon shrink-0"
           initial={{ scale: 0, rotate: -15 }}
@@ -47,26 +53,21 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
         >
           <Icon size={18} color="#C8C8C8" />
         </motion.div>
-        {badge && (
-          <span className="h-6 px-3 rounded-full bg-white text-[#0a0a0a] font-semibold text-[10px] tracking-[0.14em] uppercase shrink-0 inline-flex items-center whitespace-nowrap">
-            {badge}
-          </span>
-        )}
       </div>
 
-      {/* Title + description — always visible */}
-      <h3 className="text-[1.1rem] font-heading font-semibold text-foreground mb-2 leading-snug">
+      {/* Title + description â€” centered */}
+      <h3 className="text-[1.1rem] font-heading font-semibold text-foreground mb-2 leading-snug text-center">
         {t(`services.${cardKey}.name`)}
       </h3>
-      <p className="text-[13.5px] text-muted-foreground leading-relaxed">
+      <p className="text-[13.5px] text-muted-foreground leading-relaxed text-center">
         {t(`services.${cardKey}.desc`)}
       </p>
 
-      {/* Checklist — hidden by default, revealed on hover */}
+      {/* Checklist â€” always visible on mobile, revealed on hover for desktop */}
       <ul className="services-checklist">
         {checks.map((item, j) => (
           <li key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground">
-            <span className="text-accent mt-0.5 shrink-0">✓</span>
+            <span className="text-accent mt-0.5 shrink-0">âœ“</span>
             {item}
           </li>
         ))}
@@ -77,10 +78,10 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
         </p>
       )}
 
-      {/* Price + CTA — always visible at bottom */}
+      {/* Price + CTA â€” centered, stacked */}
       <div className="services-price mt-auto pt-4">
-        <div className="flex items-end justify-between gap-3">
-          <div>
+        <div className="flex flex-col items-center gap-3">
+          <div className="text-center">
             <span className="text-xs text-muted-foreground">{t('services.from')} </span>
             <span className="text-[1.35rem] font-heading font-bold text-foreground">
               {t(`services.${cardKey}.price`)}
@@ -89,10 +90,10 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
           </div>
           <a
             href="#contact"
-            className="shrink-0 text-[12px] font-medium text-[#0a0a0a] bg-white hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(255,255,255,0.18)] rounded-full px-3 py-1.5 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] inline-flex items-center gap-1 group whitespace-nowrap"
+            className="w-full justify-center text-[12px] font-medium text-[#0a0a0a] bg-white hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(255,255,255,0.18)] rounded-full px-3 py-1.5 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] inline-flex items-center gap-1 group whitespace-nowrap"
           >
             {t('services.orderCta')}
-            <span className="group-hover:translate-x-0.5 transition-transform duration-200" aria-hidden>→</span>
+            <span className="group-hover:translate-x-0.5 transition-transform duration-200" aria-hidden>â†’</span>
           </a>
         </div>
       </div>
@@ -102,17 +103,16 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
 
 export default function Services() {
   const { t, i18n } = useTranslation();
-  const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: false, margin: '-60px 0px' });
 
   return (
     <section id="services" className="pt-16 md:pt-28 pb-8 md:pb-10 px-4 md:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        <div key={i18n.language} ref={headerRef} className="text-center mb-16">
+        <div key={i18n.language} className="text-center mb-16">
           <motion.span
             className="section-badge"
             initial={{ opacity: 0, y: 10 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: '0px' }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             {t('services.badge')}
@@ -123,15 +123,16 @@ export default function Services() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '0px' }}
+            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
           >
             {t('services.subtitle')}
           </motion.p>
         </div>
 
-        {/* 3-column grid — 3×3 = 9 cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
+        {/* 3-column grid â€” 3Ã—3 = 9 cards, 3 cols from md to avoid orphan */}
+        <div className="grid md:grid-cols-3 gap-6 mb-24">
           {cardKeys.map((key, i) => (
             <ServiceCard key={key} cardKey={key} index={i} icons={icons} />
           ))}
@@ -155,7 +156,7 @@ export default function Services() {
             href="#contact"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-sm text-foreground hover:border-white/35 hover:bg-white/[0.07] transition-all duration-200"
           >
-            {t('services.customCta')} <span aria-hidden>→</span>
+            {t('services.customCta')} <span aria-hidden>â†’</span>
           </a>
           <p className="text-xs text-muted-foreground/45 max-w-3xl leading-relaxed mt-1">
             {t('services.pricingNote')}
@@ -165,3 +166,5 @@ export default function Services() {
     </section>
   );
 }
+
+

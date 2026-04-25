@@ -116,9 +116,9 @@ export default function Footer() {
       <div className="absolute left-12 bottom-16 h-44 w-44 rounded-full bg-white/[0.035] blur-[90px]" aria-hidden="true" />
 
       <div className="relative max-w-7xl mx-auto px-4 md:px-8 pt-14 md:pt-20 pb-5 md:pb-6">
-        <div className="grid min-h-[390px] items-start gap-12 lg:grid-cols-[1.15fr_0.8fr_0.7fr_0.95fr] lg:gap-10 xl:gap-16">
-          <div className="max-w-md">
-            <a href="#" className="group inline-flex items-center gap-3 mb-7" aria-label="Kasta Flow Studio">
+        <div className="grid min-h-[390px] items-start gap-12 mb-10 md:mb-14 lg:grid-cols-[1.15fr_0.8fr_0.7fr_0.95fr] lg:gap-10 xl:gap-16">
+          <div className="max-w-md mx-auto lg:mx-0 text-center lg:text-left">
+            <a href="#" className="group inline-flex items-center gap-3 mb-7 mx-auto lg:mx-0" aria-label="Kasta Flow Studio">
               {/* Brand monogram — to revert: replace KFLogo with the original 3-span block */}
               <span className="relative flex h-11 w-11 items-center justify-center rounded-sm border border-white/15 bg-white/[0.035]">
                 <span className="absolute inset-1 border border-white/[0.06]" />
@@ -140,7 +140,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav aria-label={t('footer.servicesHeading')} className="lg:pt-24">
+          <nav aria-label={t('footer.servicesHeading')} className="lg:pt-24 text-center lg:text-left">
             <h3 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground">
               {t('footer.servicesHeading')}
             </h3>
@@ -155,7 +155,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label={t('footer.exploreHeading')} className="lg:pt-24">
+          <nav aria-label={t('footer.exploreHeading')} className="lg:pt-24 text-center lg:text-left">
             <h3 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground">
               {t('footer.exploreHeading')}
             </h3>
@@ -170,11 +170,11 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div className="lg:pt-24">
+          <div className="lg:pt-24 text-center lg:text-left">
             <h3 className="mb-5 text-[12px] font-semibold uppercase tracking-[0.18em] text-foreground">
               {t('footer.socialHeading')}
             </h3>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 justify-center lg:justify-start">
               {socialLinks.map(({ label, href, Icon }) => (
                 <a
                   key={label}
@@ -191,7 +191,7 @@ export default function Footer() {
 
             <ul className="mt-6 space-y-2.5">
               {supportNotes.map((note) => (
-                <li key={note} className="flex items-center gap-2 text-sm text-muted-foreground">
+                <li key={note} className="flex items-center gap-2 text-sm text-muted-foreground justify-center lg:justify-start">
                   <Check size={14} className="text-foreground/80" />
                   <span>{t(`footer.notes.${note}`)}</span>
                 </li>
@@ -200,7 +200,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 py-2.5 flex flex-col gap-2 text-xs leading-none text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pr-32">
+        <div className="border-t border-white/10 py-5 flex flex-col gap-2 text-xs leading-none text-muted-foreground items-center sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:pr-32">
           <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:gap-4">
             <p>{t('footer.copyright')}</p>
             <p>

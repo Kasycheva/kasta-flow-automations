@@ -144,6 +144,21 @@
     margin-top: 14px;
     border-top: 1px solid rgba(255,255,255,0.06);
   }
+  /* On touch devices checklist is always visible (no hover) */
+  @media (max-width: 767px) {
+    .services-checklist {
+      max-height: 220px;
+      opacity: 1;
+      padding-top: 14px;
+      margin-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .services-checksNote {
+      max-height: 60px;
+      opacity: 1;
+      margin-top: 8px;
+    }
+  }
   .services-checksNote {
     overflow: hidden;
     max-height: 0;

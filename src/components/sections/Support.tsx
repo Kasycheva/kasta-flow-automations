@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+﻿import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
 import { Check, X, Shield, CheckCircle, Layers, Activity, Zap } from 'lucide-react';
@@ -12,22 +12,20 @@ export default function Support() {
   const plans = ['mini', 'standard', 'pro'] as const;
   const steps = t('support.steps', { returnObjects: true }) as { num: string; title: string; desc: string }[];
 
-  const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: false, margin: '-60px 0px' });
-
   const stepsRef = useRef<HTMLDivElement>(null);
-  const stepsInView = useInView(stepsRef, { once: true, margin: '-60px 0px' });
+  const stepsInView = useInView(stepsRef, { once: true, margin: '0px' });
 
   return (
     <section id="support" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
-        <div key={i18n.language} ref={headerRef} className="text-center mb-8">
+        <div key={i18n.language} className="text-center mb-8">
           <motion.span
             className="section-badge inline-flex items-center gap-1.5"
             initial={{ opacity: 0, y: 10 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: '0px' }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             <Shield size={13} />
@@ -39,8 +37,9 @@ export default function Support() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={headerInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '0px' }}
+            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
           >
             {t('support.subtitle')}
           </motion.p>
@@ -50,13 +49,14 @@ export default function Support() {
           key={`support-disclaimer-${i18n.language}`}
           className="text-sm text-muted-foreground text-center max-w-[600px] mx-auto mb-16"
           initial={{ opacity: 0 }}
-          animate={headerInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false, margin: '0px' }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
           {t('support.disclaimer')}
         </motion.p>
 
-        {/* Pricing cards — spring bounce entrance, center card emphasized */}
+        {/* Pricing cards â€” spring bounce entrance, center card emphasized */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           {plans.map((plan, i) => {
             const isStandard = plan === 'standard';
@@ -83,7 +83,7 @@ export default function Support() {
                   delay: i * 0.15,
                   hover: { duration: 0.28, ease: EASE },
                 }}
-                className={`relative rounded-[20px] p-8 flex flex-col ${
+                className={`relative rounded-[20px] p-8 flex flex-col items-center text-center ${
                   isStandard
                     ? 'bg-surface-elevated border border-[rgba(200,200,200,0.4)] shadow-[0_0_30px_rgba(200,200,200,0.06)] hover:border-[rgba(220,220,220,0.6)]'
                     : 'bg-surface border border-[rgba(255,255,255,0.25)] hover:border-[rgba(255,255,255,0.45)]'
@@ -107,21 +107,21 @@ export default function Support() {
                   <span className="text-sm text-muted-foreground ml-2">NOK</span>
                   <p className="text-xs text-muted-foreground mt-1">{t('support.perMonth')}</p>
                 </div>
-                <ul className="space-y-2.5 mb-4 flex-1">
+                <ul className="space-y-2.5 mb-4 flex-1 w-full">
                   {includes.map((item, j) => (
-                    <li key={j} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <li key={j} className="flex items-start justify-center gap-2 text-sm text-muted-foreground">
                       <Check size={14} className="text-accent mt-0.5 shrink-0" />
-                      {item}
+                      <span className="text-left">{item}</span>
                     </li>
                   ))}
                   {excludes.map((item, j) => (
-                    <li key={`ex-${j}`} className="flex items-start gap-2 text-sm text-muted-foreground opacity-50">
+                    <li key={`ex-${j}`} className="flex items-start justify-center gap-2 text-sm text-muted-foreground opacity-50">
                       <X size={14} className="mt-0.5 shrink-0" />
-                      {item}
+                      <span className="text-left">{item}</span>
                     </li>
                   ))}
                 </ul>
-                <a href="#contact" className={isStandard ? 'btn-primary text-center' : 'btn-outline text-center'}>
+                <a href="#contact" className={`w-full ${isStandard ? 'btn-primary text-center' : 'btn-outline text-center'}`}>
                   {t('support.getStarted')}
                 </a>
               </motion.div>
@@ -131,10 +131,10 @@ export default function Support() {
 
         <p className="text-[13px] text-muted-foreground text-center mb-20">{t('support.finePrint')}</p>
 
-        {/* How support works — alternating slide-in */}
+        {/* How support works â€” alternating slide-in */}
         <h3 className="text-xl font-heading font-bold text-foreground text-center mb-12">{t('support.howTitle')}</h3>
         <div ref={stepsRef} className="grid md:grid-cols-4 gap-8 mb-16 relative">
-          {/* Connecting line — draws itself left to right */}
+          {/* Connecting line â€” draws itself left to right */}
           <motion.div
             className="hidden md:block absolute top-[19px] left-[12.5%] right-[12.5%] h-px border-t border-dashed border-border origin-left"
             initial={{ scaleX: 0, opacity: 0 }}
@@ -142,13 +142,12 @@ export default function Support() {
             transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
           />
           {steps.map((step, i) => {
-            const xOffset = i % 2 === 0 ? -40 : 40;
             const Icon = stepIcons[i];
             return (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: xOffset, y: 10 }}
-                animate={stepsInView ? { opacity: 1, x: 0, y: 0 } : {}}
+                initial={{ opacity: 0, y: 30 }}
+                animate={stepsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ type: 'spring', stiffness: 80, damping: 18, delay: 0.3 + i * 0.25 }}
                 className="text-center relative"
               >
@@ -177,3 +176,5 @@ export default function Support() {
     </section>
   );
 }
+
+
