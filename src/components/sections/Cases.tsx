@@ -415,17 +415,16 @@ export default function Cases() {
             })}
           </div>
 
-          {/* Navigation: arrows + dots, visible on all screen sizes */}
-          <div className="flex items-center justify-center gap-4 mt-4 px-4 lg:px-0">
+          {/* Navigation — same style as testimonials block */}
+          <div className="flex items-center justify-center gap-4 mt-6 px-4 lg:px-0">
             <button
               type="button"
               aria-label="Previous case"
               onClick={() => scrollBy(-1)}
-              className="w-9 h-9 flex items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors shrink-0"
+              className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
             >
               <ChevronLeft size={16}/>
             </button>
-
             <div className="flex gap-2">
               {caseKeys.map((_, i) => (
                 <button
@@ -433,20 +432,15 @@ export default function Cases() {
                   type="button"
                   onClick={() => scrollToCard(i)}
                   aria-label={`Case ${i + 1}`}
-                  className={`transition-all duration-200 rounded-full ${
-                    i === activeCard
-                      ? 'w-6 h-2 bg-foreground'
-                      : 'w-2 h-2 bg-border hover:bg-muted-foreground'
-                  }`}
+                  className={`w-2 h-2 rounded-full transition-colors ${i === activeCard ? 'bg-foreground' : 'bg-border'}`}
                 />
               ))}
             </div>
-
             <button
               type="button"
               aria-label="Next case"
               onClick={() => scrollBy(1)}
-              className="w-9 h-9 flex items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors shrink-0"
+              className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
             >
               <ChevronRight size={16}/>
             </button>
