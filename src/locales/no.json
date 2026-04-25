@@ -294,6 +294,8 @@
     "gdpr": "Ved å sende dette skjemaet godtar du vår personvernpolicy og samtykker til behandling av dine personopplysninger for å svare på forespørselen din.",
     "voiceTitle": "Bare snakk — vi tar oss av resten",
     "voiceSubtitle": "Trykk på knappen og beskriv bedriften din, hva som tar mest tid, og hva du ønsker å automatisere. Snakk naturlig — det finnes ingen feil svar.",
+    "voiceNotSupported": "Taleinntasting er ikke tilgjengelig i denne nettleseren",
+    "voiceNotSupportedMsg": "Taleopptak krever Chrome på Android eller en skrivebordsnettleser. Du kan bruke det skriftlige skjemaet, eller bytte til Chrome.",
     "tapToRecord": "Trykk for å starte innspilling",
     "listening": "Spiller inn... trykk for å stoppe",
     "recordingComplete": "Innspilling fullført ✓",

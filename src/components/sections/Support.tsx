@@ -1,4 +1,4 @@
-﻿import { useRef } from 'react';
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
 import { Check, X, Shield, CheckCircle, Layers, Activity, Zap } from 'lucide-react';

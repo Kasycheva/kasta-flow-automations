@@ -1,4 +1,4 @@
-﻿import { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Plus, HelpCircle } from 'lucide-react';

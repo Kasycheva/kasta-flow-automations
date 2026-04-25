@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
@@ -34,10 +34,10 @@ function AnimPath({ d, delay = 0, markerId }: { d: string; delay?: number; marke
       d={d}
       {...ARR}
       markerEnd={`url(#${markerId})`}
-      initial={{ pathLength: 0, opacity: 0 }}
-      whileInView={{ pathLength: 1, opacity: 1 }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay, ease: EASE }}
+      transition={{ duration: 0.5, delay, ease: EASE }}
     />
   );
 }
@@ -414,7 +414,7 @@ export default function Cases() {
                     </span>
                     <h3 className="text-lg font-heading font-semibold text-foreground mb-2">{t(`cases.${key}.title`)}</h3>
                     <p className="inline-flex items-center gap-1 text-[11px] text-muted-foreground bg-surface-elevated border border-border/50 rounded-md px-2 py-1 mb-4">
-                      <span className="opacity-60">â†’</span> {t(`cases.${key}.audience`)}
+                      <span className="opacity-60">{'→'}</span> {t(`cases.${key}.audience`)}
                     </p>
                     <p className="text-sm text-muted-foreground leading-relaxed mb-4">{t(`cases.${key}.desc`)}</p>
                     <div className="grid grid-cols-3 gap-2 mb-4">
