@@ -16,21 +16,21 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 w-full pt-24 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text */}
-          <div>
+          <div className="text-center lg:text-left">
             <motion.div {...fadeUp(0.2)}>
               <span className="section-badge">{t('hero.badge')}</span>
             </motion.div>
             <motion.h1 {...fadeUp(0.5)} className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-foreground leading-[1.08] mb-6">
               {t('hero.title1')}<br />{t('hero.title2')}
             </motion.h1>
-            <motion.p {...fadeUp(0.8)} className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed">
+            <motion.p {...fadeUp(0.8)} className="text-lg text-muted-foreground max-w-lg mb-8 leading-relaxed mx-auto lg:mx-0">
               {t('hero.subtitle')}
             </motion.p>
-            <motion.div {...fadeUp(1.1)} className="flex flex-wrap gap-4 mb-8">
+            <motion.div {...fadeUp(1.1)} className="flex flex-wrap gap-4 mb-8 justify-center lg:justify-start">
               <a href="#contact" className="btn-primary">{t('hero.ctaPrimary')}</a>
               <a href="#services" className="btn-outline">{t('hero.ctaSecondary')}</a>
             </motion.div>
-            <motion.div {...fadeUp(1.4)} className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+            <motion.div {...fadeUp(1.4)} className="flex flex-wrap gap-4 text-sm text-muted-foreground justify-center lg:justify-start">
               <span>{t('hero.proof1')}</span>
               <span>{t('hero.proof2')}</span>
               <span>{t('hero.proof3')}</span>
@@ -50,7 +50,7 @@ export default function Hero() {
                 src="https://lottie.host/6736fad7-3348-473d-89d7-29fa57fce136/VqnXUbDwSr.lottie"
                 loop
                 autoplay
-                className="w-[280px] h-[280px] lg:w-[480px] lg:h-[480px]"
+                className="w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] lg:w-[480px] lg:h-[480px]"
               />
             </div>
           </motion.div>

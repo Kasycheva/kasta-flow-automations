@@ -39,6 +39,20 @@ export default function ChatWidget() {
     return () => { clearTimeout(timer); clearTimeout(hide); };
   }, []);
 
+  // Periodic reminder: show tooltip for 2s every 35s, up to 4 times, on all devices
+  useEffect(() => {
+    if (!hasShownTooltip || open) return;
+    let count = 0;
+    const interval = setInterval(() => {
+      if (open) return;
+      count++;
+      setShowTooltip(true);
+      setTimeout(() => setShowTooltip(false), 2000);
+      if (count >= 4) clearInterval(interval);
+    }, 35000);
+    return () => clearInterval(interval);
+  }, [hasShownTooltip, open]);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, typing]);

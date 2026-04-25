@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+﻿import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
 import { BarChart3 } from 'lucide-react';
@@ -88,7 +88,7 @@ export default function Calculator() {
   const [rate, setRate] = useState(500);
   const [employees, setEmployees] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
-  const inView = useInView(sectionRef, { once: false, amount: 0.1 });
+  const inView = useInView(sectionRef, { once: true, amount: 0.1 });
 
   const weeklyCost  = hours * rate * employees;
   const monthlyCost = Math.round(weeklyCost * 4.3);
@@ -115,7 +115,8 @@ export default function Calculator() {
           <motion.span
             className="section-badge inline-flex items-center gap-1.5"
             initial={{ opacity: 0, y: 10 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: '0px' }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             <BarChart3 size={12} />
@@ -127,14 +128,15 @@ export default function Calculator() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '0px' }}
+            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
           >
             {t('calculator.subtitle')}
           </motion.p>
         </div>
 
-        {/* Dashboard card — slides up from below */}
+        {/* Dashboard card â€” slides up from below */}
         <motion.div
           initial={{ opacity: 0, y: 80, scale: 0.95 }}
           animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
@@ -165,7 +167,7 @@ export default function Calculator() {
           {/* Body: left sliders / right metrics */}
           <div className="grid md:grid-cols-[1fr_1.15fr] items-stretch divide-y md:divide-y-0 md:divide-x divide-white/[0.07]">
 
-            {/* ── Left: sliders only ── */}
+            {/* â”€â”€ Left: sliders only â”€â”€ */}
             <div className="p-7 md:p-10 flex flex-col justify-center gap-8">
               {[
                 {
@@ -199,10 +201,10 @@ export default function Calculator() {
               ))}
             </div>
 
-            {/* ── Right: metrics ── */}
+            {/* â”€â”€ Right: metrics â”€â”€ */}
             <div className="p-7 md:p-10 flex flex-col gap-4 justify-between">
 
-              {/* Annual waste — hero metric */}
+              {/* Annual waste â€” hero metric */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
@@ -247,7 +249,7 @@ export default function Calculator() {
                 </motion.div>
               </div>
 
-              {/* Payback — with embedded progress bar */}
+              {/* Payback â€” with embedded progress bar */}
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -280,7 +282,7 @@ export default function Calculator() {
           </div>
         </motion.div>
 
-        {/* CTA — centered below card */}
+        {/* CTA â€” centered below card */}
         <motion.div
           className="text-center mt-10"
           initial={{ opacity: 0, y: 16 }}
@@ -295,3 +297,5 @@ export default function Calculator() {
     </section>
   );
 }
+
+
