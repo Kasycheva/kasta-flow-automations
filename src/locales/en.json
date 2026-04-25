@@ -303,6 +303,7 @@
     "voiceLangLabel": "Speak in:",
     "voiceLangEN": "EN",
     "voiceLangNO": "NO",
+    "voiceAfterStopHint": "Your text appears after you stop recording.",
     "voiceLiveLabel": "Capturing your message...",
     "voiceLivePlaceholder": "Speak clearly — your words will appear here",
     "voicePunctuating": "Formatting your message...",

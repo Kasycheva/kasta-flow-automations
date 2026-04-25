@@ -835,6 +835,9 @@ export default function Contact() {
                                 ? t('contact.recordingComplete')
                                 : t('contact.tapToRecord')}
                         </p>
+                        <p className="text-xs text-muted-foreground/60 mt-1">
+                          {t('contact.voiceAfterStopHint')}
+                        </p>
                         {recordingPaused && (
                           <p className="text-xs text-muted-foreground/60 mt-1">
                             {t('contact.voicePausedHint', 'Or tap Stop to finish')}

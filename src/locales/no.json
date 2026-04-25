@@ -303,6 +303,7 @@
     "voiceLangLabel": "Snakk på:",
     "voiceLangEN": "EN",
     "voiceLangNO": "NO",
+    "voiceAfterStopHint": "Teksten vises etter at du stopper opptaket.",
     "voiceLiveLabel": "Fanger opp meldingen din...",
     "voiceLivePlaceholder": "Snakk tydelig — ordene dine vil vises her",
     "voicePunctuating": "Formaterer meldingen din...",
