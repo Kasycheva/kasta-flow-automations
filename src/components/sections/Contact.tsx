@@ -119,6 +119,23 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function prefersAudioRecordingFallback() {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent;
+  const isIOS = /iP(hone|od|ad)/.test(ua);
+  const isSafari = /Safari/i.test(ua) && !/Chrome|CriOS|FxiOS|Edg/i.test(ua);
+  return isIOS || isSafari;
+}
+
+function blobToBase64(blob: Blob) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(String(reader.result).split(',')[1] || '');
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
 // ── Contact ──────────────────────────────────────────────────────────────────
 
 export default function Contact() {
@@ -141,6 +158,12 @@ export default function Contact() {
   const [recordingComplete, setRecordingComplete] = useState(false);
   const [transcript, setTranscript] = useState('');
   const transcriptRef = useRef('');
+  const recognitionRef = useRef<any>(null);
+  const stopRequestedRef = useRef(false);
+  const finalizeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
   const [recordingLang, setRecordingLang] = useState<'en-US' | 'nb-NO'>(
     () => i18n.language === 'no' ? 'nb-NO' : 'en-US',
   );
@@ -259,44 +282,142 @@ export default function Contact() {
     setSent(true);
   };
 
+  const stopActiveRecognition = () => {
+    stopRequestedRef.current = true;
+    if (finalizeTimerRef.current) clearTimeout(finalizeTimerRef.current);
+    try {
+      recognitionRef.current?.stop();
+    } catch {
+      try { recognitionRef.current?.abort(); } catch {}
+    }
+  };
+
   const handleReRecord = () => {
-    (window as any).__stopRecording?.();
+    stopActiveRecognition();
+    mediaRecorderRef.current?.stop();
+    mediaStreamRef.current?.getTracks().forEach(track => track.stop());
+    mediaRecorderRef.current = null;
+    mediaStreamRef.current = null;
+    audioChunksRef.current = [];
     transcriptRef.current = '';
     setTranscript('');
     setRecording(false);
     setRecordingPaused(false);
     setRecordingComplete(false);
+    setPunctuating(false);
+  };
+
+  const transcribeAudioBlob = async (blob: Blob, lang: 'en-US' | 'nb-NO') => {
+    const audio = await blobToBase64(blob);
+    const res = await fetch('/api/transcribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ audio, mimeType: blob.type || 'audio/webm', lang }),
+    });
+    const data = await res.json();
+    return typeof data.text === 'string' ? data.text.trim() : '';
+  };
+
+  const startAudioRecording = async () => {
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
+      setVoiceErrors(p => ({ ...p, name: t('contact.voiceNotSupported') }));
+      return;
+    }
+
+    const lang = recordingLang;
+    transcriptRef.current = '';
+    setTranscript('');
+    setRecording(true);
+    setRecordingPaused(false);
+    setRecordingComplete(false);
+    setPunctuating(false);
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaStreamRef.current = stream;
+      audioChunksRef.current = [];
+
+      const preferredType = ['audio/webm;codecs=opus', 'audio/mp4', 'audio/webm']
+        .find(type => MediaRecorder.isTypeSupported(type));
+      const recorder = preferredType
+        ? new MediaRecorder(stream, { mimeType: preferredType })
+        : new MediaRecorder(stream);
+
+      mediaRecorderRef.current = recorder;
+      recorder.ondataavailable = event => {
+        if (event.data.size > 0) audioChunksRef.current.push(event.data);
+      };
+      recorder.onstop = async () => {
+        stream.getTracks().forEach(track => track.stop());
+        mediaStreamRef.current = null;
+        mediaRecorderRef.current = null;
+        setRecording(false);
+        setRecordingComplete(true);
+
+        const blob = new Blob(audioChunksRef.current, { type: recorder.mimeType || 'audio/webm' });
+        audioChunksRef.current = [];
+        if (!blob.size) return;
+
+        setPunctuating(true);
+        try {
+          const text = await transcribeAudioBlob(blob, lang);
+          transcriptRef.current = text;
+          setTranscript(text);
+        } catch (err) {
+          console.error('Audio transcription failed:', err);
+          setVoiceErrors(p => ({ ...p, name: t('contact.voiceNoSpeech') }));
+        } finally {
+          setPunctuating(false);
+        }
+      };
+      recorder.start();
+    } catch (err) {
+      console.error('MediaRecorder init error:', err);
+      setRecording(false);
+      setVoiceErrors(p => ({ ...p, name: t('contact.voicePermissionDenied', 'Allow microphone access in your browser settings') }));
+    }
   };
 
   const startRecognitionSession = (append: boolean) => {
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) { setVoiceErrors(p => ({ ...p, name: t('contact.voiceNotSupported') })); return; }
 
+    stopActiveRecognition();
+    stopRequestedRef.current = false;
+    if (finalizeTimerRef.current) clearTimeout(finalizeTimerRef.current);
+
     if (!append) {
       transcriptRef.current = '';
       setTranscript('');
     }
 
-    let stopped = false;
+    let finalized = false;
+    let sessionFinalText = '';
+    const baseText = append ? transcriptRef.current : '';
+    const lang = recordingLang;
 
     const finalize = async () => {
-      if (stopped) return;
-      stopped = true;
+      if (finalized) return;
+      finalized = true;
+      if (finalizeTimerRef.current) clearTimeout(finalizeTimerRef.current);
       setRecording(false);
       setRecordingPaused(false);
       setRecordingComplete(true);
-      const finalText = transcriptRef.current;
+      const finalText = transcriptRef.current.trim();
       setTranscript(finalText);
-      if (finalText.trim()) {
+      if (finalText) {
         setPunctuating(true);
         try {
           const res = await fetch('/api/punctuate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: finalText, lang: recordingLang }),
+            body: JSON.stringify({ text: finalText, lang }),
           });
           const data = await res.json();
-          if (data.result) setTranscript(data.result);
+          if (data.result) {
+            transcriptRef.current = data.result;
+            setTranscript(data.result);
+          }
         } catch {
           // keep original on network error
         } finally {
@@ -307,37 +428,48 @@ export default function Contact() {
 
     try {
       const r = new SR();
-      r.lang = recordingLang;
+      recognitionRef.current = r;
+      r.lang = lang;
       r.continuous = true;
       r.interimResults = true;
 
       r.onresult = (event: any) => {
-        let chunk = '';
-        // event.resultIndex = first NEW result; avoids duplicate accumulation in continuous mode
+        let interimText = '';
         for (let i = event.resultIndex; i < event.results.length; i++) {
-          if (event.results[i].isFinal) chunk += event.results[i][0].transcript + ' ';
+          const text = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            sessionFinalText = `${sessionFinalText} ${text}`.trim();
+          } else {
+            interimText = `${interimText} ${text}`.trim();
+          }
         }
-        if (chunk) {
-          transcriptRef.current = (transcriptRef.current + ' ' + chunk).trim();
-          setTranscript(transcriptRef.current);
-        }
+
+        const stableText = `${baseText} ${sessionFinalText}`.trim();
+        const liveText = `${stableText} ${interimText}`.trim();
+        transcriptRef.current = liveText;
+        setTranscript(liveText);
       };
 
       r.onend = () => {
-        if (stopped) return;
+        if (recognitionRef.current === r) recognitionRef.current = null;
+        if (stopRequestedRef.current) {
+          finalize();
+          return;
+        }
         // Fired by iOS after silence (not by user) — pause, let user tap to continue
         setRecording(false);
         setRecordingPaused(true);
       };
 
       r.onerror = (event: any) => {
-        if (event.error === 'no-speech') return; // normal pause, onend follows
+        if (event.error === 'no-speech') return;
         if (event.error === 'not-allowed') {
           setVoiceErrors(p => ({ ...p, name: t('contact.voicePermissionDenied', 'Allow microphone access in your browser settings') }));
+          stopRequestedRef.current = true;
           finalize();
           return;
         }
-        if (event.error === 'aborted') return; // user stopped, onend will handle
+        if (event.error === 'aborted') return;
         // other errors — show paused state so user can retry
         setRecording(false);
         setRecordingPaused(true);
@@ -345,11 +477,10 @@ export default function Contact() {
 
       r.start();
 
-      (window as any).__activeRecognition = r;
       (window as any).__stopRecording = () => {
-        stopped = true;
-        try { r.stop(); } catch {}
-        finalize();
+        stopRequestedRef.current = true;
+        try { r.stop(); } catch { finalize(); }
+        finalizeTimerRef.current = setTimeout(finalize, 700);
       };
 
       setRecording(true);
@@ -362,6 +493,16 @@ export default function Contact() {
   };
 
   const toggleRecording = () => {
+    const SR = typeof window !== 'undefined' && ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
+    if (prefersAudioRecordingFallback() || !SR) {
+      if (recording) {
+        try { mediaRecorderRef.current?.stop(); } catch {}
+      } else {
+        void startAudioRecording();
+      }
+      return;
+    }
+
     if (recording) {
       // Stop completely
       (window as any).__stopRecording?.();
@@ -654,7 +795,8 @@ export default function Contact() {
                   {/* Recording area */}
                   {(() => {
                     const SR = typeof window !== 'undefined' && ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition);
-                    if (!SR) {
+                    const canRecordAudio = typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia && typeof MediaRecorder !== 'undefined';
+                    if (!SR && !canRecordAudio) {
                       return (
                         <div className="text-center rounded-2xl border border-border p-6 bg-surface">
                           <Mic size={28} className="text-muted-foreground mx-auto mb-3 opacity-50" />
