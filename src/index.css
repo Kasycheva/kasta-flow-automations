@@ -152,19 +152,28 @@
     margin-top: 14px;
     border-top: 1px solid rgba(255,255,255,0.06);
   }
-  /* On touch devices checklist is always visible (no hover) */
+  /* On mobile: tap-toggle via JS class .services-card--expanded */
   @media (max-width: 767px) {
-    .services-checklist {
-      max-height: 220px;
+    .services-card--expanded .services-checklist {
+      max-height: 280px;
       opacity: 1;
       padding-top: 14px;
       margin-top: 14px;
       border-top: 1px solid rgba(255,255,255,0.06);
     }
-    .services-checksNote {
+    .services-card--expanded .services-checksNote {
       max-height: 60px;
       opacity: 1;
       margin-top: 8px;
+    }
+  }
+  /* Hide expand button on desktop */
+  .services-expand-btn {
+    display: none;
+  }
+  @media (max-width: 767px) {
+    .services-expand-btn {
+      display: inline-block;
     }
   }
   .services-checksNote {
