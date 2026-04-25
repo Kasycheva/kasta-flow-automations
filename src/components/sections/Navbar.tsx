@@ -59,6 +59,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Lock body scroll on iOS when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.classList.add('scroll-locked');
+    } else {
+      document.body.classList.remove('scroll-locked');
+    }
+    return () => document.body.classList.remove('scroll-locked');
+  }, [mobileOpen]);
+
   const switchLang = (lang: string) => {
     i18n.changeLanguage(lang);
   };

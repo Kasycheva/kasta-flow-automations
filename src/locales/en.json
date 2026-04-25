@@ -294,6 +294,8 @@
     "gdpr": "By submitting this form you agree to our Privacy Policy and consent to processing of your personal data for the purpose of responding to your request.",
     "voiceTitle": "Just talk — we will do the rest",
     "voiceSubtitle": "Press the button and describe your business, what takes the most time, and what you would like to automate. Speak naturally — there is no wrong answer.",
+    "voiceNotSupported": "Voice input not available on this browser",
+    "voiceNotSupportedMsg": "Voice recording requires Chrome on Android or a desktop browser. You can use the written form above, or switch to Chrome.",
     "tapToRecord": "Tap to start recording",
     "listening": "Recording... tap to stop",
     "recordingComplete": "Recording complete ✓",

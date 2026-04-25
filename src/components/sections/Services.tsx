@@ -1,4 +1,4 @@
-﻿import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import {
   ArrowRightLeft, GitBranch, Zap, Filter,
@@ -35,14 +35,14 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
       transition={{ duration: 0.6, ease: EASE, delay: index * 0.06 }}
       className="services-card flex flex-col relative"
     >
-      {/* Badge â€” top right corner */}
+      {/* Badge — top right corner */}
       {badge && (
         <span className="absolute top-4 right-4 h-6 px-3 rounded-full bg-white text-[#0a0a0a] font-semibold text-[10px] tracking-[0.14em] uppercase shrink-0 inline-flex items-center whitespace-nowrap">
           {badge}
         </span>
       )}
 
-      {/* Icon â€” centered */}
+      {/* Icon — centered */}
       <div className="flex justify-center mb-5">
         <motion.div
           className="services-icon shrink-0"
@@ -55,7 +55,7 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
         </motion.div>
       </div>
 
-      {/* Title + description â€” centered */}
+      {/* Title + description — centered */}
       <h3 className="text-[1.1rem] font-heading font-semibold text-foreground mb-2 leading-snug text-center">
         {t(`services.${cardKey}.name`)}
       </h3>
@@ -63,11 +63,11 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
         {t(`services.${cardKey}.desc`)}
       </p>
 
-      {/* Checklist â€” always visible on mobile, revealed on hover for desktop */}
+      {/* Checklist — hidden by default, revealed on hover */}
       <ul className="services-checklist">
         {checks.map((item, j) => (
           <li key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground">
-            <span className="text-accent mt-0.5 shrink-0">âœ“</span>
+            <span className="text-accent mt-0.5 shrink-0">✓</span>
             {item}
           </li>
         ))}
@@ -78,7 +78,7 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
         </p>
       )}
 
-      {/* Price + CTA â€” centered, stacked */}
+      {/* Price + CTA — centered, stacked */}
       <div className="services-price mt-auto pt-4">
         <div className="flex flex-col items-center gap-3">
           <div className="text-center">
@@ -93,7 +93,7 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
             className="w-full justify-center text-[12px] font-medium text-[#0a0a0a] bg-white hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(255,255,255,0.18)] rounded-full px-3 py-1.5 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] inline-flex items-center gap-1 group whitespace-nowrap"
           >
             {t('services.orderCta')}
-            <span className="group-hover:translate-x-0.5 transition-transform duration-200" aria-hidden>â†’</span>
+            <span className="group-hover:translate-x-0.5 transition-transform duration-200" aria-hidden>→</span>
           </a>
         </div>
       </div>
@@ -131,7 +131,7 @@ export default function Services() {
           </motion.p>
         </div>
 
-        {/* 3-column grid â€” 3Ã—3 = 9 cards, 3 cols from md to avoid orphan */}
+        {/* 3-column grid — 3x3 = 9 cards, 3 cols from md to avoid orphan */}
         <div className="grid md:grid-cols-3 gap-6 mb-24">
           {cardKeys.map((key, i) => (
             <ServiceCard key={key} cardKey={key} index={i} icons={icons} />
@@ -156,7 +156,7 @@ export default function Services() {
             href="#contact"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-sm text-foreground hover:border-white/35 hover:bg-white/[0.07] transition-all duration-200"
           >
-            {t('services.customCta')} <span aria-hidden>â†’</span>
+            {t('services.customCta')} <span aria-hidden>→</span>
           </a>
           <p className="text-xs text-muted-foreground/45 max-w-3xl leading-relaxed mt-1">
             {t('services.pricingNote')}
@@ -166,5 +166,3 @@ export default function Services() {
     </section>
   );
 }
-
-

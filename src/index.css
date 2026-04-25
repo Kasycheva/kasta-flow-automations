@@ -55,9 +55,17 @@
   }
   body {
     @apply bg-background text-foreground font-body antialiased;
+    overscroll-behavior: none;
   }
   html {
     scroll-behavior: smooth;
+    overscroll-behavior: none;
+  }
+  /* Prevent scroll when mobile menu or chat is open */
+  body.scroll-locked {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
