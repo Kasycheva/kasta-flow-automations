@@ -270,18 +270,25 @@ export default function Contact() {
       try {
         const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
         if (!SR) { setVoiceErrors(p => ({ ...p, name: t('contact.voiceNotSupported') })); return; }
+
+        const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent);
         const recognition = new SR();
-        // Use site language so Norwegian site → Norwegian recognition
         recognition.lang = recordingLang;
-        recognition.continuous = true;
-        recognition.interimResults = true;
+        // iOS Safari terminates continuous recognition after silence — restart manually
+        recognition.continuous = !isIOS;
+        recognition.interimResults = !isIOS;
+
+        const stopFlag = { current: false };
+        (window as any).__recognitionStop = () => { stopFlag.current = true; recognition.stop(); };
+
         recognition.onresult = (event: any) => {
           let text = '';
-          for (let i = 0; i < event.results.length; i++) text += event.results[i][0].transcript;
-          transcriptRef.current = text;
-          setTranscript(text);
+          for (let i = 0; i < event.results.length; i++) text += event.results[i][0].transcript + ' ';
+          transcriptRef.current = (transcriptRef.current + ' ' + text).trim();
+          setTranscript(transcriptRef.current);
         };
-        recognition.onend = async () => {
+
+        const finalize = async () => {
           const finalText = transcriptRef.current;
           setTranscript(finalText);
           setRecording(false);
@@ -303,10 +310,22 @@ export default function Contact() {
             }
           }
         };
-        recognition.onerror = (event: any) => {
-          console.error('SR error:', event.error);
-          setRecording(false);
+
+        recognition.onend = () => {
+          if (isIOS && !stopFlag.current) {
+            // iOS killed recognition due to silence — restart to continue
+            try { recognition.start(); } catch { finalize(); }
+          } else {
+            finalize();
+          }
         };
+
+        recognition.onerror = (event: any) => {
+          if (event.error === 'no-speech' && isIOS && !stopFlag.current) return; // iOS fires this on silence, ignore
+          console.error('SR error:', event.error);
+          if (!stopFlag.current) finalize();
+        };
+
         recognition.start();
         (window as any).__recognition = recognition;
         transcriptRef.current = '';
@@ -315,8 +334,7 @@ export default function Contact() {
         setRecordingComplete(false);
       } catch { alert('Speech recognition error'); }
     } else {
-      (window as any).__recognition?.stop();
-      // onend will fire and finalize state via transcriptRef
+      (window as any).__recognitionStop?.();
     }
   };
 

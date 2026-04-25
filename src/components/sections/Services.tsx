@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowRightLeft, GitBranch, Zap, Filter,
   MessageSquare, Brain, Monitor, Calendar, Bell,
@@ -22,6 +23,7 @@ type CardKey = typeof cardKeys[number];
 
 function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: number; icons: LucideIcon[] }) {
   const { t } = useTranslation();
+  const [expanded, setExpanded] = useState(false);
   const Icon = icons[cardKeys.indexOf(cardKey)];
   const badge = t(`services.${cardKey}.badge`, { defaultValue: '' });
   const checks = t(`services.${cardKey}.checks`, { returnObjects: true }) as string[];
@@ -33,7 +35,8 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.6, ease: EASE, delay: index * 0.06 }}
-      className="services-card flex flex-col relative"
+      className={`services-card flex flex-col relative${expanded ? ' services-card--expanded' : ''}`}
+      onClick={() => setExpanded(p => !p)}
     >
       {/* Badge — top right corner */}
       {badge && (
@@ -63,7 +66,7 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
         {t(`services.${cardKey}.desc`)}
       </p>
 
-      {/* Checklist — hidden by default, revealed on hover */}
+      {/* Checklist — hover on desktop, tap-toggle on mobile */}
       <ul className="services-checklist">
         {checks.map((item, j) => (
           <li key={j} className="flex items-start gap-2 text-[13px] text-muted-foreground">
@@ -72,6 +75,16 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
           </li>
         ))}
       </ul>
+
+      {/* Mobile expand button */}
+      <button
+        className="services-expand-btn md:hidden mt-3 text-[11px] text-muted-foreground/60 underline underline-offset-2 self-center"
+        onClick={e => { e.stopPropagation(); setExpanded(p => !p); }}
+        aria-label={expanded ? t('services.collapse', 'Hide details') : t('services.expand', 'Show details')}
+      >
+        {expanded ? '▲ ' + t('services.collapse', 'Hide details') : '▼ ' + t('services.expand', 'Show details')}
+      </button>
+
       {checksNote && (
         <p className="services-checksNote text-[11px] text-muted-foreground/50 italic leading-relaxed">
           {checksNote}

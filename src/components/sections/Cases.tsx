@@ -381,7 +381,8 @@ export default function Cases() {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2"
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 px-1"
+            style={{ WebkitOverflowScrolling: 'touch' }}
           >
             {caseKeys.map((key, i) => {
               const metrics = t(`cases.${key}.metrics`, { returnObjects: true }) as string[];
@@ -391,12 +392,11 @@ export default function Cases() {
                 <motion.div
                   key={key}
                   data-card=""
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.1, ease: EASE }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: i * 0.12, ease: EASE }}
                   whileHover={{ y: -6, transition: { duration: 0.22, ease: 'easeOut' } }}
-                  className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default snap-start flex-shrink-0 w-[85vw] sm:w-[420px] lg:w-[calc((100%-3rem)/3)]"
+                  className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default snap-start flex-shrink-0 w-[85vw] sm:w-[400px] lg:w-[calc((100%-3rem)/3)]"
                   style={{ borderColor: 'rgba(255,255,255,0.25)', borderLeft: '2px solid rgba(200,200,200,0.5)' }}
                 >
                   <div className="overflow-hidden relative" style={{ height: 180, background: '#0A0A0A' }}>
