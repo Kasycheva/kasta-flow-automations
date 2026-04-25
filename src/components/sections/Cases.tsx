@@ -6,7 +6,7 @@ import SectionReveal from '../ui/SectionReveal';
 
 const EASE = [0.23, 1, 0.32, 1] as const;
 
-/* â”€â”€ SVG shimmer overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── SVG shimmer overlay ──────────────────────────────────────────── */
 function SvgShimmer() {
   return (
     <motion.div
@@ -20,14 +20,14 @@ function SvgShimmer() {
   );
 }
 
-/* â”€â”€â”€ SVG shared styles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── SVG shared styles ─────────────────────────────────────────── */
 
 const BOX  = { fill: '#111111', stroke: 'rgba(255,255,255,0.13)', strokeWidth: 1.5 } as const;
 const ICO  = { stroke: 'rgba(255,255,255,0.8)', strokeWidth: 1.8, fill: 'none', strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
 const LBL  = { fontSize: 10, fill: 'rgba(255,255,255,0.55)', fontFamily: 'system-ui,sans-serif', textAnchor: 'middle' as const };
 const ARR  = { stroke: 'rgba(255,255,255,0.4)', strokeWidth: 1.5, fill: 'none' } as const;
 
-/* Animated arrow path â€” draws itself on scroll */
+/* Arrow path — opacity fade, animate (not whileInView) for iOS Safari compat */
 function AnimPath({ d, delay = 0, markerId }: { d: string; delay?: number; markerId: string }) {
   return (
     <motion.path
@@ -35,14 +35,13 @@ function AnimPath({ d, delay = 0, markerId }: { d: string; delay?: number; marke
       {...ARR}
       markerEnd={`url(#${markerId})`}
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay, ease: EASE }}
     />
   );
 }
 
-/* Animated data pulse â€” moves along the path to suggest automation */
+/* Animated data pulse — moves along the path to suggest automation */
 function FlowPulse({ d, begin = '0s', duration = '3.2s' }: { d: string; begin?: string; duration?: string }) {
   return (
     <circle r="2.5" fill="rgba(255,255,255,0.9)" opacity="0.95">
@@ -52,24 +51,22 @@ function FlowPulse({ d, begin = '0s', duration = '3.2s' }: { d: string; begin?: 
   );
 }
 
-/* Animated node box â€” fades in */
+/* Node box — opacity only, animate (no scale/viewport for iOS Safari compat) */
 function AnimNode({ x, y, w, h, rx, delay = 0 }: { x: number; y: number; w: number; h: number; rx: number; delay?: number }) {
   return (
     <motion.rect
       x={x} y={y} width={w} height={h} rx={rx}
       {...BOX}
-      initial={{ opacity: 0, scale: 0.85 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.35, delay, ease: EASE }}
-      style={{ transformOrigin: `${x + w / 2}px ${y + h / 2}px` }}
     />
   );
 }
 
-/* â”€â”€â”€ SVG Flow Diagrams â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── SVG Flow Diagrams ─────────────────────────────────────────── */
 
-/** Card 1 â€” 3 inputs branch into n8n â†’ Calendar â†’ Gmail */
+/** Card 1 — 3 inputs branch into n8n → Calendar → Gmail */
 function Card1SVG() {
   return (
     <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
@@ -99,7 +96,7 @@ function Card1SVG() {
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
       </g>
 
-      {/* Arrows â†’ n8n */}
+      {/* Arrows → n8n */}
       <AnimPath d="M62,44 C108,44 138,90 156,90"  delay={0.15} markerId="a1"/>
       <AnimPath d="M62,90 C102,90 132,90 156,90"  delay={0.2}  markerId="a1"/>
       <AnimPath d="M62,136 C108,136 138,90 156,90" delay={0.25} markerId="a1"/>
@@ -111,14 +108,14 @@ function Card1SVG() {
       <AnimNode x={156} y={63} w={54} h={54} rx={13} delay={0.3}/>
       <motion.text
         x="183" y="96" textAnchor="middle" fontSize="19" fontWeight="700" fill="white" fontFamily="system-ui,sans-serif"
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.32 }}
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.32 }}
       >n8n</motion.text>
       <motion.text
         {...LBL} x="183" y="130"
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.33 }}
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.33 }}
       >n8n</motion.text>
 
-      {/* n8n â†’ Calendar */}
+      {/* n8n → Calendar */}
       <AnimPath d="M210,90 L258,90" delay={0.4} markerId="a1"/>
       <FlowPulse d="M210,90 L258,90" begin="1.25s" duration="2.6s" />
 
@@ -132,7 +129,7 @@ function Card1SVG() {
       </g>
       <text x="282" y="128" {...LBL}>Google Calendar</text>
 
-      {/* Calendar â†’ Gmail */}
+      {/* Calendar → Gmail */}
       <AnimPath d="M306,90 L342,90" delay={0.55} markerId="a1"/>
       <FlowPulse d="M306,90 L342,90" begin="1.8s" duration="2.4s" />
 
@@ -147,7 +144,7 @@ function Card1SVG() {
   );
 }
 
-/** Card 2 â€” Landing page â†’ n8n â†’ CRM â†’ Gmail */
+/** Card 2 — Landing page → n8n → CRM → Gmail */
 function Card2SVG() {
   return (
     <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
@@ -171,7 +168,7 @@ function Card2SVG() {
       <AnimNode x={132} y={55} w={48} h={48} rx={11} delay={0.2}/>
       <motion.text
         x="156" y="85" textAnchor="middle" fontSize="17" fontWeight="700" fill="white" fontFamily="system-ui,sans-serif"
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.22 }}
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.22 }}
       >n8n</motion.text>
       <text x="156" y="121" {...LBL}>n8n</text>
 
@@ -199,7 +196,7 @@ function Card2SVG() {
   );
 }
 
-/** Card 3 â€” Vipps â†’ n8n â†’ Fiken â†’ Gmail */
+/** Card 3 — Vipps → n8n → Fiken → Gmail */
 function Card3SVG() {
   return (
     <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
@@ -224,7 +221,7 @@ function Card3SVG() {
       <AnimNode x={132} y={55} w={48} h={48} rx={11} delay={0.2}/>
       <motion.text
         x="156" y="85" textAnchor="middle" fontSize="17" fontWeight="700" fill="white" fontFamily="system-ui,sans-serif"
-        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.22 }}
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.22 }}
       >n8n</motion.text>
       <text x="156" y="121" {...LBL}>n8n</text>
 
@@ -253,7 +250,7 @@ function Card3SVG() {
 
 const CARD_SVGS = [<Card1SVG />, <Card2SVG />, <Card3SVG />];
 
-/* â”€â”€â”€ CountUp stat â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── CountUp stat ──────────────────────────────────────────────── */
 
 function CountUpStat({ value, label, delay = 0 }: { value: string; label: string; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -262,7 +259,7 @@ function CountUpStat({ value, label, delay = 0 }: { value: string; label: string
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0 });
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.5 });
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
@@ -289,7 +286,7 @@ function CountUpStat({ value, label, delay = 0 }: { value: string; label: string
   );
 }
 
-/* â”€â”€â”€ Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ─── Section ───────────────────────────────────────────────────── */
 
 export default function Cases() {
   const { t, i18n } = useTranslation();
@@ -341,8 +338,7 @@ export default function Cases() {
           <motion.span
             className="section-badge"
             initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: '0px' }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: EASE }}
           >
             {t('cases.badge')}
@@ -353,32 +349,31 @@ export default function Cases() {
           <motion.p
             className="section-subtitle"
             initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '0px' }}
-            transition={{ duration: 0.5, delay: 0.2, ease: EASE }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.35, ease: EASE }}
           >
             {t('cases.subtitle')}
           </motion.p>
         </div>
 
-        {/* Case cards â€” horizontal scroll on all screen sizes â‰¥ md */}
-        <div className="relative mb-4">
-          {/* Scroll hint arrows â€” desktop only, fade after first scroll */}
+        {/* Case cards — horizontal scroll on all screen sizes ≥ md */}
+        <div className="relative mb-20">
+          {/* Scroll hint arrows — desktop only, fade after first scroll */}
           <motion.button
             aria-label="Scroll left"
             onClick={() => scrollBy(-1)}
-            animate={{ opacity: hasScrolled ? 0.5 : 1 }}
+            animate={{ opacity: hasScrolled ? 0 : 1 }}
             transition={{ duration: 0.4 }}
-            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 hidden sm:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
+            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
           >
             <ChevronLeft size={16}/>
           </motion.button>
           <motion.button
             aria-label="Scroll right"
             onClick={() => scrollBy(1)}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: hasScrolled ? 0.4 : 1 }}
             transition={{ duration: 0.4 }}
-            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 hidden sm:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
+            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors pointer-events-auto"
           >
             <ChevronRight size={16}/>
           </motion.button>
@@ -386,7 +381,7 @@ export default function Cases() {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex flex-col gap-6 sm:flex-row sm:overflow-x-auto sm:snap-x sm:snap-mandatory sm:scrollbar-hide sm:pb-2"
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2"
           >
             {caseKeys.map((key, i) => {
               const metrics = t(`cases.${key}.metrics`, { returnObjects: true }) as string[];
@@ -401,7 +396,7 @@ export default function Cases() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1, ease: EASE }}
                   whileHover={{ y: -6, transition: { duration: 0.22, ease: 'easeOut' } }}
-                  className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default sm:snap-start sm:flex-shrink-0 w-full sm:w-[90vw] md:w-[44vw] lg:w-[calc((100%-3rem)/3)]"
+                  className="card-base overflow-hidden rounded-[20px] p-0 group cursor-default snap-start flex-shrink-0 w-[85vw] sm:w-[420px] lg:w-[calc((100%-3rem)/3)]"
                   style={{ borderColor: 'rgba(255,255,255,0.25)', borderLeft: '2px solid rgba(200,200,200,0.5)' }}
                 >
                   <div className="overflow-hidden relative" style={{ height: 180, background: '#0A0A0A' }}>
@@ -414,7 +409,7 @@ export default function Cases() {
                     </span>
                     <h3 className="text-lg font-heading font-semibold text-foreground mb-2">{t(`cases.${key}.title`)}</h3>
                     <p className="inline-flex items-center gap-1 text-[11px] text-muted-foreground bg-surface-elevated border border-border/50 rounded-md px-2 py-1 mb-4">
-                      <span className="opacity-60">{'→'}</span> {t(`cases.${key}.audience`)}
+                      <span className="opacity-60">→</span> {t(`cases.${key}.audience`)}
                     </p>
                     <p className="text-sm text-muted-foreground leading-relaxed mb-4">{t(`cases.${key}.desc`)}</p>
                     <div className="grid grid-cols-3 gap-2 mb-4">
@@ -434,20 +429,6 @@ export default function Cases() {
               );
             })}
           </div>
-        </div>
-
-        {/* Carousel dot indicators â€” only in horizontal scroll mode */}
-        <div className="hidden sm:flex justify-center gap-2 mb-16">
-          {caseKeys.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => scrollToCard(i)}
-              aria-label={`Go to case ${i + 1}`}
-              className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                i === activeCard ? 'bg-foreground' : 'bg-border hover:bg-muted-foreground'
-              }`}
-            />
-          ))}
         </div>
 
         {/* Testimonials */}
@@ -490,7 +471,7 @@ export default function Cases() {
           </div>
         </div>
 
-        {/* Stats â€” staggered entrance */}
+        {/* Stats — staggered entrance */}
         <div className="bg-surface rounded-2xl p-8 md:p-10 grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, i) => (
             <CountUpStat key={i} value={stat.value} label={stat.label} delay={i * 0.28} />
@@ -500,5 +481,3 @@ export default function Cases() {
     </section>
   );
 }
-
-
