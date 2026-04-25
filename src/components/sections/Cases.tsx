@@ -359,28 +359,8 @@ export default function Cases() {
           </motion.p>
         </div>
 
-        {/* Case cards — full-bleed horizontal scroll on mobile/tablet, 3-col on desktop */}
+        {/* Case cards — full-bleed on mobile/tablet, 3-col on desktop */}
         <div className="relative mb-20 -mx-4 md:-mx-8 lg:mx-0">
-
-          {/* Desktop nav arrows */}
-          <motion.button
-            aria-label="Scroll left"
-            onClick={() => scrollBy(-1)}
-            animate={{ opacity: hasScrolled ? 0 : 1 }}
-            transition={{ duration: 0.4 }}
-            className="absolute left-2 top-[90px] z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ChevronLeft size={16}/>
-          </motion.button>
-          <motion.button
-            aria-label="Scroll right"
-            onClick={() => scrollBy(1)}
-            animate={{ opacity: hasScrolled ? 0.4 : 1 }}
-            transition={{ duration: 0.4 }}
-            className="absolute right-2 top-[90px] z-10 hidden lg:flex w-9 h-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ChevronRight size={16}/>
-          </motion.button>
 
           {/* Scroll track */}
           <div
@@ -435,20 +415,41 @@ export default function Cases() {
             })}
           </div>
 
-          {/* Dot indicators — mobile/tablet only */}
-          <div className="flex justify-center gap-2 mt-2 lg:hidden">
-            {caseKeys.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => scrollToCard(i)}
-                aria-label={`Case ${i + 1}`}
-                className={`transition-all duration-200 rounded-full ${
-                  i === activeCard
-                    ? 'w-5 h-2 bg-foreground'
-                    : 'w-2 h-2 bg-border hover:bg-muted-foreground'
-                }`}
-              />
-            ))}
+          {/* Navigation: arrows + dots, visible on all screen sizes */}
+          <div className="flex items-center justify-center gap-4 mt-4 px-4 lg:px-0">
+            <button
+              type="button"
+              aria-label="Previous case"
+              onClick={() => scrollBy(-1)}
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors shrink-0"
+            >
+              <ChevronLeft size={16}/>
+            </button>
+
+            <div className="flex gap-2">
+              {caseKeys.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => scrollToCard(i)}
+                  aria-label={`Case ${i + 1}`}
+                  className={`transition-all duration-200 rounded-full ${
+                    i === activeCard
+                      ? 'w-6 h-2 bg-foreground'
+                      : 'w-2 h-2 bg-border hover:bg-muted-foreground'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              aria-label="Next case"
+              onClick={() => scrollBy(1)}
+              className="w-9 h-9 flex items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground hover:text-foreground hover:border-foreground/40 transition-colors shrink-0"
+            >
+              <ChevronRight size={16}/>
+            </button>
           </div>
         </div>
 

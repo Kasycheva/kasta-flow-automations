@@ -137,6 +137,7 @@ export default function Contact() {
 
   // Voice form
   const [recording, setRecording] = useState(false);
+  const [recordingPaused, setRecordingPaused] = useState(false);
   const [recordingComplete, setRecordingComplete] = useState(false);
   const [transcript, setTranscript] = useState('');
   const transcriptRef = useRef('');
@@ -259,104 +260,123 @@ export default function Contact() {
   };
 
   const handleReRecord = () => {
+    (window as any).__stopRecording?.();
     transcriptRef.current = '';
     setTranscript('');
     setRecording(false);
+    setRecordingPaused(false);
     setRecordingComplete(false);
   };
 
-  const toggleRecording = () => {
-    if (!recording) {
-      const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-      if (!SR) { setVoiceErrors(p => ({ ...p, name: t('contact.voiceNotSupported') })); return; }
+  const startRecognitionSession = (append: boolean) => {
+    const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!SR) { setVoiceErrors(p => ({ ...p, name: t('contact.voiceNotSupported') })); return; }
 
-      const isIOS = /iP(hone|od|ad)/.test(navigator.userAgent);
-      let active = true;
-      let finalized = false;
+    if (!append) {
+      transcriptRef.current = '';
+      setTranscript('');
+    }
 
-      const finalize = async () => {
-        if (finalized) return;
-        finalized = true;
-        active = false;
-        const finalText = transcriptRef.current;
-        setTranscript(finalText);
-        setRecording(false);
-        setRecordingComplete(true);
-        if (finalText.trim()) {
-          setPunctuating(true);
-          try {
-            const res = await fetch('/api/punctuate', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ text: finalText, lang: recordingLang }),
-            });
-            const data = await res.json();
-            if (data.result) setTranscript(data.result);
-          } catch {
-            // keep original text on network error
-          } finally {
-            setPunctuating(false);
-          }
+    let stopped = false;
+
+    const finalize = async () => {
+      if (stopped) return;
+      stopped = true;
+      setRecording(false);
+      setRecordingPaused(false);
+      setRecordingComplete(true);
+      const finalText = transcriptRef.current;
+      setTranscript(finalText);
+      if (finalText.trim()) {
+        setPunctuating(true);
+        try {
+          const res = await fetch('/api/punctuate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: finalText, lang: recordingLang }),
+          });
+          const data = await res.json();
+          if (data.result) setTranscript(data.result);
+        } catch {
+          // keep original on network error
+        } finally {
+          setPunctuating(false);
+        }
+      }
+    };
+
+    try {
+      const r = new SR();
+      r.lang = recordingLang;
+      r.continuous = true;
+      r.interimResults = true;
+
+      r.onresult = (event: any) => {
+        let chunk = '';
+        // event.resultIndex = first NEW result; avoids duplicate accumulation in continuous mode
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) chunk += event.results[i][0].transcript + ' ';
+        }
+        if (chunk) {
+          transcriptRef.current = (transcriptRef.current + ' ' + chunk).trim();
+          setTranscript(transcriptRef.current);
         }
       };
 
-      const startInstance = () => {
-        const r = new SR();
-        r.lang = recordingLang;
-        // iOS Safari stops after ~5s silence with continuous=true; use continuous=false + manual restart
-        r.continuous = !isIOS;
-        r.interimResults = !isIOS;
+      r.onend = () => {
+        if (stopped) return;
+        // Fired by iOS after silence (not by user) — pause, let user tap to continue
+        setRecording(false);
+        setRecordingPaused(true);
+      };
 
-        r.onresult = (event: any) => {
-          let chunk = '';
-          for (let i = 0; i < event.results.length; i++) chunk += event.results[i][0].transcript + ' ';
-          transcriptRef.current = (transcriptRef.current + ' ' + chunk).trim();
-          setTranscript(transcriptRef.current);
-        };
-
-        r.onend = () => {
-          if (isIOS && active && !finalized) {
-            // iOS ended due to silence — wait 150ms then restart (direct restart in onend fails on iOS)
-            setTimeout(() => {
-              if (active && !finalized) {
-                try { startInstance(); } catch { finalize(); }
-              }
-            }, 150);
-          } else {
-            finalize();
-          }
-        };
-
-        r.onerror = (event: any) => {
-          if (event.error === 'no-speech') return; // normal pause, onend will follow
-          if (event.error === 'not-allowed') {
-            active = false;
-            setVoiceErrors(p => ({ ...p, name: t('contact.voicePermissionDenied', 'Allow microphone access in browser settings') }));
-          }
+      r.onerror = (event: any) => {
+        if (event.error === 'no-speech') return; // normal pause, onend follows
+        if (event.error === 'not-allowed') {
+          setVoiceErrors(p => ({ ...p, name: t('contact.voicePermissionDenied', 'Allow microphone access in your browser settings') }));
           finalize();
-        };
-
-        r.start();
-        (window as any).__activeRecognition = r;
+          return;
+        }
+        if (event.error === 'aborted') return; // user stopped, onend will handle
+        // other errors — show paused state so user can retry
+        setRecording(false);
+        setRecordingPaused(true);
       };
 
+      r.start();
+
+      (window as any).__activeRecognition = r;
       (window as any).__stopRecording = () => {
-        active = false;
-        (window as any).__activeRecognition?.stop();
+        stopped = true;
+        try { r.stop(); } catch {}
+        finalize();
       };
 
-      transcriptRef.current = '';
-      setTranscript('');
       setRecording(true);
+      setRecordingPaused(false);
       setRecordingComplete(false);
-      startInstance();
-    } else {
+    } catch (err) {
+      console.error('SR init error:', err);
+      setVoiceErrors(p => ({ ...p, name: 'Could not start recording. Try reloading the page.' }));
+    }
+  };
+
+  const toggleRecording = () => {
+    if (recording) {
+      // Stop completely
       (window as any).__stopRecording?.();
+    } else if (recordingPaused) {
+      // Resume: start new SR instance, append to existing transcript
+      startRecognitionSession(true);
+    } else {
+      // Fresh start
+      startRecognitionSession(false);
     }
   };
 
   const voiceSubmitDisabled = sending
     || punctuating
+    || recording
     || voiceName.trim().length < 2
     || !isValidEmail(voiceEmail)
     || !voicePhone.trim()
@@ -647,21 +667,46 @@ export default function Contact() {
                     return (
                       <div className="text-center">
                         <div className="relative inline-flex mb-4">
-                          <button onClick={toggleRecording}
-                            className="w-20 h-20 rounded-full bg-foreground flex items-center justify-center transition-transform hover:scale-105">
+                          <button
+                            type="button"
+                            onClick={toggleRecording}
+                            className={`w-20 h-20 rounded-full flex items-center justify-center transition-all hover:scale-105 ${
+                              recording
+                                ? 'bg-red-500'
+                                : recordingPaused
+                                  ? 'bg-foreground/70 border-2 border-foreground'
+                                  : 'bg-foreground'
+                            }`}
+                          >
                             <Mic size={32} className="text-background" />
                           </button>
                           {recording && (
-                            <span className="absolute inset-0 rounded-full border-2 border-red-500 animate-pulse-ring pointer-events-none" />
+                            <span className="absolute inset-0 rounded-full border-2 border-red-400 animate-pulse-ring pointer-events-none" />
                           )}
                         </div>
                         <p className="text-sm text-muted-foreground">
                           {recording
                             ? t('contact.listening')
-                            : recordingComplete
-                              ? t('contact.recordingComplete')
-                              : t('contact.tapToRecord')}
+                            : recordingPaused
+                              ? t('contact.voicePaused', 'Paused — tap to continue')
+                              : recordingComplete
+                                ? t('contact.recordingComplete')
+                                : t('contact.tapToRecord')}
                         </p>
+                        {recordingPaused && (
+                          <p className="text-xs text-muted-foreground/60 mt-1">
+                            {t('contact.voicePausedHint', 'Or tap Stop to finish')}
+                          </p>
+                        )}
+                        {recordingPaused && (
+                          <button
+                            type="button"
+                            onClick={() => (window as any).__stopRecording?.()}
+                            className="mt-3 text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
+                          >
+                            {t('contact.stopRecording', 'Stop recording')}
+                          </button>
+                        )}
                       </div>
                     );
                   })()}
