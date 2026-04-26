@@ -38,6 +38,9 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
       <meta name="theme-color" content="#0A0A0A" />
       <meta name="format-detection" content="telephone=no" />
       <meta name="robots" content={noIndex ? "noindex, nofollow" : "index, follow"} />
+      {import.meta.env.VITE_GOOGLE_SITE_VERIFICATION && (
+        <meta name="google-site-verification" content={import.meta.env.VITE_GOOGLE_SITE_VERIFICATION} />
+      )}
 
       <link rel="icon" href="/favicon.svg?v=20260424" type="image/svg+xml" sizes="any" />
       <link rel="shortcut icon" href="/favicon.svg?v=20260424" type="image/svg+xml" />

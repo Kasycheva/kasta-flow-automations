@@ -41,7 +41,7 @@
       "desc": "Multi-step automation with logic, conditions, and branching. Everything interacts automatically, freeing you from routine work and allowing you to focus on your business.",
       "checks": ["Workflow of 4–10 nodes with conditions", "Multi-branch logic (if/then scenarios)", "Data conversion between services", "Testing + documentation"],
       "checksNote": "Integration with accounting systems and custom API development are separate services.",
-      "price": "4 800"
+      "price": "5 800"
     },
     "card3": {
       "name": "Vipps + Fiken Automation",
@@ -54,7 +54,7 @@
       "name": "CRM Setup & Automation",
       "desc": "From Google Sheets to a professional CRM system. We customize a solution that fits your budget and team — whether you're starting simple or scaling.",
       "checks": ["CRM selection and setup (HubSpot, Pipedrive, and others)", "Sales funnel setup", "Contact import (up to 500 records)", "Automatic notifications and follow-up"],
-      "price": "6 400"
+      "price": "7 500"
     },
     "card5": {
       "name": "FAQ Chatbot",
@@ -86,7 +86,7 @@
       "name": "Automatic Reminders",
       "desc": "Never lose clients because of a forgotten appointment or a missed payment. Automatic reminders are sent at the right time — you no longer need to remember everything.",
       "checks": ["Meeting reminders via SMS or email", "Payment due date notifications", "Customizable time and message templates", "Compatible with your existing calendar or CRM"],
-      "price": "3 200"
+      "price": "3 800"
     },
     "customTitle": "Don't see what you need?",
     "customDesc": "We work with the most innovative automation tools available and love solving non-standard problems. If you have a workflow, a repetitive task, or just an idea — describe it to us. We'll figure out how to automate it.",
@@ -260,14 +260,14 @@
     "servicesSelected": "{{count}} selected",
     "serviceOptions": [
       "Simple integrations — from 3 600 NOK",
-      "Advanced integrations — from 4 800 NOK",
+      "Advanced integrations — from 5 800 NOK",
       "Vipps + Fiken automation — from 8 000 NOK",
-      "CRM setup — from 6 400 NOK",
+      "CRM setup — from 7 500 NOK",
       "FAQ chatbot — from 5 600 NOK",
       "Smart AI agent — from 9 600 NOK",
       "Landing page + lead flow — from 9 600 NOK",
       "Booking system — from 5 500 NOK",
-      "Automated reminders — from 3 200 NOK",
+      "Automated reminders — from 3 800 NOK",
       "Monthly support — from 1 800 NOK/month",
       "Custom request (describe below)",
       "Not sure yet"
@@ -292,6 +292,12 @@
     "voiceNoSpeech": "No speech was captured. Please check your microphone and try again.",
     "success": "✓ Request received! We will get back to you shortly via your chosen channel.",
     "gdpr": "By submitting this form you agree to our Privacy Policy and consent to processing of your personal data for the purpose of responding to your request.",
+    "gdprConsentPrefix": "I agree to the",
+    "gdprPrivacyLink": "Privacy Policy",
+    "gdprConsentSuffix": "and consent to being contacted regarding my request.",
+    "gdprTermsPrefix": "Please also review our",
+    "gdprTermsLink": "Terms of Service",
+    "gdprConsentError": "Please agree to the Privacy Policy before sending your request.",
     "voiceTitle": "Just talk — we will do the rest",
     "voiceSubtitle": "Press the button and describe your business, what takes the most time, and what you would like to automate. Speak naturally — there is no wrong answer.",
     "voiceNotSupported": "Voice input not available on this browser",
@@ -351,6 +357,7 @@
     "privacyPolicy": "Privacy Policy",
     "terms": "Terms of Service",
     "cookiePolicy": "Cookie Policy",
+    "cookieSettings": "Cookie settings",
     "location": "Norway · Remote",
     "responseTime": "Response within 48h",
     "accepting": "Currently accepting new clients",
@@ -360,8 +367,21 @@
     "madeSuffix": "in Norway"
   },
   "cookie": {
-    "text": "We use cookies to improve your experience. Essential cookies are always active.",
+    "title": "We use cookies",
+    "text": "We use necessary cookies to make the site work. With your consent, we also use analytics and marketing cookies to understand our audience and improve our services. You can accept, reject or customize your choice.",
     "acceptAll": "Accept all",
+    "rejectOptional": "Reject optional",
+    "customize": "Customize",
+    "saveChoices": "Save choices",
+    "cookiePolicy": "Cookie Policy",
+    "privacyPolicy": "Privacy Policy",
+    "necessaryTitle": "Necessary",
+    "necessaryDesc": "Required for core site functions, consent storage, forms and chat behavior.",
+    "alwaysOn": "Always on",
+    "analyticsTitle": "Analytics",
+    "analyticsDesc": "Helps us understand website traffic and improve the site. Loaded only after consent.",
+    "marketingTitle": "Marketing",
+    "marketingDesc": "Helps us measure campaigns and relevant advertising. Loaded only after consent.",
     "essentialOnly": "Essential only",
     "learnMore": "Learn more"
   },

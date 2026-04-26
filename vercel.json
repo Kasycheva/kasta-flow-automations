@@ -7,5 +7,10 @@
   },
   "redirects": [
     { "source": "/whatsapp", "destination": "https://wa.me/380632940472", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/privacy", "destination": "/index.html" },
+    { "source": "/cookies", "destination": "/index.html" },
+    { "source": "/terms", "destination": "/index.html" }
   ]
 }

@@ -147,6 +147,8 @@ export default function Contact() {
     services: [] as string[], description: '', channel: '', conditionalContact: '',
   });
   const [errors, setErrors] = useState({ name: '', email: '', phone: '' });
+  const [gdprConsent, setGdprConsent] = useState(false);
+  const [gdprConsentError, setGdprConsentError] = useState('');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
@@ -174,6 +176,8 @@ export default function Contact() {
   const [voiceChannel, setVoiceChannel] = useState('');
   const [voiceConditionalContact, setVoiceConditionalContact] = useState('');
   const [voiceErrors, setVoiceErrors] = useState({ name: '', email: '', phone: '' });
+  const [voiceGdprConsent, setVoiceGdprConsent] = useState(false);
+  const [voiceGdprConsentError, setVoiceGdprConsentError] = useState('');
 
   const teamOptions    = t('contact.teamOptions', { returnObjects: true }) as string[];
   const serviceOptions = t('contact.serviceOptions', { returnObjects: true }) as string[];
@@ -225,7 +229,8 @@ export default function Contact() {
     if (!isValidEmail(formData.email))     newErrors.email = t('contact.emailError');
     if (!formData.phone.trim())            newErrors.phone = t('contact.phoneError');
     setErrors(newErrors);
-    if (newErrors.name || newErrors.email || newErrors.phone) return;
+    if (!gdprConsent) setGdprConsentError(t('contact.gdprConsentError'));
+    if (newErrors.name || newErrors.email || newErrors.phone || !gdprConsent) return;
 
     setSending(true);
     const chatTranscript = sessionStorage.getItem('chat_transcript_for_form') || '';
@@ -238,6 +243,7 @@ export default function Contact() {
           _template: 'box',
           _cc: 'kasycheva00@ukr.net',
           ...formData,
+          gdprConsent: 'Accepted Privacy Policy and contact consent',
           chatTranscript,
         }),
       });
@@ -256,7 +262,8 @@ export default function Contact() {
     if (!isValidEmail(voiceEmail))    newErrors.email = t('contact.emailError');
     if (!voicePhone.trim())           newErrors.phone = t('contact.phoneError');
     setVoiceErrors(newErrors);
-    if (newErrors.name || newErrors.email || newErrors.phone) return;
+    if (!voiceGdprConsent) setVoiceGdprConsentError(t('contact.gdprConsentError'));
+    if (newErrors.name || newErrors.email || newErrors.phone || !voiceGdprConsent) return;
 
     setSending(true);
     const chatTranscript = sessionStorage.getItem('chat_transcript_for_form') || '';
@@ -270,6 +277,7 @@ export default function Contact() {
           _cc: 'kasycheva00@ukr.net',
           name: voiceName, email: voiceEmail, phone: voicePhone,
           channel: voiceChannel, conditionalContact: voiceConditionalContact,
+          gdprConsent: 'Accepted Privacy Policy and contact consent',
           voiceTranscript: transcript, chatTranscript,
         }),
       });
@@ -705,11 +713,44 @@ export default function Contact() {
 
                   {formData.channel && renderConditional(formData.channel, formData.conditionalContact, v => setFormData(p => ({ ...p, conditionalContact: v })))}
 
+                  <div className="rounded-xl border border-border bg-background/40 p-4">
+                    <label className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
+                      <input
+                        type="checkbox"
+                        required
+                        checked={gdprConsent}
+                        onChange={e => {
+                          setGdprConsent(e.target.checked);
+                          if (e.target.checked) setGdprConsentError('');
+                        }}
+                        className="mt-1 h-4 w-4 shrink-0 rounded border-border bg-background accent-accent"
+                        aria-describedby={gdprConsentError ? 'gdpr-consent-error' : undefined}
+                      />
+                      <span>
+                        {t('contact.gdprConsentPrefix')}{' '}
+                        <a href="/privacy" className="text-foreground underline underline-offset-4 hover:text-muted-foreground">
+                          {t('contact.gdprPrivacyLink')}
+                        </a>{' '}
+                        {t('contact.gdprConsentSuffix')}
+                      </span>
+                    </label>
+                    <p className="mt-2 pl-7 text-[12px] text-muted-foreground leading-relaxed">
+                      {t('contact.gdprTermsPrefix')}{' '}
+                      <a href="/terms" className="text-foreground underline underline-offset-4 hover:text-muted-foreground">
+                        {t('contact.gdprTermsLink')}
+                      </a>.
+                    </p>
+                    {gdprConsentError && (
+                      <p id="gdpr-consent-error" className="mt-2 pl-7 text-xs text-red-500">
+                        {gdprConsentError}
+                      </p>
+                    )}
+                  </div>
+
                   <button type="submit" disabled={sending}
                     className="w-full bg-foreground text-background rounded-xl py-3.5 font-medium text-sm transition-opacity hover:opacity-90 disabled:opacity-50">
                     {sending ? t('contact.sending') : t('contact.submit')}
                   </button>
-                  <p className="text-[12px] text-muted-foreground leading-relaxed">{t('contact.gdpr')}</p>
                 </form>
               )}
             </motion.div>
@@ -887,11 +928,44 @@ export default function Contact() {
                     </div>
                   )}
 
+                  <div className="rounded-xl border border-border bg-background/40 p-4">
+                    <label className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed">
+                      <input
+                        type="checkbox"
+                        required
+                        checked={voiceGdprConsent}
+                        onChange={e => {
+                          setVoiceGdprConsent(e.target.checked);
+                          if (e.target.checked) setVoiceGdprConsentError('');
+                        }}
+                        className="mt-1 h-4 w-4 shrink-0 rounded border-border bg-background accent-accent"
+                        aria-describedby={voiceGdprConsentError ? 'voice-gdpr-consent-error' : undefined}
+                      />
+                      <span>
+                        {t('contact.gdprConsentPrefix')}{' '}
+                        <a href="/privacy" className="text-foreground underline underline-offset-4 hover:text-muted-foreground">
+                          {t('contact.gdprPrivacyLink')}
+                        </a>{' '}
+                        {t('contact.gdprConsentSuffix')}
+                      </span>
+                    </label>
+                    <p className="mt-2 pl-7 text-[12px] text-muted-foreground leading-relaxed">
+                      {t('contact.gdprTermsPrefix')}{' '}
+                      <a href="/terms" className="text-foreground underline underline-offset-4 hover:text-muted-foreground">
+                        {t('contact.gdprTermsLink')}
+                      </a>.
+                    </p>
+                    {voiceGdprConsentError && (
+                      <p id="voice-gdpr-consent-error" className="mt-2 pl-7 text-xs text-red-500">
+                        {voiceGdprConsentError}
+                      </p>
+                    )}
+                  </div>
+
                   <button onClick={handleVoiceSubmit} disabled={voiceSubmitDisabled}
                     className="w-full bg-foreground text-background rounded-xl py-3.5 font-medium text-sm transition-opacity hover:opacity-90 disabled:opacity-50">
                     {sending ? t('contact.sending') : t('contact.sendVoice')}
                   </button>
-                  <p className="text-[12px] text-muted-foreground leading-relaxed">{t('contact.gdpr')}</p>
                 </div>
               )}
             </motion.div>

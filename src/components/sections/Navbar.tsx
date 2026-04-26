@@ -70,6 +70,7 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const switchLang = (lang: string) => {
+    localStorage.setItem('kasta-language', lang);
     i18n.changeLanguage(lang);
   };
 

@@ -41,7 +41,7 @@
       "desc": "Flerstegs automatisering med logikk, betingelser og forgreninger. Alt samhandler automatisk — du slipper rutinearbeidet og kan fokusere på bedriften.",
       "checks": ["Arbeidsflyt med 4–10 noder med betingelser", "Flergren-logikk (if/then-scenarier)", "Datakonvertering mellom tjenester", "Testing + dokumentasjon"],
       "checksNote": "Integrasjon med regnskapssystemer og tilpasset API-utvikling er separate tjenester.",
-      "price": "4 800"
+      "price": "5 800"
     },
     "card3": {
       "name": "Vipps + Fiken-automasjon",
@@ -54,7 +54,7 @@
       "name": "CRM-oppsett og automasjon",
       "desc": "Fra Google Sheets til et profesjonelt CRM-system. Vi tilpasser en løsning som passer budsjettet og teamet ditt — enten du starter enkelt eller skalerer.",
       "checks": ["CRM-valg og oppsett (HubSpot, Pipedrive og andre)", "Salgstrakt-oppsett", "Kontaktimport (opptil 500 oppføringer)", "Automatiske varsler og oppfølging"],
-      "price": "6 400"
+      "price": "7 500"
     },
     "card5": {
       "name": "FAQ-chatbot",
@@ -86,7 +86,7 @@
       "name": "Automatiske påminnelser",
       "desc": "Mist aldri kunder på grunn av en glemt avtale eller en forfalt betaling. Automatiske påminnelser sendes til rett tid — du trenger ikke lenger huske på alt.",
       "checks": ["Møtepåminnelser via SMS eller e-post", "Varsler om forfallsdato for betalinger", "Tilpassbare tids- og meldingsmaler", "Kompatibelt med eksisterende kalender eller CRM"],
-      "price": "3 200"
+      "price": "3 800"
     },
     "customTitle": "Finner du ikke det du trenger?",
     "customDesc": "Vi jobber med de mest innovative automatiseringsverktøyene og elsker å løse ikke-standard problemer. Hvis du har en arbeidsflyt, en repetitiv oppgave, eller bare en idé — beskriv den for oss. Vi finner ut hvordan vi kan automatisere den.",
@@ -260,14 +260,14 @@
     "servicesSelected": "{{count}} valgt",
     "serviceOptions": [
       "Enkle integrasjoner — fra 3 600 NOK",
-      "Avanserte integrasjoner — fra 4 800 NOK",
+      "Avanserte integrasjoner — fra 5 800 NOK",
       "Vipps + Fiken-automasjon — fra 8 000 NOK",
-      "CRM-oppsett — fra 6 400 NOK",
+      "CRM-oppsett — fra 7 500 NOK",
       "FAQ-chatbot — fra 5 600 NOK",
       "Smart AI-agent — fra 9 600 NOK",
       "Landingsside + Lead-automasjon — fra 9 600 NOK",
       "Bookingsystem — fra 5 500 NOK",
-      "Automatiske påminnelser — fra 3 200 NOK",
+      "Automatiske påminnelser — fra 3 800 NOK",
       "Månedlig support — fra 1 800 NOK/mnd",
       "Tilpasset forespørsel (beskriv nedenfor)",
       "Ikke sikker ennå"
@@ -292,6 +292,12 @@
     "voiceNoSpeech": "Ingen tale ble fanget opp. Sjekk mikrofonen din og prøv igjen.",
     "success": "✓ Forespørsel mottatt! Vi tar kontakt med deg snart via din valgte kanal.",
     "gdpr": "Ved å sende dette skjemaet godtar du vår personvernpolicy og samtykker til behandling av dine personopplysninger for å svare på forespørselen din.",
+    "gdprConsentPrefix": "Jeg godtar",
+    "gdprPrivacyLink": "personvernerklæringen",
+    "gdprConsentSuffix": "og samtykker til å bli kontaktet om forespørselen min.",
+    "gdprTermsPrefix": "Se også våre",
+    "gdprTermsLink": "vilkår",
+    "gdprConsentError": "Du må godta personvernerklæringen før du sender forespørselen.",
     "voiceTitle": "Bare snakk — vi tar oss av resten",
     "voiceSubtitle": "Trykk på knappen og beskriv bedriften din, hva som tar mest tid, og hva du ønsker å automatisere. Snakk naturlig — det finnes ingen feil svar.",
     "voiceNotSupported": "Taleinntasting er ikke tilgjengelig i denne nettleseren",
@@ -351,6 +357,7 @@
     "privacyPolicy": "Personvern",
     "terms": "Vilkår",
     "cookiePolicy": "Informasjonskapsler",
+    "cookieSettings": "Cookie settings",
     "location": "Norge · Fjernarbeid",
     "responseTime": "Svar innen 48 timer",
     "accepting": "Tar for øyeblikket imot nye kunder",
@@ -360,8 +367,21 @@
     "madeSuffix": "i Norge"
   },
   "cookie": {
-    "text": "Vi bruker informasjonskapsler for å forbedre opplevelsen din. Nødvendige informasjonskapsler er alltid aktive.",
+    "title": "Vi bruker informasjonskapsler",
+    "text": "Vi bruker nødvendige informasjonskapsler for at nettsiden skal fungere. Med ditt samtykke bruker vi også analyse og markedsføring for å forstå målgruppen vår og forbedre tjenestene. Du kan godta, avvise eller tilpasse valget ditt.",
     "acceptAll": "Godta alle",
+    "rejectOptional": "Avvis valgfrie",
+    "customize": "Tilpass",
+    "saveChoices": "Lagre valg",
+    "cookiePolicy": "Cookie-erklæring",
+    "privacyPolicy": "Personvernerklæring",
+    "necessaryTitle": "Nødvendige",
+    "necessaryDesc": "Kreves for grunnleggende funksjoner, lagring av samtykke, skjema og chat.",
+    "alwaysOn": "Alltid på",
+    "analyticsTitle": "Analyse",
+    "analyticsDesc": "Hjelper oss å forstå trafikk og forbedre nettsiden. Lastes bare etter samtykke.",
+    "marketingTitle": "Markedsføring",
+    "marketingDesc": "Hjelper oss å måle kampanjer og relevant annonsering. Lastes bare etter samtykke.",
     "essentialOnly": "Kun nødvendige",
     "learnMore": "Les mer"
   },

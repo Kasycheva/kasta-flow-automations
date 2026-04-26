@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Check, Facebook, Instagram, Linkedin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import KFLogo from '../ui/KFLogo';
+import { openCookieSettings } from '../../lib/cookieConsent';
 
 const serviceLinks = [
   { key: 'automationSystems', href: '#services' },
@@ -210,10 +211,16 @@ export default function Footer() {
               {t('footer.madeSuffix')}
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <button className="transition-colors duration-200 hover:text-foreground">{t('footer.privacyPolicy')}</button>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <a href="/privacy" className="transition-colors duration-200 hover:text-foreground">{t('footer.privacyPolicy')}</a>
             <span className="text-white/25">·</span>
-            <button className="transition-colors duration-200 hover:text-foreground">{t('footer.terms')}</button>
+            <a href="/cookies" className="transition-colors duration-200 hover:text-foreground">{t('footer.cookiePolicy')}</a>
+            <span className="text-white/25">·</span>
+            <a href="/terms" className="transition-colors duration-200 hover:text-foreground">{t('footer.terms')}</a>
+            <span className="text-white/25">·</span>
+            <button onClick={openCookieSettings} className="transition-colors duration-200 hover:text-foreground">
+              {t('footer.cookieSettings')}
+            </button>
           </div>
         </div>
       </div>
