@@ -58,7 +58,7 @@ function applyConsent(consent: CookieConsent | null) {
   if (!consent) return;
 
   if (consent.analytics) {
-    initGoogleAnalytics(import.meta.env.VITE_GA_MEASUREMENT_ID ?? "");
+    initGoogleAnalytics(import.meta.env.VITE_GA4_ID ?? "");
   }
 
   if (consent.marketing) {
