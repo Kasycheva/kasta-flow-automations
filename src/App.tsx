@@ -14,8 +14,8 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <TrackingScripts />
       <BrowserRouter>
+        <TrackingScripts />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/privacy" element={<LegalPage kind="privacy" />} />

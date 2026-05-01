@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   COOKIE_CONSENT_EVENT,
   CookieConsent,
@@ -25,17 +26,35 @@ function loadScript(id: string, src: string) {
   document.head.appendChild(script);
 }
 
+function sendGoogleAnalyticsPageView(measurementId: string) {
+  if (!measurementId || !window.gtag) return;
+
+  window.gtag("event", "page_view", {
+    page_title: document.title,
+    page_location: window.location.href,
+    page_path: `${window.location.pathname}${window.location.search}`,
+  });
+}
+
 function initGoogleAnalytics(measurementId: string) {
-  if (!measurementId || document.getElementById("kasta-ga-loader")) return;
+  if (!measurementId) return;
 
   window.dataLayer = window.dataLayer ?? [];
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer?.push(args);
-  };
-  window.gtag("js", new Date());
-  window.gtag("config", measurementId, { anonymize_ip: true });
+  window.gtag =
+    window.gtag ??
+    function gtag(...args: unknown[]) {
+      window.dataLayer?.push(args);
+    };
 
-  loadScript("kasta-ga-loader", `https://www.googletagmanager.com/gtag/js?id=${measurementId}`);
+  if (!document.getElementById("kasta-ga-loader")) {
+    window.gtag("js", new Date());
+    window.gtag("config", measurementId, {
+      anonymize_ip: true,
+      send_page_view: false,
+    });
+
+    loadScript("kasta-ga-loader", `https://www.googletagmanager.com/gtag/js?id=${measurementId}`);
+  }
 }
 
 function initMetaPixel(pixelId: string) {
@@ -58,7 +77,9 @@ function applyConsent(consent: CookieConsent | null) {
   if (!consent) return;
 
   if (consent.analytics) {
-    initGoogleAnalytics(import.meta.env.VITE_GA4_ID ?? "");
+    const measurementId = import.meta.env.VITE_GA4_ID ?? "";
+    initGoogleAnalytics(measurementId);
+    sendGoogleAnalyticsPageView(measurementId);
   }
 
   if (consent.marketing) {
@@ -71,6 +92,8 @@ function applyConsent(consent: CookieConsent | null) {
 }
 
 export default function TrackingScripts() {
+  const location = useLocation();
+
   useEffect(() => {
     applyConsent(getCookieConsent());
 
@@ -80,7 +103,7 @@ export default function TrackingScripts() {
 
     window.addEventListener(COOKIE_CONSENT_EVENT, onConsentChange);
     return () => window.removeEventListener(COOKIE_CONSENT_EVENT, onConsentChange);
-  }, []);
+  }, [location.pathname, location.search]);
 
   return null;
 }
