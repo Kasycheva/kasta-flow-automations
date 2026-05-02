@@ -11,7 +11,6 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
-    kastaGtagConsentDefaultSet?: boolean;
     fbq?: (...args: unknown[]) => void;
     _fbq?: unknown;
   }
@@ -29,29 +28,7 @@ function loadScript(id: string, src: string) {
   document.head.appendChild(script);
 }
 
-function initGoogleTagConsentDefault() {
-  window.dataLayer = window.dataLayer ?? [];
-  window.gtag =
-    window.gtag ??
-    function gtag(...args: unknown[]) {
-      window.dataLayer?.push(args);
-    };
-
-  if (window.kastaGtagConsentDefaultSet) return;
-
-  window.gtag("consent", "default", {
-    analytics_storage: "denied",
-    ad_storage: "denied",
-    ad_user_data: "denied",
-    ad_personalization: "denied",
-    wait_for_update: 500,
-  });
-  window.kastaGtagConsentDefaultSet = true;
-}
-
 function updateGoogleTagConsent(consent: CookieConsent) {
-  initGoogleTagConsentDefault();
-
   const analyticsStorage: ConsentModeValue = consent.analytics ? "granted" : "denied";
   const marketingStorage: ConsentModeValue = consent.marketing ? "granted" : "denied";
 
@@ -73,20 +50,17 @@ function sendGoogleAnalyticsPageView(measurementId: string) {
   });
 }
 
+let gaConfigured = false;
+
 function initGoogleAnalytics(measurementId: string) {
-  if (!measurementId) return;
+  if (!measurementId || gaConfigured || !window.gtag) return;
 
-  initGoogleTagConsentDefault();
-
-  if (!document.getElementById("kasta-ga-loader")) {
-    window.gtag("js", new Date());
-    window.gtag("config", measurementId, {
-      anonymize_ip: true,
-      send_page_view: false,
-    });
-
-    loadScript("kasta-ga-loader", `https://www.googletagmanager.com/gtag/js?id=${measurementId}`);
-  }
+  gaConfigured = true;
+  window.gtag("js", new Date());
+  window.gtag("config", measurementId, {
+    anonymize_ip: true,
+    send_page_view: false,
+  });
 }
 
 function initMetaPixel(pixelId: string) {
@@ -106,8 +80,6 @@ function initMetaPixel(pixelId: string) {
 }
 
 function applyConsent(consent: CookieConsent | null) {
-  initGoogleTagConsentDefault();
-
   if (!consent) return;
 
   updateGoogleTagConsent(consent);
