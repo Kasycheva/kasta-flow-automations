@@ -130,7 +130,7 @@ export default function Footer() {
               </span>
             </a>
 
-            <h2 className="footer-statement text-3xl md:text-[2.45rem] font-semibold leading-tight" aria-label={statement}>
+            <h2 className="footer-statement text-3xl md:text-[2.45rem] font-semibold leading-tight mx-auto lg:mx-0" aria-label={statement}>
               <span className="footer-statement-ghost" aria-hidden="true">{statement}</span>
               <span className={statementMode === 'shine' ? 'footer-shine-text' : undefined}>
                 {typedStatement}
