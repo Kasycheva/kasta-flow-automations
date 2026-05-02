@@ -11,10 +11,13 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    kastaGtagConsentDefaultSet?: boolean;
     fbq?: (...args: unknown[]) => void;
     _fbq?: unknown;
   }
 }
+
+type ConsentModeValue = "granted" | "denied";
 
 function loadScript(id: string, src: string) {
   if (document.getElementById(id)) return;
@@ -24,6 +27,40 @@ function loadScript(id: string, src: string) {
   script.async = true;
   script.src = src;
   document.head.appendChild(script);
+}
+
+function initGoogleTagConsentDefault() {
+  window.dataLayer = window.dataLayer ?? [];
+  window.gtag =
+    window.gtag ??
+    function gtag(...args: unknown[]) {
+      window.dataLayer?.push(args);
+    };
+
+  if (window.kastaGtagConsentDefaultSet) return;
+
+  window.gtag("consent", "default", {
+    analytics_storage: "denied",
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    wait_for_update: 500,
+  });
+  window.kastaGtagConsentDefaultSet = true;
+}
+
+function updateGoogleTagConsent(consent: CookieConsent) {
+  initGoogleTagConsentDefault();
+
+  const analyticsStorage: ConsentModeValue = consent.analytics ? "granted" : "denied";
+  const marketingStorage: ConsentModeValue = consent.marketing ? "granted" : "denied";
+
+  window.gtag?.("consent", "update", {
+    analytics_storage: analyticsStorage,
+    ad_storage: marketingStorage,
+    ad_user_data: marketingStorage,
+    ad_personalization: marketingStorage,
+  });
 }
 
 function sendGoogleAnalyticsPageView(measurementId: string) {
@@ -39,12 +76,7 @@ function sendGoogleAnalyticsPageView(measurementId: string) {
 function initGoogleAnalytics(measurementId: string) {
   if (!measurementId) return;
 
-  window.dataLayer = window.dataLayer ?? [];
-  window.gtag =
-    window.gtag ??
-    function gtag(...args: unknown[]) {
-      window.dataLayer?.push(args);
-    };
+  initGoogleTagConsentDefault();
 
   if (!document.getElementById("kasta-ga-loader")) {
     window.gtag("js", new Date());
@@ -74,7 +106,11 @@ function initMetaPixel(pixelId: string) {
 }
 
 function applyConsent(consent: CookieConsent | null) {
+  initGoogleTagConsentDefault();
+
   if (!consent) return;
+
+  updateGoogleTagConsent(consent);
 
   if (consent.analytics) {
     const measurementId = import.meta.env.VITE_GA4_ID ?? "";
