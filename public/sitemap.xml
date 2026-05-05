@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
     <loc>https://kastaflow.com/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kastaflow.com/en"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://kastaflow.com/no"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kastaflow.com/en"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://kastaflow.com/en</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kastaflow.com/en"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://kastaflow.com/no"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kastaflow.com/en"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
     <loc>https://kastaflow.com/no</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://kastaflow.com/en"/>
-    <xhtml:link rel="alternate" hreflang="no" href="https://kastaflow.com/no"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://kastaflow.com/en"/>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
