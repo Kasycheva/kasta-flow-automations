@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import SectionReveal from '../ui/SectionReveal';
+import { trackEvent } from '../../lib/analytics';
 
 const icons: LucideIcon[] = [
   ArrowRightLeft, GitBranch, Zap, Filter,
@@ -103,6 +104,14 @@ function ServiceCard({ cardKey, index, icons }: { cardKey: CardKey; index: numbe
           </div>
           <a
             href="#contact"
+            onClick={() => {
+              trackEvent('cta_click', {
+                cta_type: 'service_card',
+                cta_location: 'services',
+                cta_id: cardKey,
+                target: '#contact',
+              });
+            }}
             className="w-full justify-center text-[12px] font-medium text-[#0a0a0a] bg-white hover:bg-white/90 hover:-translate-y-0.5 hover:shadow-[0_4px_14px_rgba(255,255,255,0.18)] rounded-full px-3 py-1.5 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] inline-flex items-center gap-1 group whitespace-nowrap"
           >
             {t('services.orderCta')}
@@ -167,6 +176,12 @@ export default function Services() {
           </p>
           <a
             href="#contact"
+            onClick={() => trackEvent('cta_click', {
+              cta_type: 'service_custom',
+              cta_location: 'services',
+              cta_id: 'custom_services',
+              target: '#contact',
+            })}
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-white/[0.04] text-sm text-foreground hover:border-white/35 hover:bg-white/[0.07] transition-all duration-200"
           >
             {t('services.customCta')} <span aria-hidden>→</span>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, Mail, ChevronDown, Linkedin, MessageCircle, Send, Facebook, FileSearch } from 'lucide-react';
 import SectionReveal from '../ui/SectionReveal';
+import { trackEvent } from '../../lib/analytics';
 
 const EASE = [0.23, 1, 0.32, 1] as const;
 
@@ -153,6 +154,7 @@ export default function Contact() {
   const [sent, setSent] = useState(false);
   const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
   const serviceDropdownRef = useRef<HTMLDivElement>(null);
+  const formStartedRef = useRef({ written: false, voice: false });
 
   // Voice form
   const [recording, setRecording] = useState(false);
@@ -188,6 +190,12 @@ export default function Contact() {
   const labelReq     = 'text-sm font-medium text-foreground mb-2 block';
   const labelOpt     = 'text-sm text-muted-foreground mb-2 block';
   const asterisk     = <span className="text-foreground ml-0.5">*</span>;
+
+  const trackFormStart = (formType: 'written' | 'voice') => {
+    if (formStartedRef.current[formType]) return;
+    formStartedRef.current[formType] = true;
+    trackEvent('contact_form_start', { form_type: formType });
+  };
 
   // Close service dropdown on outside click
   useEffect(() => {
@@ -247,7 +255,11 @@ export default function Contact() {
           chatTranscript,
         }),
       });
-      if (!res.ok) console.error('Formsubmit error', await res.text());
+      if (res.ok) {
+        trackEvent('contact_form_submit', { form_type: 'written' });
+      } else {
+        console.error('Formsubmit error', await res.text());
+      }
     } catch (err) {
       console.error('Formsubmit fetch failed', err);
     }
@@ -281,7 +293,11 @@ export default function Contact() {
           voiceTranscript: transcript, chatTranscript,
         }),
       });
-      if (!res.ok) console.error('Formsubmit error', await res.text());
+      if (res.ok) {
+        trackEvent('contact_form_submit', { form_type: 'voice' });
+      } else {
+        console.error('Formsubmit error', await res.text());
+      }
     } catch (err) {
       console.error('Formsubmit fetch failed', err);
     }
@@ -327,6 +343,8 @@ export default function Contact() {
   };
 
   const startAudioRecording = async () => {
+    trackFormStart('voice');
+
     if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === 'undefined') {
       setVoiceErrors(p => ({ ...p, name: t('contact.voiceNotSupported') }));
       return;
@@ -387,6 +405,8 @@ export default function Contact() {
   };
 
   const startRecognitionSession = (append: boolean) => {
+    trackFormStart('voice');
+
     const SR = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SR) { setVoiceErrors(p => ({ ...p, name: t('contact.voiceNotSupported') })); return; }
 
@@ -609,7 +629,13 @@ export default function Contact() {
                   <p className="text-xl text-foreground font-heading font-bold">{t('contact.success')}</p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} noValidate className="space-y-6">
+                <form
+                  onSubmit={handleSubmit}
+                  onFocusCapture={() => trackFormStart('written')}
+                  onChangeCapture={() => trackFormStart('written')}
+                  noValidate
+                  className="space-y-6"
+                >
                   <input type="hidden" name="chatTranscript"
                     value={typeof window !== 'undefined' ? (sessionStorage.getItem('chat_transcript_for_form') ?? '') : ''} />
 
@@ -765,7 +791,11 @@ export default function Contact() {
                   <p className="text-xl text-foreground font-heading font-bold">{t('contact.success')}</p>
                 </div>
               ) : (
-                <div className="space-y-6">
+                <div
+                  className="space-y-6"
+                  onFocusCapture={() => trackFormStart('voice')}
+                  onChangeCapture={() => trackFormStart('voice')}
+                >
 
                   {/* Full name * */}
                   <div>
@@ -990,6 +1020,12 @@ export default function Contact() {
             </a>
             <p className="text-xs text-muted-foreground flex-1 flex items-center">{t('contact.emailCard.note')}</p>
             <a href="mailto:kastaflow.studio@gmail.com"
+              onClick={() => trackEvent('cta_click', {
+                cta_type: 'contact_button',
+                cta_location: 'contact_cards',
+                cta_id: 'email',
+                target: 'mailto',
+              })}
               className="btn-outline text-xs py-2 px-4">{t('contact.emailCard.cta')}</a>
           </motion.div>
 
@@ -1006,6 +1042,12 @@ export default function Contact() {
             <p className="text-sm text-muted-foreground">{t('contact.whatsappCard.text')}</p>
             <p className="text-xs text-muted-foreground flex-1 flex items-center">{t('contact.whatsappCard.note')}</p>
             <a href="/whatsapp" target="_blank" rel="noopener noreferrer"
+              onClick={() => trackEvent('cta_click', {
+                cta_type: 'contact_button',
+                cta_location: 'contact_cards',
+                cta_id: 'whatsapp',
+                target: '/whatsapp',
+              })}
               className="btn-outline text-xs py-2 px-4">{t('contact.whatsappCard.cta')}</a>
           </motion.div>
 
@@ -1025,6 +1067,12 @@ export default function Contact() {
             </a>
             <p className="text-xs text-muted-foreground flex-1 flex items-center">{t('contact.telegramCard.note')}</p>
             <a href="https://t.me/kastaflow_assist_bot" target="_blank" rel="noopener noreferrer"
+              onClick={() => trackEvent('cta_click', {
+                cta_type: 'contact_button',
+                cta_location: 'contact_cards',
+                cta_id: 'telegram',
+                target: 'telegram',
+              })}
               className="btn-outline text-xs py-2 px-4">{t('contact.telegramCard.cta')}</a>
           </motion.div>
 
@@ -1044,6 +1092,12 @@ export default function Contact() {
             </a>
             <p className="text-xs text-muted-foreground flex-1 flex items-center">{t('contact.linkedinCard.note')}</p>
             <a href="https://www.linkedin.com/in/maria-kasta-flow/" target="_blank" rel="noopener noreferrer"
+              onClick={() => trackEvent('cta_click', {
+                cta_type: 'contact_button',
+                cta_location: 'contact_cards',
+                cta_id: 'linkedin',
+                target: 'linkedin',
+              })}
               className="btn-outline text-xs py-2 px-4">{t('contact.linkedinCard.cta')}</a>
           </motion.div>
         </div>

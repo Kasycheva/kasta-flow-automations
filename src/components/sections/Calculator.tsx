@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, useInView } from 'framer-motion';
 import { BarChart3 } from 'lucide-react';
 import SectionReveal from '../ui/SectionReveal';
+import { trackEvent } from '../../lib/analytics';
 
 function AnimatedNumber({ value, format }: { value: number; format: (n: number) => string }) {
   const [display, setDisplay] = useState(value);
@@ -30,12 +31,20 @@ function AnimatedNumber({ value, format }: { value: number; format: (n: number) 
 const fmt = (n: number) => new Intl.NumberFormat('no-NO').format(n);
 
 function Slider({
-  label, helper, min, max, step, value, onChange, displayValue,
+  label, helper, min, max, step, value, onChange, displayValue, trackingControl, onTrackInteraction,
 }: {
   label: string; helper?: string; min: number; max: number;
   step: number; value: number; onChange: (v: number) => void; displayValue: string;
+  trackingControl: 'hours' | 'rate' | 'employees';
+  onTrackInteraction: (control: 'hours' | 'rate' | 'employees') => void;
 }) {
   const pct = ((value - min) / (max - min)) * 100;
+
+  const handleChange = (nextValue: number) => {
+    onTrackInteraction(trackingControl);
+    onChange(nextValue);
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-2.5">
@@ -49,7 +58,7 @@ function Slider({
         />
         <input
           type="range" min={min} max={max} step={step} value={value}
-          onChange={e => onChange(+e.target.value)}
+          onChange={e => handleChange(+e.target.value)}
           className="absolute inset-0 w-full opacity-0 cursor-pointer h-full"
         />
         <div
@@ -88,7 +97,16 @@ export default function Calculator() {
   const [rate, setRate] = useState(500);
   const [employees, setEmployees] = useState(1);
   const sectionRef = useRef<HTMLElement>(null);
+  const trackedControlsRef = useRef(new Set<'hours' | 'rate' | 'employees'>());
   const inView = useInView(sectionRef, { once: true, amount: 0.1 });
+
+  const trackCalculatorInteraction = (control: 'hours' | 'rate' | 'employees') => {
+    if (trackedControlsRef.current.has(control)) return;
+    trackedControlsRef.current.add(control);
+    trackEvent('calculator_interaction', {
+      calculator_control: control,
+    });
+  };
 
   const weeklyCost  = hours * rate * employees;
   const monthlyCost = Math.round(weeklyCost * 4.3);
@@ -174,6 +192,8 @@ export default function Calculator() {
                   label: t('calculator.hoursLabel'),
                   min: 1, max: 40, step: 1, value: hours, onChange: setHours,
                   displayValue: `${hours} ${t('calculator.hoursUnit')}`,
+                  trackingControl: 'hours' as const,
+                  onTrackInteraction: trackCalculatorInteraction,
                   delay: 0.3,
                 },
                 {
@@ -181,12 +201,16 @@ export default function Calculator() {
                   helper: t('calculator.rateHelper'),
                   min: 200, max: 1200, step: 50, value: rate, onChange: setRate,
                   displayValue: `${fmt(rate)} ${t('calculator.rateUnit')}`,
+                  trackingControl: 'rate' as const,
+                  onTrackInteraction: trackCalculatorInteraction,
                   delay: 0.42,
                 },
                 {
                   label: t('calculator.employeesLabel'),
                   min: 1, max: 10, step: 1, value: employees, onChange: setEmployees,
                   displayValue: String(employees),
+                  trackingControl: 'employees' as const,
+                  onTrackInteraction: trackCalculatorInteraction,
                   delay: 0.54,
                 },
               ].map(({ delay, ...props }) => (

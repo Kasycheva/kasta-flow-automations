@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send } from 'lucide-react';
+import { trackEvent } from '../../lib/analytics';
 
 
 interface Message {
@@ -65,7 +66,10 @@ export default function ChatWidget() {
     }
   }, [messages]);
 
-  const handleOpen = () => {
+  const handleOpen = (openSource: 'button' | 'tooltip' = 'button') => {
+    if (!open) {
+      trackEvent('chat_open', { open_source: openSource });
+    }
     setOpen(true);
     setShowTooltip(false);
     if (messages.length === 0) {
@@ -172,7 +176,7 @@ export default function ChatWidget() {
             exit={{ opacity: 0, scale: 0.9, y: 8 }}
             transition={{ duration: 0.2 }}
             className="fixed bottom-[100px] right-6 z-[9999] cursor-pointer"
-            onClick={() => { setShowTooltip(false); handleOpen(); }}
+            onClick={() => { setShowTooltip(false); handleOpen('tooltip'); }}
           >
             <div style={{
               background: '#111111',
@@ -196,7 +200,7 @@ export default function ChatWidget() {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-          onClick={handleOpen}
+          onClick={() => handleOpen('button')}
           onMouseEnter={() => { if (hasShownTooltip) setShowTooltip(true); }}
           onMouseLeave={() => { if (hasShownTooltip) setShowTooltip(false); }}
           aria-label="Open chat"

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import KFLogo from '../ui/KFLogo';
+import { trackEvent } from '../../lib/analytics';
 
 /* ── Assembly logo: 4 fragments fly in from corners, then settle into glow.
    To revert entirely: remove this component and use plain
@@ -73,6 +74,13 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   const switchLang = (lang: string) => {
+    const fromLanguage = i18n.language === 'no' ? 'no' : 'en';
+    if (lang !== fromLanguage) {
+      trackEvent('language_switch', {
+        from_language: fromLanguage,
+        to_language: lang,
+      });
+    }
     localStorage.setItem('kasta-language', lang);
     i18n.changeLanguage(lang);
     navigate(`/${lang}${location.hash}`);

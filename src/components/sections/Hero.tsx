@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { trackEvent } from '../../lib/analytics';
 
 const fadeUp = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
@@ -27,7 +28,18 @@ export default function Hero() {
               {t('hero.subtitle')}
             </motion.p>
             <motion.div {...fadeUp(1.1)} className="flex flex-wrap gap-4 mb-8 justify-center lg:justify-start">
-              <a href="#contact" className="btn-primary">{t('hero.ctaPrimary')}</a>
+              <a
+                href="#contact"
+                className="btn-primary"
+                onClick={() => trackEvent('cta_click', {
+                  cta_type: 'hero_main',
+                  cta_location: 'hero',
+                  cta_id: 'hero_primary',
+                  target: '#contact',
+                })}
+              >
+                {t('hero.ctaPrimary')}
+              </a>
               <a href="#services" className="btn-outline">{t('hero.ctaSecondary')}</a>
             </motion.div>
             <motion.div {...fadeUp(1.4)} className="flex flex-wrap gap-4 text-sm text-muted-foreground justify-center lg:justify-start">
