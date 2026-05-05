@@ -243,25 +243,27 @@ export default function Contact() {
     setSending(true);
     const chatTranscript = sessionStorage.getItem('chat_transcript_for_form') || '';
     try {
-      const res = await fetch('https://formsubmit.co/ajax/kastaflow.studio@gmail.com', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject: 'New lead from Kasta Flow Studio',
-          _template: 'box',
-          _cc: 'kasycheva00@ukr.net',
+          access_key: '46c53942-e47c-476a-ae1b-777a8dafa501',
+          subject: 'New audit request — Kasta Flow Studio',
+          from_name: 'Kasta Flow Studio Website',
+          cc: import.meta.env.VITE_CC_EMAIL,
           ...formData,
           gdprConsent: 'Accepted Privacy Policy and contact consent',
           chatTranscript,
         }),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
         trackEvent('contact_form_submit', { form_type: 'written' });
       } else {
-        console.error('Formsubmit error', await res.text());
+        console.error('Web3Forms error', data);
       }
     } catch (err) {
-      console.error('Formsubmit fetch failed', err);
+      console.error('Web3Forms fetch failed', err);
     }
     sessionStorage.removeItem('chat_transcript_for_form');
     setSending(false);
@@ -280,26 +282,28 @@ export default function Contact() {
     setSending(true);
     const chatTranscript = sessionStorage.getItem('chat_transcript_for_form') || '';
     try {
-      const res = await fetch('https://formsubmit.co/ajax/kastaflow.studio@gmail.com', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
-          _subject: 'New voice lead from Kasta Flow Studio',
-          _template: 'box',
-          _cc: 'kasycheva00@ukr.net',
+          access_key: '46c53942-e47c-476a-ae1b-777a8dafa501',
+          subject: 'New audit request — Kasta Flow Studio',
+          from_name: 'Kasta Flow Studio Website',
+          cc: import.meta.env.VITE_CC_EMAIL,
           name: voiceName, email: voiceEmail, phone: voicePhone,
           channel: voiceChannel, conditionalContact: voiceConditionalContact,
           gdprConsent: 'Accepted Privacy Policy and contact consent',
           voiceTranscript: transcript, chatTranscript,
         }),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
         trackEvent('contact_form_submit', { form_type: 'voice' });
       } else {
-        console.error('Formsubmit error', await res.text());
+        console.error('Web3Forms error', data);
       }
     } catch (err) {
-      console.error('Formsubmit fetch failed', err);
+      console.error('Web3Forms fetch failed', err);
     }
     sessionStorage.removeItem('chat_transcript_for_form');
     setSending(false);
