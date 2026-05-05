@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 interface SeoProps {
   title?: string;
@@ -9,6 +10,7 @@ interface SeoProps {
 
 export default function Seo({ title, description, noIndex = false }: SeoProps) {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
   const currentLanguage = i18n.language === "no" ? "no" : "en";
 
   const metaTitle =
@@ -28,7 +30,13 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
       ? new URL("/og-image.svg?v=20260424", window.location.origin).toString()
       : "/og-image.svg?v=20260424";
   const pageUrl =
-    typeof window !== "undefined" ? window.location.href : "/";
+    location.pathname === "/"
+      ? "https://kastaflow.com/"
+      : location.pathname === "/en"
+        ? "https://kastaflow.com/en"
+        : location.pathname === "/no"
+          ? "https://kastaflow.com/no"
+          : `https://kastaflow.com${location.pathname}`;
   const canonicalUrl =
     currentLanguage === "no" ? "https://kastaflow.com/no" : "https://kastaflow.com/en";
 
