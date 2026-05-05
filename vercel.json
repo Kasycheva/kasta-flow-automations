@@ -5,6 +5,17 @@
       "maxDuration": 30
     }
   },
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/whatsapp", "destination": "/api/whatsapp" },
     { "source": "/privacy", "destination": "/index.html" },
