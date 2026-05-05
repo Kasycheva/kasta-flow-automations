@@ -9,6 +9,7 @@ interface SeoProps {
 
 export default function Seo({ title, description, noIndex = false }: SeoProps) {
   const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language === "no" ? "no" : "en";
 
   const metaTitle =
     title ??
@@ -28,10 +29,12 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
       : "/og-image.svg?v=20260424";
   const pageUrl =
     typeof window !== "undefined" ? window.location.href : "/";
+  const canonicalUrl =
+    currentLanguage === "no" ? "https://kastaflow.com/no" : "https://kastaflow.com/en";
 
   return (
     <Helmet>
-      <html lang={i18n.language === "no" ? "no" : "en"} />
+      <html lang={currentLanguage} />
       <title>{metaTitle}</title>
       <meta name="description" content={metaDescription} />
       <meta name="author" content={siteName} />
@@ -46,12 +49,16 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
       <link rel="shortcut icon" href="/favicon.svg?v=20260424" type="image/svg+xml" />
       <link rel="apple-touch-icon" href="/apple-touch-icon.svg?v=20260424" />
       <link rel="manifest" href="/site.webmanifest?v=20260424" />
+      <link rel="canonical" href={canonicalUrl} />
+      <link rel="alternate" hrefLang="en" href="https://kastaflow.com/en" />
+      <link rel="alternate" hrefLang="no" href="https://kastaflow.com/no" />
+      <link rel="alternate" hrefLang="x-default" href="https://kastaflow.com/en" />
 
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={siteName} />
-      <meta property="og:locale" content={i18n.language === "no" ? "nb_NO" : "en_US"} />
+      <meta property="og:locale" content={currentLanguage === "no" ? "nb_NO" : "en_US"} />
       <meta property="og:url" content={pageUrl} />
       <meta property="og:image" content={imageUrl} />
 

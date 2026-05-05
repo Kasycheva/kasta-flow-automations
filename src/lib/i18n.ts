@@ -4,9 +4,13 @@ import en from '../locales/en.json';
 import no from '../locales/no.json';
 
 const savedLanguage =
-  typeof window !== 'undefined' && window.localStorage.getItem('kasta-language') === 'no'
+  typeof window !== 'undefined' && window.location.pathname === '/no'
     ? 'no'
-    : 'en';
+    : typeof window !== 'undefined' && window.location.pathname === '/en'
+      ? 'en'
+      : typeof window !== 'undefined' && window.localStorage.getItem('kasta-language') === 'no'
+        ? 'no'
+        : 'en';
 
 i18n.use(initReactI18next).init({
   resources: {

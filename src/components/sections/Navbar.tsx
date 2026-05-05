@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import KFLogo from '../ui/KFLogo';
 
 /* ── Assembly logo: 4 fragments fly in from corners, then settle into glow.
@@ -50,6 +51,8 @@ const navLinks = [
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -72,9 +75,15 @@ export default function Navbar() {
   const switchLang = (lang: string) => {
     localStorage.setItem('kasta-language', lang);
     i18n.changeLanguage(lang);
+    navigate(`/${lang}${location.hash}`);
+    setMobileOpen(false);
   };
 
   const scrollToTop = () => {
+    if (location.pathname !== '/' && location.pathname !== '/en' && location.pathname !== '/no') {
+      navigate(i18n.language === 'no' ? '/no' : '/en');
+      return;
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
