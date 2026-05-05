@@ -37,6 +37,32 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
         : location.pathname === "/no"
           ? "https://kastaflow.com/no"
           : `https://kastaflow.com${location.pathname}`;
+  const shouldRenderStructuredData =
+    location.pathname === "/" || location.pathname === "/en" || location.pathname === "/no";
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "Kasta Flow Studio",
+    url: "https://kastaflow.com",
+    email: "kastaflow.studio@gmail.com",
+    description:
+      "Business automation studio helping small businesses reduce manual work using AI, CRM systems, n8n workflows, integrations and landing page automations.",
+    areaServed: {
+      "@type": "Country",
+      name: "Norway",
+    },
+    availableLanguage: ["English", "Norwegian"],
+    knowsAbout: [
+      "business automation",
+      "AI automation",
+      "n8n workflows",
+      "CRM setup",
+      "Vipps integration",
+      "Fiken integration",
+      "AI chatbot",
+      "lead generation",
+    ],
+  };
 
   return (
     <Helmet>
@@ -72,6 +98,12 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
       <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:description" content={metaDescription} />
       <meta name="twitter:image" content={imageUrl} />
+
+      {shouldRenderStructuredData && (
+        <script type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </script>
+      )}
     </Helmet>
   );
 }
