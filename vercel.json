@@ -20,6 +20,7 @@
     { "source": "/whatsapp", "destination": "/api/whatsapp" },
     { "source": "/privacy", "destination": "/index.html" },
     { "source": "/cookies", "destination": "/index.html" },
-    { "source": "/terms", "destination": "/index.html" }
+    { "source": "/terms", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
