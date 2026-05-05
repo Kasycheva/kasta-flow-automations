@@ -37,8 +37,6 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
         : location.pathname === "/no"
           ? "https://kastaflow.com/no"
           : `https://kastaflow.com${location.pathname}`;
-  const canonicalUrl =
-    currentLanguage === "no" ? "https://kastaflow.com/no" : "https://kastaflow.com/en";
 
   return (
     <Helmet>
@@ -57,7 +55,7 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
       <link rel="shortcut icon" href="/favicon.svg?v=20260424" type="image/svg+xml" />
       <link rel="apple-touch-icon" href="/apple-touch-icon.svg?v=20260424" />
       <link rel="manifest" href="/site.webmanifest?v=20260424" />
-      <link rel="canonical" href={canonicalUrl} />
+      <link rel="canonical" href={pageUrl} />
       <link rel="alternate" hrefLang="en" href="https://kastaflow.com/en" />
       <link rel="alternate" hrefLang="no" href="https://kastaflow.com/no" />
       <link rel="alternate" hrefLang="x-default" href="https://kastaflow.com/en" />
