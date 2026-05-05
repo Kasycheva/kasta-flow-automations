@@ -259,6 +259,18 @@ export default function Contact() {
       const data = await res.json();
       if (data.success) {
         trackEvent('contact_form_submit', { form_type: 'written' });
+        fetch('/api/notify-telegram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Notify-Secret': import.meta.env.VITE_TELEGRAM_NOTIFY_SECRET ?? '' },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            company: formData.company,
+            services: formData.services?.join(', '),
+            description: formData.description,
+            channel: formData.channel,
+          }),
+        }).catch(err => console.error('Telegram notify failed', err));
       } else {
         console.error('Web3Forms error', data);
       }
@@ -299,6 +311,18 @@ export default function Contact() {
       const data = await res.json();
       if (data.success) {
         trackEvent('contact_form_submit', { form_type: 'voice' });
+        fetch('/api/notify-telegram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Notify-Secret': import.meta.env.VITE_TELEGRAM_NOTIFY_SECRET ?? '' },
+          body: JSON.stringify({
+            name: voiceName,
+            email: voiceEmail,
+            company: '',
+            services: '',
+            description: transcript,
+            channel: voiceChannel,
+          }),
+        }).catch(err => console.error('Telegram notify failed', err));
       } else {
         console.error('Web3Forms error', data);
       }
