@@ -261,7 +261,7 @@ export default function Contact() {
         trackEvent('contact_form_submit', { form_type: 'written' });
         fetch('/api/notify-telegram', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-Notify-Secret': import.meta.env.VITE_TELEGRAM_NOTIFY_SECRET ?? '' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             name: formData.name,
             email: formData.email,
@@ -313,7 +313,7 @@ export default function Contact() {
         trackEvent('contact_form_submit', { form_type: 'voice' });
         fetch('/api/notify-telegram', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-Notify-Secret': import.meta.env.VITE_TELEGRAM_NOTIFY_SECRET ?? '' },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             name: voiceName,
             email: voiceEmail,
