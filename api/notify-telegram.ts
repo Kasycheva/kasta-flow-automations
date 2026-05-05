@@ -1,10 +1,10 @@
+const ALLOWED_ORIGINS = ['https://kastaflow.com', 'https://www.kastaflow.com'];
+
 export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const secret = process.env.TELEGRAM_NOTIFY_SECRET;
-  if (secret && req.headers['x-notify-secret'] !== secret) {
-    return res.status(403).end();
-  }
+  const origin = req.headers['origin'] ?? '';
+  if (!ALLOWED_ORIGINS.includes(origin)) return res.status(403).end();
 
   const { name, email, company, services, description, channel } = req.body ?? {};
 
