@@ -1,6 +1,6 @@
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { trackEvent } from '../../lib/analytics';
 
 const fadeUp = (delay: number) => ({
@@ -11,6 +11,26 @@ const fadeUp = (delay: number) => ({
 
 export default function Hero() {
   const { t } = useTranslation();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [LottieComponent, setLottieComponent] = useState<React.ComponentType<{
+    src: string; loop: boolean; autoplay: boolean; className?: string;
+  }> | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        import('@lottiefiles/dotlottie-react').then((mod) => {
+          setLottieComponent(() => mod.DotLottieReact as React.ComponentType<{
+            src: string; loop: boolean; autoplay: boolean; className?: string;
+          }>);
+        });
+        observer.disconnect();
+      }
+    }, { rootMargin: '200px' });
+
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center bg-background overflow-hidden">
@@ -56,14 +76,18 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex justify-center lg:justify-end"
           >
-            <div className="relative">
+            <div ref={containerRef} className="relative">
               <div className="absolute inset-0 bg-[radial-gradient(circle,rgba(200,200,200,0.08),transparent)] rounded-full scale-125" />
-              <DotLottieReact
-                src="https://lottie.host/6736fad7-3348-473d-89d7-29fa57fce136/VqnXUbDwSr.lottie"
-                loop
-                autoplay
-                className="w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] lg:w-[480px] lg:h-[480px]"
-              />
+              {LottieComponent ? (
+                <LottieComponent
+                  src="https://lottie.host/6736fad7-3348-473d-89d7-29fa57fce136/VqnXUbDwSr.lottie"
+                  loop
+                  autoplay
+                  className="w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] lg:w-[480px] lg:h-[480px]"
+                />
+              ) : (
+                <div className="w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] lg:w-[480px] lg:h-[480px]" />
+              )}
             </div>
           </motion.div>
         </div>
