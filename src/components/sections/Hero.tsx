@@ -17,19 +17,20 @@ export default function Hero() {
   }> | null>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        import('@lottiefiles/dotlottie-react').then((mod) => {
-          setLottieComponent(() => mod.DotLottieReact as React.ComponentType<{
-            src: string; loop: boolean; autoplay: boolean; className?: string;
-          }>);
-        });
-        observer.disconnect();
-      }
-    }, { rootMargin: '200px' });
-
-    if (containerRef.current) observer.observe(containerRef.current);
-    return () => observer.disconnect();
+    const load = () => {
+      import('@lottiefiles/dotlottie-react').then((mod) => {
+        setLottieComponent(() => mod.DotLottieReact as React.ComponentType<{
+          src: string; loop: boolean; autoplay: boolean; className?: string;
+        }>);
+      });
+    };
+    if ('requestIdleCallback' in window) {
+      const id = (window as any).requestIdleCallback(load, { timeout: 3000 });
+      return () => (window as any).cancelIdleCallback(id);
+    } else {
+      const id = setTimeout(load, 1000);
+      return () => clearTimeout(id);
+    }
   }, []);
 
   return (

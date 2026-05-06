@@ -292,8 +292,12 @@ export default function Calculator() {
                 <div className="h-1.5 rounded-full overflow-hidden mb-1.5" style={{ background: 'rgba(255,255,255,0.08)' }}>
                   <motion.div
                     className="h-full rounded-full"
-                    style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.35), rgba(255,255,255,0.8))' }}
-                    animate={{ width: `${barWidth}%` }}
+                    style={{
+                      background: 'linear-gradient(90deg, rgba(255,255,255,0.35), rgba(255,255,255,0.8))',
+                      width: '100%',
+                      transformOrigin: '0 0',
+                    }}
+                    animate={{ scaleX: barWidth / 100 }}
                     transition={{ type: 'spring', stiffness: 80, damping: 18 }}
                   />
                 </div>
