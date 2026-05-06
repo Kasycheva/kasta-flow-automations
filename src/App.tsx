@@ -3,13 +3,14 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Index from "./pages/Index";
-import LegalPage from "./pages/LegalPage";
-import NotFound from "./pages/NotFound";
 import TrackingScripts from "./components/widgets/TrackingScripts";
 import CookieBanner from "./components/widgets/CookieBanner";
+
+const LegalPage = lazy(() => import("./pages/LegalPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 type SupportedLanguage = "en" | "no";
 
@@ -37,10 +38,10 @@ const App = () => (
           <Route path="/" element={<LanguageRoute language="en" />} />
           <Route path="/en" element={<LanguageRoute language="en" />} />
           <Route path="/no" element={<LanguageRoute language="no" />} />
-          <Route path="/privacy" element={<LegalPage kind="privacy" />} />
-          <Route path="/cookies" element={<LegalPage kind="cookies" />} />
-          <Route path="/terms" element={<LegalPage kind="terms" />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/privacy" element={<Suspense fallback={null}><LegalPage kind="privacy" /></Suspense>} />
+          <Route path="/cookies" element={<Suspense fallback={null}><LegalPage kind="cookies" /></Suspense>} />
+          <Route path="/terms" element={<Suspense fallback={null}><LegalPage kind="terms" /></Suspense>} />
+          <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
         </Routes>
       </BrowserRouter>
       <CookieBanner />

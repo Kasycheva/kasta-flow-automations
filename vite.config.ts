@@ -20,7 +20,7 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor-react': ['react', 'react-dom'],
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
           'vendor-lottie': ['@lottiefiles/dotlottie-react'],
           'vendor-animations': ['framer-motion'],
         },

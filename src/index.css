@@ -314,6 +314,7 @@
   }
   .ticker-scroll {
     animation: ticker 30s linear infinite;
+    will-change: transform;
   }
   .ticker-scroll:hover {
     animation-duration: 60s;
