@@ -6,7 +6,7 @@ export default async function handler(req: any, res: any) {
   const origin = req.headers['origin'] ?? '';
   if (!ALLOWED_ORIGINS.includes(origin)) return res.status(403).end();
 
-  const { name, email, company, services, description, channel } = req.body ?? {};
+  const { name, email, phone, company, services, description, channel } = req.body ?? {};
 
   const truncate = (s: unknown, max = 200) =>
     typeof s === 'string' ? s.slice(0, max) : '—';
@@ -16,6 +16,7 @@ export default async function handler(req: any, res: any) {
     '',
     `👤 Name: ${truncate(name)}`,
     `📧 Email: ${truncate(email)}`,
+    `📞 Phone: ${truncate(phone)}`,
     `🏢 Company: ${truncate(company)}`,
     `🛠 Services: ${truncate(services)}`,
     `💬 Message: ${truncate(description, 500)}`,
