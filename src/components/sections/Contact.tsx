@@ -728,8 +728,8 @@ export default function Contact() {
 
                   {/* Team size */}
                   <div>
-                    <label className={labelOpt}>{t('contact.teamLabel')}</label>
-                    <select value={formData.teamSize} onChange={e => setFormData(p => ({ ...p, teamSize: e.target.value }))} className={inputClass}>
+                    <label htmlFor="team-size" className={labelOpt}>{t('contact.teamLabel')}</label>
+                    <select id="team-size" value={formData.teamSize} onChange={e => setFormData(p => ({ ...p, teamSize: e.target.value }))} className={inputClass}>
                       <option value="">—</option>
                       {teamOptions.map(o => <option key={o} value={o}>{o}</option>)}
                     </select>
@@ -1072,7 +1072,7 @@ export default function Contact() {
             whileHover={{ scale: 1.03 }}
             className="card-base rounded-2xl p-7 flex flex-col items-center text-center gap-2">
             <Mail size={28} className="text-muted-foreground mb-1" />
-            <h4 className="text-foreground font-medium">{t('contact.emailCard.title')}</h4>
+            <h3 className="text-foreground font-medium text-base">{t('contact.emailCard.title')}</h3>
             <a href="mailto:kastaflow.studio@gmail.com"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors break-all">
               {t('contact.emailCard.address')}
@@ -1097,7 +1097,7 @@ export default function Contact() {
             whileHover={{ scale: 1.03 }}
             className="card-base rounded-2xl p-7 flex flex-col items-center text-center gap-2">
             <WhatsAppIcon size={28} className="text-muted-foreground mb-1" />
-            <h4 className="text-foreground font-medium">{t('contact.whatsappCard.title')}</h4>
+            <h3 className="text-foreground font-medium text-base">{t('contact.whatsappCard.title')}</h3>
             <p className="text-sm text-muted-foreground">{t('contact.whatsappCard.text')}</p>
             <p className="text-xs text-muted-foreground flex-1 flex items-center">{t('contact.whatsappCard.note')}</p>
             <a href="/whatsapp" target="_blank" rel="noopener noreferrer"
@@ -1119,7 +1119,7 @@ export default function Contact() {
             whileHover={{ scale: 1.03 }}
             className="card-base rounded-2xl p-7 flex flex-col items-center text-center gap-2">
             <TelegramIcon size={28} className="text-muted-foreground mb-1" />
-            <h4 className="text-foreground font-medium">{t('contact.telegramCard.title')}</h4>
+            <h3 className="text-foreground font-medium text-base">{t('contact.telegramCard.title')}</h3>
             <a href="https://t.me/kastaflow_assist_bot" target="_blank" rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               {t('contact.telegramCard.username')}
@@ -1144,7 +1144,7 @@ export default function Contact() {
             whileHover={{ scale: 1.03 }}
             className="card-base rounded-2xl p-7 flex flex-col items-center text-center gap-2">
             <Linkedin size={28} className="text-muted-foreground mb-1" />
-            <h4 className="text-foreground font-medium">{t('contact.linkedinCard.title')}</h4>
+            <h3 className="text-foreground font-medium text-base">{t('contact.linkedinCard.title')}</h3>
             <a href="https://www.linkedin.com/in/maria-kasta-flow/" target="_blank" rel="noopener noreferrer"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               {t('contact.linkedinCard.handle')}

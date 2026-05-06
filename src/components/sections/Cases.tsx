@@ -472,16 +472,17 @@ export default function Cases() {
             </div>
           </div>
           <div className="flex items-center justify-center gap-4 mt-6">
-            <button onClick={() => setCurrentTestimonial(p => (p - 1 + testimonials.length) % testimonials.length)} className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+            <button onClick={() => setCurrentTestimonial(p => (p - 1 + testimonials.length) % testimonials.length)} aria-label="Previous testimonial" className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
               <ChevronLeft size={16} />
             </button>
             <div className="flex gap-2">
               {testimonials.map((_, i) => (
                 <button key={i} onClick={() => setCurrentTestimonial(i)}
+                  aria-label={`Go to slide ${i + 1}`}
                   className={`w-2 h-2 rounded-full transition-colors ${i === currentTestimonial ? 'bg-foreground' : 'bg-border'}`} />
               ))}
             </div>
-            <button onClick={() => setCurrentTestimonial(p => (p + 1) % testimonials.length)} className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
+            <button onClick={() => setCurrentTestimonial(p => (p + 1) % testimonials.length)} aria-label="Next testimonial" className="w-8 h-8 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors">
               <ChevronRight size={16} />
             </button>
           </div>

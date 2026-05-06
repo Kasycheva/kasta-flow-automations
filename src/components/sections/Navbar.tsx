@@ -106,7 +106,7 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
-          <button onClick={scrollToTop} className="flex items-center gap-3">
+          <button onClick={scrollToTop} aria-label="Kasta Flow Studio — Home" className="flex items-center gap-3">
             <AssemblyLogo size={36} />
             <span className="hidden sm:block text-[11px] font-bold uppercase tracking-[0.22em] text-foreground leading-tight">
               Kasta Flow<br />Studio
@@ -131,6 +131,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-1 text-sm">
               <button
                 onClick={() => switchLang('en')}
+                aria-label="Switch to English"
                 className={`px-2 py-1 transition-colors ${i18n.language === 'en' ? 'text-foreground' : 'text-muted-foreground'}`}
               >
                 EN
@@ -138,6 +139,7 @@ export default function Navbar() {
               <span className="text-muted-foreground">/</span>
               <button
                 onClick={() => switchLang('no')}
+                aria-label="Switch to Norwegian"
                 className={`px-2 py-1 transition-colors ${i18n.language === 'no' ? 'text-foreground' : 'text-muted-foreground'}`}
               >
                 NO
@@ -150,6 +152,7 @@ export default function Navbar() {
             <div className="hidden min-[375px]:flex lg:hidden items-center text-xs">
               <button
                 onClick={() => switchLang('en')}
+                aria-label="Switch to English"
                 className={`w-7 py-1 text-center transition-colors ${
                   i18n.language === 'en' ? 'text-foreground' : 'text-muted-foreground/50'
                 }`}
@@ -159,6 +162,7 @@ export default function Navbar() {
               <span className="text-white/15 select-none text-[10px]">|</span>
               <button
                 onClick={() => switchLang('no')}
+                aria-label="Switch to Norwegian"
                 className={`w-7 py-1 text-center transition-colors ${
                   i18n.language === 'no' ? 'text-foreground' : 'text-muted-foreground/50'
                 }`}
@@ -169,6 +173,7 @@ export default function Navbar() {
             <button
               className="lg:hidden text-foreground"
               onClick={() => setMobileOpen(true)}
+              aria-label="Open navigation menu"
             >
               <Menu size={24} />
             </button>

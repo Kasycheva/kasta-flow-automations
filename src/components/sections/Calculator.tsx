@@ -59,6 +59,7 @@ function Slider({
         <input
           type="range" min={min} max={max} step={step} value={value}
           onChange={e => handleChange(+e.target.value)}
+          aria-label={label}
           className="absolute inset-0 w-full opacity-0 cursor-pointer h-full"
         />
         <div
