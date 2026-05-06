@@ -85,13 +85,14 @@ interface AnimatedInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClearError?: () => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   type?: string;
   className?: string;
   name?: string;
   autoComplete?: string;
 }
 
-function AnimatedInput({ examples, value, onChange, onClearError, type = 'text', className, ...rest }: AnimatedInputProps) {
+function AnimatedInput({ examples, value, onChange, onClearError, onBlur, type = 'text', className, ...rest }: AnimatedInputProps) {
   const [focused, setFocused] = useState(false);
   const typed = useTypewriter(examples, !value && !focused);
   return (
@@ -101,7 +102,7 @@ function AnimatedInput({ examples, value, onChange, onClearError, type = 'text',
       value={value}
       onChange={onChange}
       onFocus={() => setFocused(true)}
-      onBlur={() => setFocused(false)}
+      onBlur={e => { setFocused(false); onBlur?.(e); }}
       className={className}
       {...rest}
     />
@@ -118,6 +119,10 @@ const PHONE_EXAMPLES = ['+47 901 23 456', '+47 456 78 901'];
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPhone(phone: string) {
+  return phone.replace(/\D/g, '').length >= 8;
 }
 
 function prefersAudioRecordingFallback() {
@@ -152,6 +157,8 @@ export default function Contact() {
   const [gdprConsentError, setGdprConsentError] = useState('');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [sendError, setSendError] = useState('');
+  const [voiceSendError, setVoiceSendError] = useState('');
   const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false);
   const serviceDropdownRef = useRef<HTMLDivElement>(null);
   const formStartedRef = useRef({ written: false, voice: false });
@@ -235,12 +242,13 @@ export default function Contact() {
     const newErrors = { name: '', email: '', phone: '' };
     if (formData.name.trim().length < 2)  newErrors.name  = t('contact.nameError');
     if (!isValidEmail(formData.email))     newErrors.email = t('contact.emailError');
-    if (!formData.phone.trim())            newErrors.phone = t('contact.phoneError');
+    if (!isValidPhone(formData.phone))     newErrors.phone = t('contact.phoneError');
     setErrors(newErrors);
     if (!gdprConsent) setGdprConsentError(t('contact.gdprConsentError'));
     if (newErrors.name || newErrors.email || newErrors.phone || !gdprConsent) return;
 
     setSending(true);
+    setSendError('');
     const chatTranscript = sessionStorage.getItem('chat_transcript_for_form') || '';
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -265,33 +273,39 @@ export default function Contact() {
           body: JSON.stringify({
             name: formData.name,
             email: formData.email,
+            phone: formData.phone,
             company: formData.company,
             services: formData.services?.join(', '),
             description: formData.description,
             channel: formData.channel,
           }),
         }).catch(err => console.error('Telegram notify failed', err));
-      } else {
-        console.error('Web3Forms error', data);
+        sessionStorage.removeItem('chat_transcript_for_form');
+        setSending(false);
+        setSent(true);
+        return;
       }
+      console.error('Web3Forms error', data);
+      setSendError(t('contact.submitError'));
     } catch (err) {
       console.error('Web3Forms fetch failed', err);
+      setSendError(t('contact.submitError'));
     }
     sessionStorage.removeItem('chat_transcript_for_form');
     setSending(false);
-    setSent(true);
   };
 
   const handleVoiceSubmit = async () => {
     const newErrors = { name: '', email: '', phone: '' };
     if (voiceName.trim().length < 2)  newErrors.name  = t('contact.nameError');
     if (!isValidEmail(voiceEmail))    newErrors.email = t('contact.emailError');
-    if (!voicePhone.trim())           newErrors.phone = t('contact.phoneError');
+    if (!isValidPhone(voicePhone))    newErrors.phone = t('contact.phoneError');
     setVoiceErrors(newErrors);
     if (!voiceGdprConsent) setVoiceGdprConsentError(t('contact.gdprConsentError'));
     if (newErrors.name || newErrors.email || newErrors.phone || !voiceGdprConsent) return;
 
     setSending(true);
+    setVoiceSendError('');
     const chatTranscript = sessionStorage.getItem('chat_transcript_for_form') || '';
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -317,21 +331,26 @@ export default function Contact() {
           body: JSON.stringify({
             name: voiceName,
             email: voiceEmail,
+            phone: voicePhone,
             company: '',
             services: '',
             description: transcript,
             channel: voiceChannel,
           }),
         }).catch(err => console.error('Telegram notify failed', err));
-      } else {
-        console.error('Web3Forms error', data);
+        sessionStorage.removeItem('chat_transcript_for_form');
+        setSending(false);
+        setSent(true);
+        return;
       }
+      console.error('Web3Forms error', data);
+      setVoiceSendError(t('contact.submitError'));
     } catch (err) {
       console.error('Web3Forms fetch failed', err);
+      setVoiceSendError(t('contact.submitError'));
     }
     sessionStorage.removeItem('chat_transcript_for_form');
     setSending(false);
-    setSent(true);
   };
 
   const stopActiveRecognition = () => {
@@ -576,7 +595,7 @@ export default function Contact() {
     || recording
     || voiceName.trim().length < 2
     || !isValidEmail(voiceEmail)
-    || !voicePhone.trim()
+    || !isValidPhone(voicePhone)
     || !transcript.trim();
 
   const renderConditional = (channel: string, value: string, onChange: (v: string) => void) => {
@@ -681,6 +700,7 @@ export default function Contact() {
                     <label className={labelReq}>{t('contact.emailLabel')}{asterisk}</label>
                     <AnimatedInput examples={EMAIL_EXAMPLES} type="email" value={formData.email}
                       onChange={e => { setFormData(p => ({ ...p, email: e.target.value })); setErrors(p => ({ ...p, email: '' })); }}
+                      onBlur={() => { if (formData.email && !isValidEmail(formData.email)) setErrors(p => ({ ...p, email: t('contact.emailError') })); }}
                       className={inputClass} autoComplete="email" />
                     {errors.email
                       ? <p className="text-xs text-red-500 mt-1">{errors.email}</p>
@@ -692,8 +712,11 @@ export default function Contact() {
                     <label className={labelReq}>{t('contact.phoneLabel')}{asterisk}</label>
                     <AnimatedInput examples={PHONE_EXAMPLES} type="tel" value={formData.phone}
                       onChange={e => { setFormData(p => ({ ...p, phone: e.target.value })); setErrors(p => ({ ...p, phone: '' })); }}
+                      onBlur={() => { if (formData.phone && !isValidPhone(formData.phone)) setErrors(p => ({ ...p, phone: t('contact.phoneError') })); }}
                       className={inputClass} autoComplete="tel" />
-                    {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
+                    {errors.phone
+                      ? <p className="text-xs text-red-500 mt-1">{errors.phone}</p>
+                      : <p className="text-xs text-muted-foreground mt-1">{t('contact.phoneHelper')}</p>}
                   </div>
 
                   {/* Company */}
@@ -801,6 +824,7 @@ export default function Contact() {
                     )}
                   </div>
 
+                  {sendError && <p className="text-sm text-red-500 text-center -mb-2">{sendError}</p>}
                   <button type="submit" disabled={sending}
                     className="w-full bg-foreground text-background rounded-xl py-3.5 font-medium text-sm transition-opacity hover:opacity-90 disabled:opacity-50">
                     {sending ? t('contact.sending') : t('contact.submit')}
@@ -839,8 +863,11 @@ export default function Contact() {
                     <label className={labelReq}>{t('contact.emailLabel')}{asterisk}</label>
                     <AnimatedInput examples={EMAIL_EXAMPLES} type="email" value={voiceEmail}
                       onChange={e => { setVoiceEmail(e.target.value); setVoiceErrors(p => ({ ...p, email: '' })); }}
+                      onBlur={() => { if (voiceEmail && !isValidEmail(voiceEmail)) setVoiceErrors(p => ({ ...p, email: t('contact.emailError') })); }}
                       className={inputClass} autoComplete="email" />
-                    {voiceErrors.email && <p className="text-xs text-red-500 mt-1">{voiceErrors.email}</p>}
+                    {voiceErrors.email
+                      ? <p className="text-xs text-red-500 mt-1">{voiceErrors.email}</p>
+                      : <p className="text-xs text-muted-foreground mt-1">{t('contact.emailHelper')}</p>}
                   </div>
 
                   {/* Phone * */}
@@ -852,8 +879,11 @@ export default function Contact() {
                         setVoiceErrors(p => ({ ...p, phone: '' }));
                         if (voiceChannel.includes('WhatsApp')) setVoiceConditionalContact(e.target.value);
                       }}
+                      onBlur={() => { if (voicePhone && !isValidPhone(voicePhone)) setVoiceErrors(p => ({ ...p, phone: t('contact.phoneError') })); }}
                       className={inputClass} autoComplete="tel" />
-                    {voiceErrors.phone && <p className="text-xs text-red-500 mt-1">{voiceErrors.phone}</p>}
+                    {voiceErrors.phone
+                      ? <p className="text-xs text-red-500 mt-1">{voiceErrors.phone}</p>
+                      : <p className="text-xs text-muted-foreground mt-1">{t('contact.phoneHelper')}</p>}
                   </div>
 
                   {/* Channel * */}
@@ -1020,6 +1050,7 @@ export default function Contact() {
                     )}
                   </div>
 
+                  {voiceSendError && <p className="text-sm text-red-500 text-center -mb-2">{voiceSendError}</p>}
                   <button onClick={handleVoiceSubmit} disabled={voiceSubmitDisabled}
                     className="w-full bg-foreground text-background rounded-xl py-3.5 font-medium text-sm transition-opacity hover:opacity-90 disabled:opacity-50">
                     {sending ? t('contact.sending') : t('contact.sendVoice')}
