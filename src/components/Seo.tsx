@@ -82,9 +82,9 @@ export default function Seo({ title, description, noIndex = false }: SeoProps) {
       <link rel="apple-touch-icon" href="/apple-touch-icon.svg?v=20260424" />
       <link rel="manifest" href="/site.webmanifest?v=20260424" />
       <link rel="canonical" href={pageUrl} />
+      <link rel="alternate" hrefLang="x-default" href="https://kastaflow.com/" />
       <link rel="alternate" hrefLang="en" href="https://kastaflow.com/en" />
       <link rel="alternate" hrefLang="no" href="https://kastaflow.com/no" />
-      <link rel="alternate" hrefLang="x-default" href="https://kastaflow.com/en" />
 
       <meta property="og:title" content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
