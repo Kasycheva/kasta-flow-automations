@@ -27,9 +27,11 @@
   ],
   "rewrites": [
     { "source": "/whatsapp", "destination": "/api/whatsapp" },
-    { "source": "/privacy", "destination": "/index.html" },
-    { "source": "/cookies", "destination": "/index.html" },
-    { "source": "/terms", "destination": "/index.html" },
+    { "source": "/en", "destination": "/en/index.html" },
+    { "source": "/no", "destination": "/no/index.html" },
+    { "source": "/privacy", "destination": "/privacy/index.html" },
+    { "source": "/cookies", "destination": "/cookies/index.html" },
+    { "source": "/terms", "destination": "/terms/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
